@@ -2,188 +2,209 @@
 <html>
 
 <head>
-    <title>DIANS_Prototype</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-          crossorigin="">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
+  <title>DIANS_Prototype</title>
+  <link rel='stylesheet' href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css'
+        integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
+        crossorigin=''>
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+  <link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet'>
+  <meta charset='UTF-8'>
+  <link rel='stylesheet' href='../static/static.js'>
+  <style>
+      *{
+          margin: 0;
+          padding: 0;
+      }
+      html {
+          width: 100%;
+          height: 100%;
+      }
 
+      body {
+          overflow-x: hidden;
+          padding: 0;
+          width: 100%;
+          height: 100%;
+      }
+
+      .button_icon {
+          height: 40px;
+          width: 40px;
+      }
+
+      .navbar {
+          background-color: #191d1f;
+      }
+
+      .nav-item {
+          margin-left: 10px;
+          margin-right: 10px;
+      }
+
+      .my_class {
+          background-color: #cc4747;
+      }
+
+      .red_inside {
+          background-color: #ad4040;
+      }
+
+      .movedown {
+          margin-top: 20px;
+      }
+
+      .red3 {
+          background-color: #b75a5a;
+      }
+
+      .scroll-div {
+          overflow: hidden;
+          overflow-y: scroll;
+          height: 600px;
+      }
+
+      .scroll-div::-webkit-scrollbar {
+          width: 11px;
+      }
+
+      .scroll-div::-webkit-scrollbar-track {
+
+          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+          border-radius: 5px;
+      }
+
+      .scroll-div::-webkit-scrollbar-thumb {
+          border-radius: 5px;
+          background-color: rgb(192, 192, 192);
+          /*-webkit-box-shadow: inset 0 0 6px rgb(255,250,240);*/
+      }
+  </style>
 
 </head>
-
 <body>
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#" style="color: white" id="home"
-               onclick="navbarText(id)">Home <span class="sr-only"></span></a>
-            <a class="nav-item nav-link" href="#" style="color: gray" id="project"
-               onclick="navbarText(id)">Project</a>
-            <a class="nav-item nav-link" href="#" style="color: gray" id="aboutus" onclick="navbarText(id)">About
-                Us</a>
-        </div>
+<nav class='navbar navbar-expand-lg navbar-light'>
+  <div class='collapse navbar-collapse d-flex justify-content-center' id='navbarNavAltMarkup'>
+    <div class='navbar-nav'>
+      <a class='nav-item nav-link active' href='#' style='color: white' id='home'
+         onclick='navbarText(id)'>Home <span class='sr-only'></span></a>
+      <a class='nav-item nav-link' href='#' style='color: gray' id='project'
+         onclick='navbarText(id)'>Project</a>
+      <a class='nav-item nav-link' href='#' style='color: gray' id='aboutus' onclick='navbarText(id)'>About
+        Us</a>
     </div>
+  </div>
 </nav>
-<style>
-    body {
-        overflow-x: hidden;
-    }
-
-    .button_icon {
-        height: 40px;
-        width: 40px;
-    }
-
-    .navbar {
-        background-color: #191d1f;
-    }
-
-    .nav-item {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-
-    .my_class {
-        border: solid 1px;
-        background-color: #cc4747;
-    }
-
-    .red_inside {
-        background-color: #ad4040;
-    }
-
-    .movedown {
-        margin-top: 20px;
-    }
-
-    .red3 {
-        background-color: #b75a5a;
-    }
-
-    .scroll-div {
-        overflow: hidden;
-        overflow-y: scroll;
-        height: 600px;
-    }
-
-    .scroll-div::-webkit-scrollbar {
-        width: 11px;
-    }
-
-    .scroll-div::-webkit-scrollbar-track {
-
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-
-        border-radius: 5px;
-    }
-
-    .scroll-div::-webkit-scrollbar-thumb {
-        border-radius: 5px;
-        background-color: rgb(192, 192, 192);
-        /*-webkit-box-shadow: inset 0 0 6px rgb(255,250,240);*/
-    }
-</style>
 <section>
-    <div class="row">
-        <div class="col-3 my_class">
-            <div class="container" style="height: 700px;">
-                <div class="input-group rounded mt-4">
-                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                           aria-describedby="search-addon"/>
-                    <span class="input-group-text border-0" id="search-addon">
-                            <i class="fa fa-search"></i>
+  <div class='row'>
+    <div class='col-3 my_class'>
+      <div class='container' style='height: 700px;'>
+        <div class='input-group rounded mt-4'>
+          <input type='search' class='form-control rounded' placeholder='Search' aria-label='Search'
+                 aria-describedby='search-addon'/>
+          <span class='input-group-text border-0' id='search-addon'>
+                            <i class='fa fa-search'></i>
                         </span>
-                </div>
-                <div class="container">
-                    <hr style="width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;">
-                </div>
-                <div class="scroll-div">
-                    <div id="fastfood_" class="rounded-3 pt-1 red_inside">
-                        <div class="red3 rounded-pill m-3 text-center">
-                            <h5>FAST FOOD</h5>
-                        </div>
-                        <ul style="list-style-type: '-';">
-                            <li>Жито Леб</li>
-                            <li>Сендвичара Попе</li>
-                            <li>Вили</li>
-                            <li>Гирадико</li>
-                            <li>Pizza FRESKO</li>
-                            <li>DM Restaurant</li>
-                            <li>Burger Friends</li>
-                            <li>Пемпеле</li>
-                            <li>7</li>
-                            <li>Ла Пуерта</li>
-                            <li>Domino's Pizza</li>
-                        </ul>
-                    </div>
-                    <div id="_pubs" class="rounded-3 pt-1 red_inside">
-                        <div class="red3 rounded-pill m-3 text-center">
-                            <h5>PUBS</h5>
-                        </div>
-                        <ul style="list-style-type: '-';">
-                            <li>London Pub</li>
-                            <li>Карпе Дием</li>
-                            <li>Конак</li>
-                            <li>Ирски паб Св.Патрик</li>
-                            <li>London Pub</li>
-                            <li>Карпе Дием</li>
-                            <li>Конак</li>
-                            <li>Ирски паб Св.Патрик</li>
-                            <li>London Pub</li>
-                            <li>Карпе Дием</li>
-                            <li>Конак</li>
-                            <li>Ирски паб Св.Патрик</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="container">
-                    <hr style="width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;">
-                </div>
+        </div>
+        <div class='container'>
+          <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
+        </div>
+        <div class='scroll-div'>
+          <div id='fastfood_' class='rounded-3 pt-1 red_inside'>
+            <div class='red3 rounded-pill m-3 text-center'>
+              <h5>FAST FOOD</h5>
+            </div>
+            <ul style="list-style-type: '-';">
+              <li>Жито Леб</li>
+              <li>Сендвичара Попе</li>
+              <li>Вили</li>
+              <li>Гирадико</li>
+              <li>Pizza FRESKO</li>
+              <li>DM Restaurant</li>
+              <li>Burger Friends</li>
+              <li>Пемпеле</li>
+              <li>7</li>
+              <li>Ла Пуерта</li>
+              <li>Domino's Pizza</li>
+            </ul>
+          </div>
+          <div id='_pubs' class='rounded-3 pt-1 red_inside'>
+            <div class='red3 rounded-pill m-3 text-center'>
+              <h5>PUBS</h5>
+            </div>
+            <ul style="list-style-type: '-';">
+              <li>London Pub</li>
+              <li>Карпе Дием</li>
+              <li>Конак</li>
+              <li>Ирски паб Св.Патрик</li>
+              <li>London Pub</li>
+              <li>Карпе Дием</li>
+              <li>Конак</li>
+              <li>Ирски паб Св.Патрик</li>
+              <li>London Pub</li>
+              <li>Карпе Дием</li>
+              <li>Конак</li>
+              <li>Ирски паб Св.Патрик</li>
+            </ul>
+          </div>
+        </div>
+        <div class='container'>
+          <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
+        </div>
 
-            </div>
-        </div>
-        <div class="col-9 p-0">
-            <div class="row rounded-3 text-center m-5 bg-light btn-group"
-                 style="z-index: 100; position: absolute; width: 70%;">
-                <div id="fastfood" class="col-4 p-0">
-                    <button type="button" class="btn border-2 border-end" style="width: 100%;"><img
-                            src="fastfoodicon.png" class="m-1 button_icon">
-                        <h6>Fast Food</h6>
-                    </button>
-                </div>
-                </button>
-                <div id="pubs" class="col-4 m-0 p-0">
-                    <button type="button" class="btn" style="width: 100%;"><img
-                            src="pubicon.png" class="m-1 button_icon">
-                        <h6>Pubs</h6>
-                    </button>
-                </div>
-                <div id="ffpb" class="col-4 p-0">
-                    <button type="button" class="btn border-2 border-start" style="width: 100%;"><img
-                            src="ffandpubicon.png" class="m-1 button_icon">
-                        <h6>Fast Food & Pubs</h6>
-                    </button>
-                </div>
-            </div>
-            <div class="w-70" id="map" style="width: 100%; height: 726px; z-index: 1;"></div>
-        </div>
+      </div>
     </div>
+    <div class='col-9 p-0'>
+      <div class='row rounded-3 text-center m-5 bg-light btn-group'
+           style='z-index: 100; position: absolute; width: 70%;'>
+        <div id='fastfood' class='col-4 p-0'>
+          <button type='button' class='btn border-2 border-end' style='width: 100%;'>
+            <img src='images/fastfoodicon.png' class='m-1 button_icon'>
+            <h6>Fast Food</h6>
+          </button>
+        </div>
+        </button>
+        <div id='pubs' class='col-4 m-0 p-0'>
+          <button type='button' class='btn' style='width: 100%;'><img
+            src='images/pubicon.png' class='m-1 button_icon'>
+            <h6>Pubs</h6>
+          </button>
+        </div>
+        <div id='ffpb' class='col-4 p-0'>
+          <button type='button' class='btn border-2 border-start' style='width: 100%;'><img
+            src='images/ffandpubicon.png' class='m-1 button_icon'>
+            <h6>Fast Food & Pubs</h6>
+          </button>
+        </div>
+      </div>
+      <div class='w-70' id='map' style='width: 100%; height: 900px; z-index: 1;'></div>
+    </div>
+  </div>
 </section>
 
-<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-        integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-        crossorigin=""></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
-<script src="../static.js"></script>
 
+<script src='https://unpkg.com/leaflet@1.4.0/dist/leaflet.js'
+        integrity='sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=='
+        crossorigin=''></script>
+<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'
+        integrity='sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p'
+        crossorigin='anonymous'></script>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js'
+        integrity='sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF'
+        crossorigin='anonymous'></script>
+
+<script>
+  var map = L.map('map').setView([41.996, 21.4316], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap</a> contributors"'
+  }).addTo(map);
+
+  var popup = marker.bindPopup('<b>Hello world!</b><br />I am a popup.');
+  popup.openPopup();
+
+</script>
 
 </body>
 
