@@ -1,8 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/restaurant
-    username: postgres
-    password: admin
-  jpa:
-    hibernate:
-      ddl-auto: update
