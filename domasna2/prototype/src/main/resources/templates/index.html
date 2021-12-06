@@ -209,32 +209,45 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap</a> contributors"'
   }).addTo(map);
 
-  var objectarr = [{'name': 'Zito_Leb', 'lon': ' 21.4268596', 'lat': '42.0003611'}, {
-    'name': 'London_Pub',
-    'lon': '21.4302534',
-    'lat': '41.9957302'
-  }]
+  var marker = L.marker([41.9957302, 21.4302534]).addTo(map);
+  var popup = marker.bindPopup('<b>London Pub</b><br />5.9km');
+  popup.openPopup();
 
-  function addMarker(id) {
+  var marker = L.marker([42.0003611, 21.4268596]).addTo(map);
+  var popup = marker.bindPopup('<b>Жито Леб</b><br />3.3km');
+  popup.openPopup();
 
-    if (id == 'Zito_Leb') {
+  var marker = L.marker([42.0015351, 21.4059587]).addTo(map);
+  var popup = marker.bindPopup('<b>Вили</b><br />2.5km');
+  popup.openPopup();
 
-      let lon = parseFloat(objectarr[0].lon);
-      let lat = parseFloat(objectarr[0].lat);
+  // var objectarr = [{'name': 'Zito_Leb', 'lon': ' 21.4268596', 'lat': '42.0003611'}, {
+  //   'name': 'London_Pub',
+  //   'lon': '21.4302534',
+  //   'lat': '41.9957302'
+  // }]
+  //
+  // function addMarker(id) {
+  //
+  //   if (id == 'Zito_Leb') {
+  //
+  //     let lon = parseFloat(objectarr[0].lon);
+  //     let lat = parseFloat(objectarr[0].lat);
+  //
+  //     var marker = L.marker([lat, lon]).addTo(map);
+  //     var popup = marker.bindPopup('<div class="my_class"><b>Жито Леб</b><br />6.1km</div>');
+  //
+  //   } else if (id == 'London_Pub') {
+  //
+  //     let lon = parseFloat(objectarr[1].lon);
+  //     let lat = parseFloat(objectarr[1].lat);
+  //     var marker = L.marker([lat, lon]).addTo(map);
+  //     var popup = marker.bindPopup('<div class="my_class"><b>London Pub</b><br />5.9km</div>');
+  //     popup.openPopup();
+  //
+  //   }
 
-      var marker = L.marker([lat, lon]).addTo(map);
-      var popup = marker.bindPopup('<b>Жито Леб</b><br />6.1km');
-
-    } else if (id == 'London_Pub') {
-
-      let lon = parseFloat(objectarr[1].lon);
-      let lat = parseFloat(objectarr[1].lat);
-      var marker = L.marker([lat, lon]).addTo(map);
-      var popup = marker.bindPopup('<b>London Pub</b><br />5.9km');
-
-    }
-
-  }
+  //}
 
 
 </script>
