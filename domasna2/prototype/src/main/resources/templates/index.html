@@ -116,7 +116,7 @@
               <h5>FAST FOOD</h5>
             </div>
             <ul style="list-style-type: '-';">
-              <li>Жито Леб</li>
+              <li id='Zito_Leb' onclick="addMarker(this.id)">Жито Леб</li>
               <li>Сендвичара Попе</li>
               <li>Вили</li>
               <li>Гирадико</li>
@@ -134,7 +134,7 @@
               <h5>PUBS</h5>
             </div>
             <ul style="list-style-type: '-';">
-              <li>London Pub</li>
+              <li id='London_Pub' onclick="addMarker(this.id)">London Pub</li>
               <li>Карпе Дием</li>
               <li>Конак</li>
               <li>Ирски паб Св.Патрик</li>
@@ -201,8 +201,36 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap</a> contributors"'
   }).addTo(map);
 
-  var popup = marker.bindPopup('<b>Hello world!</b><br />I am a popup.');
-  popup.openPopup();
+
+
+  var objectarr = [{'name':'Zito_Leb','lon':' 21.4268596', 'lat':'42.0003611'},{'name':'London_Pub','lon':'21.4302534', 'lat':'41.9957302'} ]
+  function addMarker(id){
+
+
+    if(id == 'Zito_Leb'){
+
+
+      let lon = parseFloat(objectarr[0].lon);
+      let lat = parseFloat(objectarr[0].lat);
+
+      var marker = L.marker([lat, lon]).addTo(map);
+      var popup = marker.bindPopup('<b>Жито Леб</b><br />6.1km');
+
+    } else if(id == 'London_Pub') {
+
+      let lon = parseFloat(objectarr[1].lon);
+      let lat = parseFloat(objectarr[1].lat);
+      var marker = L.marker([lat, lon]).addTo(map);
+      var popup = marker.bindPopup('<b>London Pub</b><br />5.9km');
+
+    }
+
+
+
+  }
+
+
+
 
 </script>
 
