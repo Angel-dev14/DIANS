@@ -130,7 +130,7 @@
     <div class='col-3 my_class clear-paddings'>
       <div class='side-bar'>
         <div class='input-group rounded mt-4 search-bar'>
-          <form th:method="post" th:action="@{'/search'}">
+          <form th:method="post" th:action="@{'/search'}" style="display: flex; width: 100%">
             <input type='search' id="filter" name="filter" class='form-control rounded' placeholder='Search' aria-label='Search'
                    aria-describedby='search-addon'/>
               <span class='input-group-text border-0' id='search-addon'>
