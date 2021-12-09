@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.dians</groupId>
-	<artifactId>prototype</artifactId>
+	<artifactId>navigation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>prototype</name>
-	<description>Prototype for navigation application</description>
+	<name>navigation</name>
+	<description>Navigation application</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
