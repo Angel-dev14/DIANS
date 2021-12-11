@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 
 <head>
   <title>DIANS_Prototype</title>
@@ -13,6 +13,10 @@
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <link rel='stylesheet' href='../static/static.js'>
+
+
+
+
   <style>
 
       .clear-paddings {
@@ -169,20 +173,20 @@
       <div class='row rounded-3 text-center m-5 bg-light btn-group'
            style='z-index: 100; position: absolute; width: 70%;'>
         <div id='fastfood' class='col-4 p-0'>
-          <button type='button' class='btn border-2 border-end' style='width: 100%;'>
+          <button type='button' onclick="addFastFoods()" class='btn border-2 border-end' style='width: 100%;'>
             <img src='images/fastfoodicon.png' class='m-1 button_icon'>
             <h6>Fast Food</h6>
           </button>
         </div>
         </button>
         <div id='pubs' class='col-4 m-0 p-0'>
-          <button type='button' class='btn' style='width: 100%;'><img
+          <button type='button' onclick="addPubs()" class='btn' style='width: 100%;'><img
             src='images/pubicon.png' class='m-1 button_icon'>
             <h6>Pubs</h6>
           </button>
         </div>
         <div id='ffpb' class='col-4 p-0'>
-          <button type='button' class='btn border-2 border-start' style='width: 100%;'><img
+          <button type='button' onclick="addPubsAndFastFoods()" class='btn border-2 border-start' style='width: 100%;'><img
             src='images/ffandpubicon.png' class='m-1 button_icon'>
             <h6>Fast Food & Pubs</h6>
           </button>
@@ -203,54 +207,80 @@
         crossorigin='anonymous'></script>
 
 <script>
-  var map = L.map('map').setView([41.996, 21.4316], 13);
+
+  //Adding map
+  var map = L.map('map').setView([41.999, 21.4306], 15.4);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap</a> contributors"'
   }).addTo(map);
 
-  var marker = L.marker([41.9957302, 21.4302534]).addTo(map);
-  var popup = marker.bindPopup('<b>London Pub</b><br />5.9km');
-  popup.openPopup();
-
-  var marker = L.marker([42.0003611, 21.4268596]).addTo(map);
-  var popup = marker.bindPopup('<b>Жито Леб</b><br />3.3km');
-  popup.openPopup();
-
-  var marker = L.marker([42.0015351, 21.4059587]).addTo(map);
-  var popup = marker.bindPopup('<b>Вили</b><br />2.5km');
-  popup.openPopup();
-
-  // var objectarr = [{'name': 'Zito_Leb', 'lon': ' 21.4268596', 'lat': '42.0003611'}, {
-  //   'name': 'London_Pub',
-  //   'lon': '21.4302534',
-  //   'lat': '41.9957302'
-  // }]
-  //
-  // function addMarker(id) {
-  //
-  //   if (id == 'Zito_Leb') {
-  //
-  //     let lon = parseFloat(objectarr[0].lon);
-  //     let lat = parseFloat(objectarr[0].lat);
-  //
-  //     var marker = L.marker([lat, lon]).addTo(map);
-  //     var popup = marker.bindPopup('<div class="my_class"><b>Жито Леб</b><br />6.1km</div>');
-  //
-  //   } else if (id == 'London_Pub') {
-  //
-  //     let lon = parseFloat(objectarr[1].lon);
-  //     let lat = parseFloat(objectarr[1].lat);
-  //     var marker = L.marker([lat, lon]).addTo(map);
-  //     var popup = marker.bindPopup('<div class="my_class"><b>London Pub</b><br />5.9km</div>');
-  //     popup.openPopup();
-  //
-  //   }
-
-  //}
-
+  //Adding custom marker
+  var redIcon = new L.Icon({
+    iconUrl: 'images/redmarker.png',
+    shadowUrl: 'images/markerShadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
 </script>
+
+
+<!--ADDING MARKERS AND MARKER LAYER -->
+<script th:inline="javascript">
+  /*<![CDATA[*/
+
+  var pubs = /*[[${pubs}]]*/ "pubs";
+  var fastfoods = /*[[${fastFoods}]]*/ "fastFoods";
+
+  var layerGroup = L.layerGroup().addTo(map);
+
+
+  function addPubsAndFastFoods(){
+    clearMarkers();
+    var marker;
+    for(let i=0;i<pubs.length;i++){
+      marker = L.marker([pubs[i].lat, pubs[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker.bindPopup(pubs[i].name);
+    }
+
+    for(let i=0;i<fastfoods.length;i++){
+      marker = L.marker([fastfoods[i].lat, fastfoods[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker.bindPopup(fastfoods[i].name);
+    }
+  }
+
+  //Function called on load
+  addPubsAndFastFoods();
+
+  function addPubs(){
+    clearMarkers();
+    var marker;
+    for(let i=0;i<pubs.length;i++){
+      marker = L.marker([pubs[i].lat, pubs[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker.bindPopup(fastfoods[i].name);
+    }
+  }
+
+  function addFastFoods(){
+    clearMarkers();
+    var marker;
+    for(let i=0;i<fastfoods.length;i++){
+      marker= L.marker([fastfoods[i].lat, fastfoods[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker.bindPopup(fastfoods[i].name);
+    }
+  }
+
+
+  function clearMarkers(){
+    layerGroup.clearLayers();
+  }
+
+  /*]]>*/
+</script>
+
 
 </body>
 
