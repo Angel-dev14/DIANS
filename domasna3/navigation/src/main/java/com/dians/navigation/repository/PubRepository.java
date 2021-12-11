@@ -11,9 +11,9 @@ import java.util.List;
 public interface PubRepository extends JpaRepository<Pub, Long> {
 
     @Query("SELECT name FROM Pub ")
-    List<String> findAllPubs();
+    List<String> findAllPubNames();
 
     @Query("SELECT name FROM Pub  WHERE name LIKE %?1% ")
-    List<String> findAllPubsByName(String place);
+    List<String> findAllPubNamesFromPlaceName(String place);
 
 }
