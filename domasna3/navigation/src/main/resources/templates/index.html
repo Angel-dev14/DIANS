@@ -240,8 +240,8 @@
 
   function addPubsAndFastFoods(){
     clearMarkers();
-    $("#fastfood_").css("display", "inline-block");
-    $("#_pubs").css("display", "inline-block");
+    $("#fastfood_").css("display", "block");
+    $("#_pubs").css("display", "block");
 
     var marker;
     for(let i=0;i<pubs.length;i++){
@@ -261,7 +261,7 @@
   function addPubs(){
     clearMarkers();
     $("#fastfood_").css("display", "none");
-    $("#_pubs").css("display", "inline-block");
+    $("#_pubs").css("display", "block");
     var marker;
     for(let i=0;i<pubs.length;i++){
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
@@ -271,7 +271,7 @@
 
   function addFastFoods(){
     clearMarkers();
-    $("#fastfood_").css("display", "inline-block");
+    $("#fastfood_").css("display", "block");
     $("#_pubs").css("display", "none");
     var marker;
     for(let i=0;i<fastfoods.length;i++){
