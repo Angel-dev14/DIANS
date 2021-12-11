@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 
 <head>
   <title>DIANS_Prototype</title>
@@ -15,100 +15,100 @@
   <link rel='stylesheet' href='../static/static.js'>
   <style>
 
-      .clear-paddings {
-          padding: 0;
-      }
+    .clear-paddings {
+      padding: 0;
+    }
 
-      html {
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-      }
+    html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
 
-      body {
-          padding: 0;
-          margin: 0;
-      }
+    body {
+      padding: 0;
+      margin: 0;
+    }
 
-      .navbar {
-          height: 50px;
-      }
+    .navbar {
+      height: 50px;
+    }
 
-      .navbar {
-          background-color: #191d1f;
-      }
+    .navbar {
+      background-color: #191d1f;
+    }
 
-      .nav-item {
-          margin-left: 10px;
-          margin-right: 10px;
-      }
+    .nav-item {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
 
-      /*LEV SIDE BAR*/
-      .my_class {
-          background-color: #cc4747;
-          height: 100vh;
-          padding: 15px;
-          max-width: 400px;
-      }
+    /*LEV SIDE BAR*/
+    .my_class {
+      background-color: #cc4747;
+      height: 100vh;
+      padding: 15px;
+      max-width: 400px;
+    }
 
-      .side-bar {
-          height: 100%;
-          padding: 10px;
-      }
+    .side-bar {
+      height: 100%;
+      padding: 10px;
+    }
 
-      .red_inside {
-          background-color: #ad4040;
-      }
+    .red_inside {
+      background-color: #ad4040;
+    }
 
-      .movedown {
-          margin-top: 20px;
-      }
+    .movedown {
+      margin-top: 20px;
+    }
 
-      .red3 {
-          background-color: #b75a5a;
-      }
+    .red3 {
+      background-color: #b75a5a;
+    }
 
-      .scroll-div {
-          overflow: hidden;
-          overflow-y: scroll;
-          height: 600px;
-      }
+    .scroll-div {
+      overflow: hidden;
+      overflow-y: scroll;
+      height: 600px;
+    }
 
-      .scroll-div::-webkit-scrollbar {
-          width: 11px;
-      }
+    .scroll-div::-webkit-scrollbar {
+      width: 11px;
+    }
 
-      .scroll-div::-webkit-scrollbar-track {
+    .scroll-div::-webkit-scrollbar-track {
 
-          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 
-          border-radius: 5px;
-      }
+      border-radius: 5px;
+    }
 
-      .scroll-div::-webkit-scrollbar-thumb {
-          border-radius: 5px;
-          background-color: rgb(192, 192, 192);
-          /*-webkit-box-shadow: inset 0 0 6px rgb(255,250,240);*/
-      }
+    .scroll-div::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: rgb(192, 192, 192);
+      /*-webkit-box-shadow: inset 0 0 6px rgb(255,250,240);*/
+    }
 
-      #map {
-          width: 100%;
-          height: 100%;
-          z-index: 1;
-      }
+    #map {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
 
-      h4 {
-          font-weight: bold;
-      }
+    h4 {
+      font-weight: bold;
+    }
 
-      ul li {
-          font-size: 20px;
-      }
+    ul li {
+      font-size: 20px;
+    }
 
-      img {
-          height: 50px;
-          width: 50px;
-      }
+    img {
+      height: 50px;
+      width: 50px;
+    }
   </style>
 
 </head>
@@ -133,7 +133,7 @@
           <form th:method="get"  th:action="@{'/search'}" style="display: flex; width: 100%">
             <input type='search'th:value="${searched != null  ? searched : ''}" id="search" name="search" class='form-control rounded' placeholder='Search' aria-label='Search'
                    aria-describedby='search-addon'/>
-              <span class='input-group-text border-0' id='search-addon'>
+            <span class='input-group-text border-0' id='search-addon'>
                 <button type="submit" th:for="search"><i class='fa fa-search'></i></button>
               </span>
           </form>
@@ -173,27 +173,27 @@
            style='z-index: 100; position: absolute; width: 70%;'>
         <div id='fastfood' class='col-4 p-0'>
           <form th:action="${'/fastFood'}" th:method="get">
-          <button type='submit' class='btn border-2 border-end' style='width: 100%;'>
-            <img src='images/fastfoodicon.png' class='m-1 button_icon'>
-            <h6>Fast Food</h6>
-          </button>
+            <button type='submit' onclick="addFastFoods()" class='btn border-2 border-end' style='width: 100%;'>
+              <img src='images/fastfoodicon.png' class='m-1 button_icon'>
+              <h6>Fast Food</h6>
+            </button>
           </form>
         </div>
 
         <div id='pubs' class='col-4 m-0 p-0'>
           <form th:action="${'/pubs'}" th:method="get">
-          <button type='submit' class='btn' style='width: 100%;'><img
-            src='images/pubicon.png' class='m-1 button_icon'>
-            <h6>Pubs</h6>
-          </button>
+            <button type='submit' onclick="addPubs()"  class='btn' style='width: 100%;'><img
+                    src='images/pubicon.png' class='m-1 button_icon'>
+              <h6>Pubs</h6>
+            </button>
           </form>
         </div>
         <div id='ffpb' class='col-4 p-0'>
           <form th:action="${'/'}" th:method="get">
-          <button type='submit' class='btn border-2 border-start' style='width: 100%;'><img
-            src='images/ffandpubicon.png' class='m-1 button_icon'>
-            <h6>Fast Food & Pubs</h6>
-          </button>
+            <button type='submit' onclick="addPubsAndFastFoods()" class='btn border-2 border-start' style='width: 100%;'><img
+                    src='images/ffandpubicon.png' class='m-1 button_icon'>
+              <h6>Fast Food & Pubs</h6>
+            </button>
           </form>
         </div>
       </div>
@@ -212,54 +212,81 @@
         crossorigin='anonymous'></script>
 
 <script>
-  var map = L.map('map').setView([41.996, 21.4316], 13);
+
+  //Adding map
+  var map = L.map('map').setView([41.999, 21.4306], 15.4);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap</a> contributors"'
   }).addTo(map);
 
-  var marker = L.marker([41.9957302, 21.4302534]).addTo(map);
-  var popup = marker.bindPopup('<b>London Pub</b><br />5.9km');
-  popup.openPopup();
-
-  var marker = L.marker([42.0003611, 21.4268596]).addTo(map);
-  var popup = marker.bindPopup('<b>Жито Леб</b><br />3.3km');
-  popup.openPopup();
-
-  var marker = L.marker([42.0015351, 21.4059587]).addTo(map);
-  var popup = marker.bindPopup('<b>Вили</b><br />2.5km');
-  popup.openPopup();
-
-  // var objectarr = [{'name': 'Zito_Leb', 'lon': ' 21.4268596', 'lat': '42.0003611'}, {
-  //   'name': 'London_Pub',
-  //   'lon': '21.4302534',
-  //   'lat': '41.9957302'
-  // }]
-  //
-  // function addMarker(id) {
-  //
-  //   if (id == 'Zito_Leb') {
-  //
-  //     let lon = parseFloat(objectarr[0].lon);
-  //     let lat = parseFloat(objectarr[0].lat);
-  //
-  //     var marker = L.marker([lat, lon]).addTo(map);
-  //     var popup = marker.bindPopup('<div class="my_class"><b>Жито Леб</b><br />6.1km</div>');
-  //
-  //   } else if (id == 'London_Pub') {
-  //
-  //     let lon = parseFloat(objectarr[1].lon);
-  //     let lat = parseFloat(objectarr[1].lat);
-  //     var marker = L.marker([lat, lon]).addTo(map);
-  //     var popup = marker.bindPopup('<div class="my_class"><b>London Pub</b><br />5.9km</div>');
-  //     popup.openPopup();
-  //
-  //   }
-
-  //}
-
+  //Adding custom marker
+  var redIcon = new L.Icon({
+    iconUrl: 'images/redmarker.png',
+    shadowUrl: 'images/markerShadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
 </script>
+
+
+<!--ADDING MARKERS AND MARKER LAYER -->
+<script th:inline="javascript">
+  /*<![CDATA[*/
+
+  var pubs = /*[[${pubs}]]*/ "pubs";
+  var fastfoods = /*[[${fastFoods}]]*/ "fastFoods";
+
+  var layerGroup = L.layerGroup().addTo(map);
+
+
+  function addPubsAndFastFoods(){
+    clearMarkers();
+    var marker;
+    for(let i=0;i<pubs.length;i++){
+      marker = L.marker([pubs[i].lat, pubs[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker.bindPopup(pubs[i].name);
+    }
+
+    for(let i=0;i<fastfoods.length;i++){
+      marker = L.marker([fastfoods[i].lat, fastfoods[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker.bindPopup(fastfoods[i].name);
+    }
+  }
+
+  //Function called on load
+  addPubsAndFastFoods();
+
+  function addPubs(){
+    clearMarkers();
+    var marker;
+    for(let i=0;i<pubs.length;i++){
+      marker = L.marker([pubs[i].lat, pubs[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker.bindPopup(fastfoods[i].name);
+    }
+  }
+
+  function addFastFoods(){
+    clearMarkers();
+    var marker;
+    for(let i=0;i<fastfoods.length;i++){
+      marker= L.marker([fastfoods[i].lat, fastfoods[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker.bindPopup(fastfoods[i].name);
+    }
+  }
+
+
+  function clearMarkers(){
+    layerGroup.clearLayers();
+  }
+
+  /*]]>*/
+</script>
+
+
 
 </body>
 
