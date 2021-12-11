@@ -1,4 +1,4 @@
-package com.dians.navigation.service.imp;
+package com.dians.navigation.service.impl;
 
 import com.dians.navigation.repository.FastFoodRepository;
 import com.dians.navigation.repository.PubRepository;
