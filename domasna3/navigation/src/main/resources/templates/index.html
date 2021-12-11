@@ -12,7 +12,6 @@
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
-  <link rel='stylesheet' href='../static/static.js'>
   <style>
 
     .clear-paddings {
@@ -172,29 +171,23 @@
       <div class='row rounded-3 text-center m-5 bg-light btn-group'
            style='z-index: 100; position: absolute; width: 70%;'>
         <div id='fastfood' class='col-4 p-0'>
-          <form th:action="${'/fastFood'}" th:method="get">
-            <button type='submit' onclick="addFastFoods()" class='btn border-2 border-end' style='width: 100%;'>
-              <img src='images/fastfoodicon.png' class='m-1 button_icon'>
-              <h6>Fast Food</h6>
-            </button>
-          </form>
+          <button type='submit' onclick="addFastFoods()" class='btn border-2 border-end' style='width: 100%;'>
+            <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
+            <h6>Fast Food</h6>
+          </button>
         </div>
 
         <div id='pubs' class='col-4 m-0 p-0'>
-          <form th:action="${'/pubs'}" th:method="get">
-            <button type='submit' onclick="addPubs()"  class='btn' style='width: 100%;'><img
-                    src='images/pubicon.png' class='m-1 button_icon'>
-              <h6>Pubs</h6>
-            </button>
-          </form>
+          <button type='submit' onclick="addPubs()"  class='btn' style='width: 100%;'><img
+                  src='/images/pubicon.png' class='m-1 button_icon'>
+            <h6>Pubs</h6>
+          </button>
         </div>
         <div id='ffpb' class='col-4 p-0'>
-          <form th:action="${'/'}" th:method="get">
-            <button type='submit' onclick="addPubsAndFastFoods()" class='btn border-2 border-start' style='width: 100%;'><img
-                    src='images/ffandpubicon.png' class='m-1 button_icon'>
-              <h6>Fast Food & Pubs</h6>
-            </button>
-          </form>
+          <button type='submit' onclick="addPubsAndFastFoods()" class='btn border-2 border-start' style='width: 100%;'><img
+                  src='/images/ffandpubicon.png' class='m-1 button_icon'>
+            <h6>Fast Food & Pubs</h6>
+          </button>
         </div>
       </div>
     </div>
@@ -211,6 +204,8 @@
         integrity='sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF'
         crossorigin='anonymous'></script>
 
+<script src="/jquery/jquery-3.6.0.min.js"></script>
+
 <script>
 
   //Adding map
@@ -222,8 +217,8 @@
 
   //Adding custom marker
   var redIcon = new L.Icon({
-    iconUrl: 'images/redmarker.png',
-    shadowUrl: 'images/markerShadow.png',
+    iconUrl: '/images/redmarker.png',
+    shadowUrl: '/images/markerShadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -237,22 +232,25 @@
 <script th:inline="javascript">
   /*<![CDATA[*/
 
-  var pubs = /*[[${pubs}]]*/ "pubs";
-  var fastfoods = /*[[${fastFoods}]]*/ "fastFoods";
+  var pubs = /*[[${pubObs}]]*/ "pubObs";
+  var fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
 
   var layerGroup = L.layerGroup().addTo(map);
 
 
   function addPubsAndFastFoods(){
     clearMarkers();
+    $("#fastfood_").css("display", "block");
+    $("#_pubs").css("display", "block");
+
     var marker;
     for(let i=0;i<pubs.length;i++){
-      marker = L.marker([pubs[i].lat, pubs[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(pubs[i].name);
     }
 
     for(let i=0;i<fastfoods.length;i++){
-      marker = L.marker([fastfoods[i].lat, fastfoods[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name);
     }
   }
@@ -262,18 +260,22 @@
 
   function addPubs(){
     clearMarkers();
+    $("#fastfood_").css("display", "none");
+    $("#_pubs").css("display", "block");
     var marker;
     for(let i=0;i<pubs.length;i++){
-      marker = L.marker([pubs[i].lat, pubs[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name);
     }
   }
 
   function addFastFoods(){
     clearMarkers();
+    $("#fastfood_").css("display", "block");
+    $("#_pubs").css("display", "none");
     var marker;
     for(let i=0;i<fastfoods.length;i++){
-      marker= L.marker([fastfoods[i].lat, fastfoods[i].lon],{icon:redIcon}).addTo(layerGroup);
+      marker= L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name);
     }
   }

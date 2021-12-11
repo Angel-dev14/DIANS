@@ -16,4 +16,5 @@ public interface PubRepository extends JpaRepository<Pub, Long> {
     @Query("SELECT name FROM Pub  WHERE name LIKE %?1% ")
     List<String> findAllPubNamesFromPlaceName(String place);
 
+    List<Pub> findAllByNameContaining(String name);
 }

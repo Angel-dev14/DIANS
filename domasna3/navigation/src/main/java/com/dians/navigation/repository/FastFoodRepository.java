@@ -17,4 +17,5 @@ public interface FastFoodRepository extends JpaRepository<FastFood, Long> {
     @Query("SELECT name FROM FastFood  WHERE name LIKE %?1% ")
     List<String> findAllFastFoodNamesFromPlaceName(String place);
 
+    List<FastFood> findAllByNameContaining(String name);
 }
