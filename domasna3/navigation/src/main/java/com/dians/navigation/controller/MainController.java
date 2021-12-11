@@ -4,12 +4,10 @@ import com.dians.navigation.model.FastFood;
 import com.dians.navigation.model.Pub;
 import com.dians.navigation.service.FastFoodService;
 import com.dians.navigation.service.PubService;
+import com.dians.navigation.service.SearchService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,34 +16,32 @@ import java.util.List;
 @RequestMapping("/")
 public class MainController {
 
-    private final FastFoodService fastFoodService;
-    private final PubService pubService;
+    private final SearchService searchService;
 
-    public MainController(FastFoodService fastFoodService, PubService pubService) {
-        this.fastFoodService = fastFoodService;
-        this.pubService = pubService;
+    public MainController(SearchService searchService) {
+        this.searchService = searchService;
     }
 
     @GetMapping("")
     public String getIndexPage(Model model){
-        List<Pub> pubs = pubService.findAllPubs();
-        List<FastFood> fastFoods = fastFoodService.findAllFastFoods();
+        List<String> pubs = searchService.findAllPubs();
+        List<String> fastFoods = searchService.findAllFastFoods();
         model.addAttribute("pubs", pubs);
         model.addAttribute("fastFoods", fastFoods);
         return "index";
     }
 
     @PostMapping("/search")
-    public String searchBar(@RequestParam(required = true) String filter, Model model){
-        List<Pub> pubs = new ArrayList<>();
-        List<FastFood> fastFoods = new ArrayList<>();
+    public String searchBar(@RequestParam(required = false) String filter, Model model){
+        List<String> pubs = new ArrayList<>();
+        List<String> fastFoods = new ArrayList<>();
 
-        if(!pubService.findAllPubsByName(filter).isEmpty()){
-            pubs = pubService.findAllPubsByName(filter);
+        if(!searchService.findAllPubsByName(filter).isEmpty()){
+            pubs = searchService.findAllPubsByName(filter);
         }
 
-        if(!fastFoodService.findAllFastFoodsByName(filter).isEmpty()){
-            fastFoods = fastFoodService.findAllFastFoodsByName(filter);
+        if(!searchService.findAllFastFoodsByName(filter).isEmpty()){
+            fastFoods = searchService.findAllFastFoodsByName(filter);
         }
 
         model.addAttribute("pubs", pubs);
@@ -53,4 +49,23 @@ public class MainController {
 
         return "index";
     }
+
+//    @GetMapping("/search/{filter}")
+//    public String searchBar(@PathVariable(required = true) String filter, Model model){
+//        List<String> pubs = new ArrayList<>();
+//        List<String> fastFoods = new ArrayList<>();
+//
+//        if(!searchService.findAllPubsByName(filter).isEmpty() && searchService.findAllPubsByName(filter) !=null){
+//            pubs = searchService.findAllPubsByName(filter);
+//        }
+//
+//        if(!searchService.findAllFastFoodsByName(filter).isEmpty()){
+//            fastFoods = searchService.findAllFastFoodsByName(filter);
+//        }
+//
+//        model.addAttribute("pubs", pubs);
+//        model.addAttribute("fastFoods", fastFoods);
+//
+//        return "index";
+//    }
 }
