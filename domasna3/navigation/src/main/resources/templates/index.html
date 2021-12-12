@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:th='http://thymeleaf.org'>
 
 <head>
   <title>DIANS_Prototype</title>
@@ -14,100 +14,116 @@
 
   <style>
 
-    .clear-paddings {
-      padding: 0;
-    }
+      .clear-paddings {
+          padding: 0;
+      }
 
-    html {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
+      html {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+      }
 
-    body {
-      padding: 0;
-      margin: 0;
-    }
+      body {
+          padding: 0;
+          margin: 0;
+      }
 
-    .navbar {
-      height: 50px;
-    }
+      .navbar {
+          height: 50px;
+      }
 
-    .navbar {
-      background-color: #191d1f;
-    }
+      .navbar {
+          background-color: #191d1f;
+      }
 
-    .nav-item {
-      margin-left: 10px;
-      margin-right: 10px;
-    }
+      .nav-item {
+          margin-left: 10px;
+          margin-right: 10px;
+      }
 
-    /*LEV SIDE BAR*/
-    .my_class {
-      background-color: #cc4747;
-      height: 100vh;
-      padding: 15px;
-      max-width: 400px;
-    }
+      /*LEV SIDE BAR*/
+      .my_class {
+          background-color: #cc4747;
+          height: 100vh;
+          padding: 15px;
+          max-width: 400px;
+      }
 
-    .side-bar {
-      height: 100%;
-      padding: 10px;
-    }
+      .side-bar {
+          height: 100%;
+          padding: 10px;
+      }
 
-    .red_inside {
-      background-color: #ad4040;
-    }
+      .red_inside {
+          background-color: #ad4040;
+      }
 
-    .movedown {
-      margin-top: 20px;
-    }
+      .movedown {
+          margin-top: 20px;
+      }
 
-    .red3 {
-      background-color: #b75a5a;
-    }
+      .red3 {
+          background-color: #b75a5a;
+      }
 
-    .scroll-div {
-      overflow: hidden;
-      overflow-y: scroll;
-      height: 600px;
-    }
+      .scroll-div {
+          overflow: hidden;
+          overflow-y: scroll;
+          height: 600px;
+      }
 
-    .scroll-div::-webkit-scrollbar {
-      width: 11px;
-    }
+      .scroll-div::-webkit-scrollbar {
+          width: 11px;
+      }
 
-    .scroll-div::-webkit-scrollbar-track {
+      .scroll-div::-webkit-scrollbar-track {
 
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 
-      border-radius: 5px;
-    }
+          border-radius: 5px;
+      }
 
-    .scroll-div::-webkit-scrollbar-thumb {
-      border-radius: 5px;
-      background-color: rgb(192, 192, 192);
-      /*-webkit-box-shadow: inset 0 0 6px rgb(255,250,240);*/
-    }
+      .scroll-div::-webkit-scrollbar-thumb {
+          border-radius: 5px;
+          background-color: rgb(192, 192, 192);
+          /*-webkit-box-shadow: inset 0 0 6px rgb(255,250,240);*/
+      }
 
-    #map {
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
+      #map {
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+      }
 
-    h4 {
-      font-weight: bold;
-    }
+      h4 {
+          font-weight: bold;
+          margin: 0;
+      }
 
-    ul li {
-      font-size: 20px;
-    }
+      ul{
+          list-style-type: none;
+          padding: 0;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+      }
 
-    img {
-      height: 50px;
-      width: 50px;
-    }
+      ul li {
+          font-size: 20px;
+          margin: 2px 0;
+          padding: 5px 0;
+          width: 80%;
+          background-color: #b74e4e;
+          border-radius: 10px;
+      }
+
+      img {
+          height: 50px;
+          width: 50px;
+      }
   </style>
 
 </head>
@@ -129,11 +145,12 @@
     <div class='col-3 my_class clear-paddings'>
       <div class='side-bar'>
         <div class='input-group rounded mt-4 search-bar'>
-          <form th:method="get"  th:action="@{'/search'}" style="display: flex; width: 100%">
-            <input type='search'th:value="${searched != null  ? searched : ''}" id="search" name="search" class='form-control rounded' placeholder='Search' aria-label='Search'
+          <form th:method='get' th:action="@{'/search'}" style='display: flex; width: 100%'>
+            <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
+                   class='form-control rounded' placeholder='Search' aria-label='Search'
                    aria-describedby='search-addon'/>
             <span class='input-group-text border-0' id='search-addon'>
-                <button type="submit" th:for="search"><i class='fa fa-search'></i></button>
+                <button type='submit' th:for='search'><i class='fa fa-search'></i></button>
               </span>
           </form>
         </div>
@@ -141,24 +158,28 @@
           <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
         </div>
         <div class='scroll-div'>
-          <div th:unless="${#lists.isEmpty(fastFoods)}" id='fastfood_' class='rounded-3 pt-1 red_inside'>
-            <div class='red3 rounded-pill m-3 text-center'>
+          <div th:unless='${#lists.isEmpty(fastFoods)}' id='fastfood_' class='rounded-3 pt-1 red_inside'>
+            <div class='red3 rounded-pill m-3 text-center p-1'>
               <h4>FAST FOOD</h4>
             </div>
-            <ul style="list-style-type: '-';">
-              <li th:each="fastFood : ${fastFoods}" th:text="${fastFood}"></li>
+            <ul>
+              <li th:each='fastFood : ${fastFoods}' th:text='${fastFood}'></li>
             </ul>
           </div>
-          <div th:unless="${#lists.isEmpty(pubs)}" id='_pubs' class='rounded-3 pt-1 red_inside'>
-            <div class='red3 rounded-pill m-3 text-center'>
+          <div th:unless='${#lists.isEmpty(pubs)}' id='_pubs' class='rounded-3 pt-1 red_inside'>
+            <div class='red3 rounded-pill m-3 text-center p-1'>
               <h4>PUBS</h4>
             </div>
-            <ul style="list-style-type: '-';">
-              <li th:each="pub : ${pubs}" th:text="${pub}"></li>
+            <ul>
+              <li th:each='pub : ${pubs}' th:text='${pub}'></li>
             </ul>
           </div>
-          <div class='rounded-3 pt-1 red_inside' style=" margin-right: 1vh" th:if="${#lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)}">
-            <p style="font-size: 150%; text-align:center">No results found for <th:block th:text="${searched}"></th:block>.</p>
+          <div class='rounded-3 pt-1 red_inside' style=' margin-right: 1vh'
+               th:if='${#lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)}'>
+            <p style='font-size: 150%; text-align:center'>No results found for
+              <th:block th:text='${searched}'></th:block>
+              .
+            </p>
           </div>
         </div>
         <div>
@@ -171,21 +192,22 @@
       <div class='row rounded-3 text-center m-5 bg-light btn-group'
            style='z-index: 100; position: absolute; width: 70%;'>
         <div id='fastfood' class='col-4 p-0'>
-          <button type='submit' onclick="addFastFoods()" class='btn border-2 border-end' style='width: 100%;'>
+          <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
             <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
             <h6>Fast Food</h6>
           </button>
         </div>
 
         <div id='pubs' class='col-4 m-0 p-0'>
-          <button type='submit' onclick="addPubs()"  class='btn' style='width: 100%;'><img
-                  src='/images/pubicon.png' class='m-1 button_icon'>
+          <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
+            src='/images/pubicon.png' class='m-1 button_icon'>
             <h6>Pubs</h6>
           </button>
         </div>
         <div id='ffpb' class='col-4 p-0'>
-          <button type='submit' onclick="addPubsAndFastFoods()" class='btn border-2 border-start' style='width: 100%;'><img
-                  src='/images/ffandpubicon.png' class='m-1 button_icon'>
+          <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start' style='width: 100%;'>
+            <img
+              src='/images/ffandpubicon.png' class='m-1 button_icon'>
             <h6>Fast Food & Pubs</h6>
           </button>
         </div>
@@ -204,90 +226,85 @@
         integrity='sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF'
         crossorigin='anonymous'></script>
 
-<script src="/jquery/jquery-3.6.0.min.js"></script>
+<script src='/jquery/jquery-3.6.0.min.js'></script>
 
-<script>
+<script src='map.js'></script>
 
-  //Adding map
-  var map = L.map('map').setView([41.999, 21.4306], 15.4);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap</a> contributors"'
-  }).addTo(map);
-
-  //Adding custom marker
-  var redIcon = new L.Icon({
-    iconUrl: '/images/redmarker.png',
-    shadowUrl: '/images/markerShadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
-
-</script>
-
-
-<!--ADDING MARKERS AND MARKER LAYER -->
-<script th:inline="javascript">
-  /*<![CDATA[*/
+<script th:inline='javascript'>
 
   var pubs = /*[[${pubObs}]]*/ "pubObs";
   var fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
 
   var layerGroup = L.layerGroup().addTo(map);
 
+  var currentUserLocation = undefined;
 
-  function addPubsAndFastFoods(){
+  function addPubsAndFastFoods() {
     clearMarkers();
     $("#fastfood_").css("display", "block");
     $("#_pubs").css("display", "block");
 
     var marker;
-    for(let i=0;i<pubs.length;i++){
+    for (let i = 0; i < pubs.length; i++) {
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(pubs[i].name);
     }
 
-    for(let i=0;i<fastfoods.length;i++){
+    for (let i = 0; i < fastfoods.length; i++) {
       marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name);
     }
+    if(currentUserLocation)
+      displayCurrentLocation()
   }
 
   //Function called on load
   addPubsAndFastFoods();
 
-  function addPubs(){
+  function addPubs() {
     clearMarkers();
     $("#fastfood_").css("display", "none");
     $("#_pubs").css("display", "block");
     var marker;
-    for(let i=0;i<pubs.length;i++){
+    for (let i = 0; i < pubs.length; i++) {
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name);
     }
+    if(currentUserLocation)
+      displayCurrentLocation()
   }
 
-  function addFastFoods(){
+  function addFastFoods() {
     clearMarkers();
     $("#fastfood_").css("display", "block");
     $("#_pubs").css("display", "none");
     var marker;
-    for(let i=0;i<fastfoods.length;i++){
-      marker= L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
+    for (let i = 0; i < fastfoods.length; i++) {
+      marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name);
     }
+    if(currentUserLocation)
+      displayCurrentLocation()
   }
 
-
-  function clearMarkers(){
+  function clearMarkers() {
     layerGroup.clearLayers();
   }
 
-  /*]]>*/
-</script>
+  window.onload = function (){
+    navigator.geolocation.getCurrentPosition(getUserLocation);
+  }
 
+  function getUserLocation(position){
+    currentUserLocation = position.coords;
+    displayCurrentLocation()
+  }
+
+  function displayCurrentLocation(){
+    marker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
+    marker.bindPopup('My location');
+  }
+</script>
 
 
 </body>
