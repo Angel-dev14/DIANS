@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface NavigationService {
 
-    public List<FastFood> findAllFastFoods();
+    List<FastFood> findAllFastFoods();
 
-    public List<Pub> findAllPubs();
+    List<Pub> findAllPubs();
 
-    public List<FastFood> findAllFastFoodsByName(String name);
+    List<FastFood> findAllFastFoodsByName(String name);
 
-    public List<Pub> findAllPubsByName(String name);
+    List<Pub> findAllPubsByName(String name);
 }

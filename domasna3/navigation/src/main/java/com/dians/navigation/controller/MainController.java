@@ -7,7 +7,6 @@ import com.dians.navigation.service.SearchService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class MainController {
     }
 
     @GetMapping("/search")
-    public String searchBar(@RequestParam(required = true) String search, Model model) {
+    public String searchBar(@RequestParam String search, Model model) {
 
         model.addAttribute("searched", search);
         List<String> pubs = new ArrayList<>();
