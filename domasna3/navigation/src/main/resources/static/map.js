@@ -22,3 +22,11 @@ var greenIcon = new L.Icon({
   popupAnchor: [1, -34],
 });
 
+var userIcon = new L.Icon({
+  iconUrl: '/images/user.png',
+  shadowUrl: '/images/markerShadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
