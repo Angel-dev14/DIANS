@@ -254,6 +254,8 @@
       marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name);
     }
+    if(currentUserLocation)
+      displayCurrentLocation()
   }
 
   //Function called on load
@@ -268,6 +270,8 @@
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name);
     }
+    if(currentUserLocation)
+      displayCurrentLocation()
   }
 
   function addFastFoods() {
@@ -279,6 +283,8 @@
       marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name);
     }
+    if(currentUserLocation)
+      displayCurrentLocation()
   }
 
   function clearMarkers() {
@@ -290,7 +296,11 @@
   }
 
   function getUserLocation(position){
-    var currentUserLocation = position.coords;
+    currentUserLocation = position.coords;
+    displayCurrentLocation()
+  }
+
+  function displayCurrentLocation(){
     marker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
     marker.bindPopup('My location');
   }
