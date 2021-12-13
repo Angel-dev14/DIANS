@@ -276,8 +276,6 @@
   var plostadLat = 41.99646, plostadLon = 21.43141;
 
   function getRoute(place) {
-    clearMarkers();
-    clearRoute();
 
     var target_lat = undefined, target_lon = undefined;
 
@@ -298,42 +296,48 @@
     }
 
     if(target_lat && target_lon) {
-      clearUserMarker();
-
-      var startLat, startLon;
-
-      if (userLocationMarker != null) {
-        startLat = currentUserLocation.latitude;
-        startLon = currentUserLocation.longitude;
-      } else {
-        startLat = plostadLat;
-        startLon = plostadLon;
-      }
-
-      route = L.Routing.control({
-        waypoints: [
-          L.latLng(startLat, startLon),
-          L.latLng(target_lat, target_lon)
-        ],
-        createMarker: function(i, wp, nWps) {
-          if (i === 0) {
-            return L.marker(wp.latLng, {
-              icon: userIcon
-            });
-          } else if (i === nWps - 1) {
-            return L.marker(wp.latLng, {
-              icon: redIcon
-            });
-          }
-        },
-        router: new L.Routing.osrmv1({
-          language: 'en',
-          profile: 'car'
-        })
-      });
-      route.addTo(map);
-      $('#clearRoute').css('display', 'inline-block');
+      drawRoute(target_lat, target_lon);
     }
+  }
+
+  function drawRoute(target_lat, target_lon) {
+    clearUserMarker();
+    clearMarkers();
+    clearRoute();
+
+    var startLat, startLon;
+
+    if (currentUserLocation) {
+      startLat = currentUserLocation.latitude;
+      startLon = currentUserLocation.longitude;
+    } else {
+      startLat = plostadLat;
+      startLon = plostadLon;
+    }
+
+    route = L.Routing.control({
+      waypoints: [
+        L.latLng(startLat, startLon),
+        L.latLng(target_lat, target_lon)
+      ],
+      createMarker: function(i, wp, nWps) {
+        if (i === 0) {
+          return L.marker(wp.latLng, {
+            icon: userIcon
+          });
+        } else if (i === nWps - 1) {
+          return L.marker(wp.latLng, {
+            icon: redIcon
+          });
+        }
+      },
+      router: new L.Routing.osrmv1({
+        language: 'en',
+        profile: 'bike'
+      })
+    });
+    route.addTo(map);
+    $('#clearRoute').css('display', 'inline-block');
   }
 
   function addPubsAndFastFoods() {
@@ -345,14 +349,18 @@
     var marker;
     for (let i = 0; i < pubs.length; i++) {
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
-      marker.bindPopup(pubs[i].name);
+      marker.bindPopup(pubs[i].name +
+              '<br /><label id="_distance">2km</label><br />' +
+              '<button class="btn directions-button" onclick="drawRoute('
+              + pubs[i].lat + ', ' + pubs[i].lon +')">DIRECTIONS</button>');
     }
 
     for (let i = 0; i < fastfoods.length; i++) {
       marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name +
               '<br /><label id="_distance">2km</label><br />' +
-              '<button class="btn directions-button">DIRECTIONS</button>');
+              '<button class="btn directions-button" onclick="drawRoute('
+              + fastfoods[i].lat + ', ' + fastfoods[i].lon +')">DIRECTIONS</button>');
     }
     if(currentUserLocation)
       displayCurrentLocation()
@@ -369,9 +377,10 @@
     var marker;
     for (let i = 0; i < pubs.length; i++) {
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
-      marker.bindPopup(fastfoods[i].name +
+      marker.bindPopup(pubs[i].name +
               '<br /><label id="_distance">2km</label><br />' +
-              '<button class="btn directions-button">DIRECTIONS</button>');
+              '<button class="btn directions-button" onclick="drawRoute('
+              + pubs[i].lat + ', ' + pubs[i].lon +')">DIRECTIONS</button>');
     }
     if(currentUserLocation)
       displayCurrentLocation()
@@ -387,7 +396,8 @@
       marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
       marker.bindPopup(fastfoods[i].name +
               '<br /><label id="_distance">2km</label><br />' +
-              '<button class="btn directions-button">DIRECTIONS</button>');
+              '<button class="btn directions-button" onclick="drawRoute('
+              + fastfoods[i].lat + ', ' + fastfoods[i].lon +')">DIRECTIONS</button>');
     }
     if(currentUserLocation)
       displayCurrentLocation()
@@ -406,7 +416,8 @@
   }
 
   function clearUserMarker() {
-    map.removeLayer(userLocationMarker);
+    if (userLocationMarker)
+      map.removeLayer(userLocationMarker);
   }
 
   window.onload = function (){
