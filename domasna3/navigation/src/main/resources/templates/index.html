@@ -146,6 +146,13 @@
       color: white;
       text-align: center;
     }
+      .text{
+        color: #191d1f;
+      }
+
+      a{
+        font-weight: bolder;
+      }
   </style>
 
 </head>
@@ -156,9 +163,9 @@
       <div class='navbar-nav'>
         <a class='nav-item nav-link active' href='#' style='color: white' id='home'
            onclick='navbarText(id)'>Home <span class='sr-only'></span></a>
-        <a class='nav-item nav-link' href='#' style='color: gray' id='project'
+        <a class='nav-item nav-link'href='#' style='color: #C0C0C0' id='project'
            onclick='navbarText(id)'>Project</a>
-        <a class='nav-item nav-link' href='#' style='color: gray' id='aboutus' onclick='navbarText(id)'>About
+        <a class='nav-item nav-link' href='#' style='color: #C0C0C0' id='aboutus' onclick='navbarText(id)'>About
           Us</a>
       </div>
     </div>
@@ -179,34 +186,40 @@
         <div>
           <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
         </div>
-        <div class='scroll-div'>
-          <div th:unless='${#lists.isEmpty(fastFoods)}' id='fastfood_' class='rounded-3 pt-1 red_inside'>
-            <div class='red3 rounded-pill m-3 text-center p-1'>
-              <h4>FAST FOOD</h4>
-            </div>
-            <ul>
-              <li th:each='fastFood : ${fastFoods}' th:attr="onclick=|getRoute('${fastFood}')|"
-                  th:text='${fastFood}'></li>
-            </ul>
-          </div>
-          <div th:unless='${#lists.isEmpty(pubs)}' id='_pubs' class='rounded-3 pt-1 red_inside'>
-            <div class='red3 rounded-pill m-3 text-center p-1'>
-              <h4>PUBS</h4>
-            </div>
-            <ul>
-              <li th:each='pub : ${pubs}' th:attr="onclick=|getRoute('${pub}')|"
-                  th:text='${pub}'></li>
-            </ul>
-          </div>
-          <div class='rounded-3 pt-1 red_inside' style=' margin-right: 1vh'
-               th:if='${#lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)}'>
-            <p style='font-size: 150%; text-align:center'>No results found for
-              <th:block th:text='${searched}'></th:block>
-              .
-            </p>
-          </div>
+        <div class='rounded-3 pt-1 red_inside' style=' margin-right: 1vh'
+             th:if='${#lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)}'  >
+          <p style='font-size: 150%; text-align:center' class="text">No results found for "<th:block th:text='${searched}'>
+          </th:block>".
+          </p>
         </div>
-        <div>
+
+       <div  id='fastfood_' class="scroll-div" style="height: 35vh" th:unless='${#lists.isEmpty(fastFoods)}'>
+         <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
+            <div class='red3 rounded-pill m-3 text-center p-1'>
+              <h4 class="text">FAST FOOD</h4>
+            </div>
+            <ul>
+              <li class="text" th:each='fastFood : ${fastFoods}' th:text='${fastFood}' th:attr="onclick=|getRoute('${fastFood}')|"></li>
+            </ul>
+          </div>
+      </div>
+
+        <div id="middleLine" th:if='${not #lists.isEmpty(fastFoods) && not #lists.isEmpty(pubs)}'>
+          <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
+        </div>
+
+        <div  id='_pubs' th:unless='${#lists.isEmpty(pubs)}' class="scroll-div" style="height: 35vh">
+          <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
+            <div class='red3 rounded-pill m-3 text-center p-1'>
+              <h4 class="text">PUBS</h4>
+            </div>
+            <ul>
+              <li class="text" th:each='pub : ${pubs}' th:text='${pub}' th:attr="onclick=|getRoute('${pub}')|"></li>
+            </ul>
+          </div>
+      </div>
+        <div th:unless='${(not #lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)) ||
+                (#lists.isEmpty(fastFoods) && not #lists.isEmpty(pubs))}'>
           <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
         </div>
       </div>
@@ -343,8 +356,16 @@
   function addPubsAndFastFoods() {
     clearMarkers();
     clearRoute();
-    $("#fastfood_").css("display", "block");
-    $("#_pubs").css("display", "block");
+    $("#middleLine").css("display", "block");
+    $("#fastfood_").css({
+      "display": "block",
+      "height": "35vh"
+    });
+
+    $("#_pubs").css({
+      "display": "block",
+      "height": "35vh"
+    });
 
     var marker;
     for (let i = 0; i < pubs.length; i++) {
@@ -372,8 +393,13 @@
   function addPubs() {
     clearMarkers();
     clearRoute();
+    $("#middleLine").css("display", "none");
     $("#fastfood_").css("display", "none");
-    $("#_pubs").css("display", "block");
+    $("#_pubs").css({
+      "display" : "block",
+      "height" : "70vh"
+    });
+
     var marker;
     for (let i = 0; i < pubs.length; i++) {
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
@@ -389,7 +415,12 @@
   function addFastFoods() {
     clearMarkers();
     clearRoute();
-    $("#fastfood_").css("display", "block");
+    $("#middleLine").css("display", "none");
+    $("#fastfood_").css({
+      "display" : "block",
+    "height" : "70vh"
+    });
+
     $("#_pubs").css("display", "none");
     var marker;
     for (let i = 0; i < fastfoods.length; i++) {
@@ -434,7 +465,6 @@
     userLocationMarker.bindPopup('My location');
   }
 </script>
-
 
 </body>
 
