@@ -120,11 +120,24 @@
           border-radius: 10px;
       }
 
-      img {
-          height: 50px;
-          width: 50px;
-      }
-
+    img {
+      height: 50px;
+      width: 50px;
+    }
+    .leaflet-popup-content-wrapper {
+      background-color: #ad4040;
+      font-size: 15px;
+      color: white;
+      text-align: center;
+    }
+    .leaflet-popup-tip {
+      background-color: #ad4040;
+    }
+    .directions-button {
+      background-color: #b75a5a;
+      color: white;
+      text-align: center;
+    }
       .text{
         color: #191d1f;
       }
@@ -157,9 +170,9 @@
             <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
                    class='form-control rounded' placeholder='Search' aria-label='Search'
                    aria-describedby='search-addon'/>
-            <span class='input-group-text border-0' id='search-addon'>
-                <button type='submit' th:for='search'><i class='fa fa-search'></i></button>
-              </span>
+<!--            <span class='input-group-text border-0' id='search-addon'>-->
+                <button class='input-group-text border-0' type="submit" th:for="search"><i class='fa fa-search'></i></button>
+<!--              </span>-->
           </form>
         </div>
         <div>
@@ -276,7 +289,9 @@
 
     for (let i = 0; i < fastfoods.length; i++) {
       marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
-      marker.bindPopup(fastfoods[i].name);
+      marker.bindPopup(fastfoods[i].name +
+              '<br /><label id="_distance">2km</label><br />' +
+              '<button class="btn directions-button">DIRECTIONS</button>');
     }
     if(currentUserLocation)
       displayCurrentLocation()
@@ -297,7 +312,9 @@
     var marker;
     for (let i = 0; i < pubs.length; i++) {
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
-      marker.bindPopup(fastfoods[i].name);
+      marker.bindPopup(fastfoods[i].name +
+              '<br /><label id="_distance">2km</label><br />' +
+              '<button class="btn directions-button">DIRECTIONS</button>');
     }
     if(currentUserLocation)
       displayCurrentLocation()
@@ -315,7 +332,9 @@
     var marker;
     for (let i = 0; i < fastfoods.length; i++) {
       marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
-      marker.bindPopup(fastfoods[i].name);
+      marker.bindPopup(fastfoods[i].name +
+              '<br /><label id="_distance">2km</label><br />' +
+              '<button class="btn directions-button">DIRECTIONS</button>');
     }
     if(currentUserLocation)
       displayCurrentLocation()
