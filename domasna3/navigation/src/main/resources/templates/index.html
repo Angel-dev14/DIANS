@@ -39,6 +39,7 @@
 
       .navbar {
           height: 50px;
+          z-index: 100;
       }
 
       .navbar {
@@ -50,13 +51,16 @@
           margin-right: 10px;
       }
 
-      /*LEV SIDE BAR*/
-      .my_class {
-          background-color: #cc4747;
-          height: 100vh;
-          padding: 15px;
-          max-width: 400px;
-      }
+      /*.left-panel {*/
+      /*    position: absolute;*/
+      /*    left: 0;*/
+      /*    top: 0;*/
+      /*    z-index: 13;*/
+      /*    background-color: #cc4747;*/
+      /*    height: 100%;*/
+      /*    padding: 15px;*/
+      /*    width: 400px;*/
+      /*}*/
 
       .side-bar {
           height: 100%;
@@ -65,10 +69,6 @@
 
       .red_inside {
           background-color: #ad4040;
-      }
-
-      .movedown {
-          margin-top: 20px;
       }
 
       .red3 {
@@ -95,7 +95,6 @@
       .scroll-div::-webkit-scrollbar-thumb {
           border-radius: 5px;
           background-color: rgb(192, 192, 192);
-          /*-webkit-box-shadow: inset 0 0 6px rgb(255,250,240);*/
       }
 
       #map {
@@ -109,7 +108,7 @@
           margin: 0;
       }
 
-      ul{
+      ul {
           list-style-type: none;
           padding: 0;
           text-align: center;
@@ -128,30 +127,96 @@
           border-radius: 10px;
       }
 
-    img {
-      height: 50px;
-      width: 50px;
-    }
-    .leaflet-popup-content-wrapper {
-      background-color: #ad4040;
-      font-size: 15px;
-      color: white;
-      text-align: center;
-    }
-    .leaflet-popup-tip {
-      background-color: #ad4040;
-    }
-    .directions-button {
-      background-color: #b75a5a;
-      color: white;
-      text-align: center;
-    }
-      .text{
-        color: #191d1f;
+      img {
+          height: 50px;
+          width: 50px;
       }
 
-      a{
-        font-weight: bolder;
+      .directions-button {
+          background-color: #b75a5a;
+          color: white;
+          text-align: center;
+      }
+
+      .text {
+          color: #191d1f;
+      }
+
+      a {
+          font-weight: bolder;
+      }
+
+      .leaflet-top {
+          position: absolute;
+          z-index: 1000;
+          pointer-events: none;
+          bottom: 0;
+          top: auto;
+          margin-bottom: 50px;
+      }
+
+      .toolbar {
+          z-index: 100;
+          position: absolute;
+          margin-top: 60px;
+          left: 60%;
+          width: 70%;
+          transform: translate(-50%,-50%);
+      }
+
+      .sidenav {
+          z-index: 3;
+          height: 100%;
+          width: 400px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          background-color: #b75a5a;
+          overflow-x: hidden;
+          transition: 0.5s;
+          padding-top: 60px;
+      }
+
+      .sidenav .closebtn {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          font-size: 80px;
+          margin-left: 50px;
+          width: 40px;
+          height: 40px;
+          display: inline-block;
+          cursor: pointer;
+      }
+      .closebtn{
+          font-size: 80px;
+      }
+
+      .nav-bar-toggle-button{
+          width: 70px;
+          height: 70px;
+          cursor:pointer;
+          z-index: 2;
+          position: absolute;
+          left: 50px;
+          margin-top: 20px;
+      }
+
+      @media screen and (max-width: 1650px) {
+          .toolbar{
+              width: 60%;
+              left: 60%;
+          }
+      }
+      @media screen and (max-width: 1450px) {
+          .toolbar{
+              width: 50%;
+          }
+      }
+      @media screen and (max-width: 1450px) {
+          .toolbar{
+            left: 70%;
+          }
       }
   </style>
 
@@ -163,15 +228,17 @@
       <div class='navbar-nav'>
         <a class='nav-item nav-link active' href='#' style='color: white' id='home'
            onclick='navbarText(id)'>Home <span class='sr-only'></span></a>
-        <a class='nav-item nav-link'href='#' style='color: #C0C0C0' id='project'
+        <a class='nav-item nav-link' href='#' style='color: #C0C0C0' id='project'
            onclick='navbarText(id)'>Project</a>
         <a class='nav-item nav-link' href='#' style='color: #C0C0C0' id='aboutus' onclick='navbarText(id)'>About
           Us</a>
       </div>
     </div>
   </nav>
-  <div class='row'>
-    <div class='col-3 my_class clear-paddings'>
+  <img src='images/hamburger.png' class='nav-bar-toggle-button' id='hamburger' onclick="openNav()" alt='hamburger button'/>
+  <div class='row m-0'>
+    <div class='col-3 clear-paddings sidenav' id="mySidenav">
+      <div class="closebtn">&times;</div>
       <div class='side-bar'>
         <div class='input-group rounded mt-4 search-bar'>
           <form th:method='get' th:action="@{'/search'}" style='display: flex; width: 100%'>
@@ -226,8 +293,7 @@
     </div>
     <div class='col-9 clear-paddings'>
       <div class='d-block position-absolute ' id='map'></div>
-      <div class='row rounded-3 text-center m-5 bg-light btn-group'
-           style='z-index: 100; position: absolute; width: 70%;'>
+      <div class='row rounded-3 text-center bg-light btn-group toolbar'>
         <div id='fastfood' class='col-4 p-0'>
           <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
             <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
@@ -277,6 +343,35 @@
 <script src='map.js'></script>
 
 <script th:inline='javascript'>
+
+  $("#mySidenav").on("click",function (){
+    $(this).css("width",0);
+    console.log('called')
+    // $(".toolbar").animate({
+    //   display: "none"
+    // },500,function (){
+    //   console.log('animation complete');
+    // })
+    $(".toolbar").css({
+      left: "50%",
+      transition: "1s"
+    });
+  })
+  $("#hamburger").on("click",function (){
+    $(".toolbar").css({
+      left: "60%",
+      transition: "1s"
+    });
+  })
+
+
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "400px";
+  }
+
+  // function closeNav() {
+  //   document.getElementById("mySidenav").style.width = "0";
+  // }
 
   var pubs = /*[[${pubObs}]]*/ "pubObs";
   var fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
@@ -418,7 +513,7 @@
     $("#middleLine").css("display", "none");
     $("#fastfood_").css({
       "display" : "block",
-    "height" : "70vh"
+      "height" : "70vh"
     });
 
     $("#_pubs").css("display", "none");
