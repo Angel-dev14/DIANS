@@ -288,6 +288,7 @@
   var route = null, userLocationMarker = null;
   var plostadLat = 41.99646, plostadLon = 21.43141;
 
+  //Funcijava nigde ne se povikuva - Hristijan
   function getRoute(place) {
 
     var target_lat = undefined, target_lon = undefined;
@@ -309,7 +310,8 @@
     }
 
     if(target_lat && target_lon) {
-      drawRoute(target_lat, target_lon);
+      //drawRoute(target_lat, target_lon);
+
     }
   }
 
@@ -350,7 +352,40 @@
       })
     });
     route.addTo(map);
+
+    //getDistance(route);
+
     $('#clearRoute').css('display', 'inline-block');
+  }
+  // Naoga tocna dolzina i vreme na rutata, maybe useful for future functionalities
+  // function getDistance(route) {
+  //   route.on('routesfound', function (e) {
+  //     var routes = e.routes;
+  //     var summary = routes[0].summary;
+  //     //var distance = summary.totalDistance / 1000;
+  //     //return distance.toFixed(2);
+  //     // alert distance and time in km and minutes
+  //     alert('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes')
+  //   });
+  // }
+
+  function getDistancePlace(lon , lat) {
+    var startLat, startLon;
+
+    if (currentUserLocation) {
+      startLat = currentUserLocation.latitude;
+      startLon = currentUserLocation.longitude;
+    } else {
+      startLat = plostadLat;
+      startLon = plostadLon;
+    }
+    
+    var markerFrom = L.circleMarker([startLat, startLon], {color: "#F00", radius: 10});
+    var markerTo = L.circleMarker([lon, lat], {color: "#4AFF00", radius: 10});
+    var from = markerFrom.getLatLng();
+    var to = markerTo.getLatLng();
+
+    return (from.distanceTo(to) / 1000);
   }
 
   function addPubsAndFastFoods() {
@@ -368,18 +403,35 @@
     });
 
     var marker;
+
+    var minpub = parseFloat(getDistancePlace(pubs[0].lat, pubs[0].lon));
+    var minpubindex = pubs[0];
     for (let i = 0; i < pubs.length; i++) {
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
+      var distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
+      var showdistance =  distance.toFixed(2);
+      if(parseFloat(distance) < minpub) {
+        minpub = distance;
+        minpubindex = pubs[i];
+      }
       marker.bindPopup(pubs[i].name +
-              '<br /><label id="_distance">2km</label><br />' +
+              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
               '<button class="btn directions-button" onclick="drawRoute('
               + pubs[i].lat + ', ' + pubs[i].lon +')">DIRECTIONS</button>');
     }
 
+    var minff = parseFloat(getDistancePlace(fastfoods[0].lat, fastfoods[0].lon));
+    var minffindex = fastfoods[0];
     for (let i = 0; i < fastfoods.length; i++) {
       marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
+      var distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
+      var showdistance =  distance.toFixed(2);
+      if (parseFloat(distance) < minff) {
+        minff = distance;
+        minffindex = fastfoods[i];
+      }
       marker.bindPopup(fastfoods[i].name +
-              '<br /><label id="_distance">2km</label><br />' +
+              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
               '<button class="btn directions-button" onclick="drawRoute('
               + fastfoods[i].lat + ', ' + fastfoods[i].lon +')">DIRECTIONS</button>');
     }
@@ -388,7 +440,6 @@
   }
 
   //Function called on load
-  addPubsAndFastFoods();
 
   function addPubs() {
     clearMarkers();
@@ -403,8 +454,10 @@
     var marker;
     for (let i = 0; i < pubs.length; i++) {
       marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
+      var distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
+      var showdistance =  distance.toFixed(2);
       marker.bindPopup(pubs[i].name +
-              '<br /><label id="_distance">2km</label><br />' +
+              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
               '<button class="btn directions-button" onclick="drawRoute('
               + pubs[i].lat + ', ' + pubs[i].lon +')">DIRECTIONS</button>');
     }
@@ -425,8 +478,10 @@
     var marker;
     for (let i = 0; i < fastfoods.length; i++) {
       marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
+      var distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
+      var showdistance =  distance.toFixed(2);
       marker.bindPopup(fastfoods[i].name +
-              '<br /><label id="_distance">2km</label><br />' +
+              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
               '<button class="btn directions-button" onclick="drawRoute('
               + fastfoods[i].lat + ', ' + fastfoods[i].lon +')">DIRECTIONS</button>');
     }
@@ -464,6 +519,9 @@
     userLocationMarker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
     userLocationMarker.bindPopup('My location');
   }
+
+  setTimeout(addPubsAndFastFoods,150);
+
 </script>
 
 </body>
