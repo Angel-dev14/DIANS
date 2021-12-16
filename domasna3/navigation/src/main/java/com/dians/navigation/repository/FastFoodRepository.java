@@ -16,4 +16,8 @@ public interface FastFoodRepository extends JpaRepository<FastFood, Long> {
     List<String> findAllFastFoodNamesFromPlaceName(String place);
 
     List<FastFood> findAllByNameContaining(String name);
+
+    void deleteByName(String name);
+
+    void deleteById(Long id);
 }

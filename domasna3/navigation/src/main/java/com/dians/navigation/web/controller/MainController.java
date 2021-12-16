@@ -1,4 +1,4 @@
-package com.dians.navigation.controller;
+package com.dians.navigation.web.controller;
 
 import com.dians.navigation.model.FastFood;
 import com.dians.navigation.model.Pub;

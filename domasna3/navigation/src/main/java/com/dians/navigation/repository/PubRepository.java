@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PubRepository extends JpaRepository<Pub, Long> {
@@ -17,4 +18,8 @@ public interface PubRepository extends JpaRepository<Pub, Long> {
     List<String> findAllPubNamesFromPlaceName(String place);
 
     List<Pub> findAllByNameContaining(String name);
+
+    void deleteByName(String name);
+
+    void deleteById(Long id);
 }
