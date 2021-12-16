@@ -54,6 +54,7 @@
       .side-bar {
           height: 100%;
           padding: 10px;
+        z-index: 3;
       }
 
       .red_inside {
@@ -158,6 +159,9 @@
       .closeBtn{
           height: 35px;
           background-color: #ad4040;
+          margin-left: 80%;
+          margin-bottom: -10px;
+
       }
 
       .sidenav {
@@ -169,8 +173,9 @@
           left: 0;
           background-color: #cc4747;
           overflow-x: hidden;
-          transition: 0.5s;
+          transition: 0.2s;
           margin-top: 50px;
+
       }
 
       .nav-bar-toggle-button{
@@ -183,6 +188,42 @@
           margin-top: 20px;
           background-color: #cc4747;
       }
+
+      .sidenav-toolbar {
+        width: 100%;
+        margin: 0 auto;
+        display: none;
+      }
+
+      #closestPub {
+        height: 35px;
+        background-color: #ad4040;
+        margin-top: 20px;
+        color: white;
+        margin-right: 40px;
+
+      }
+
+      #closestFastFood {
+        height: 35px;
+        background-color: #ad4040;
+        margin-top: 20px;
+        margin-left: 25px;
+        color: white;
+
+      }
+
+      #clearRoute{
+        display: none;
+        z-index: 2;
+        background-color: white;
+        bottom: 3%;
+        position:absolute;
+        right: 354px;
+        border: 3px solid darkslategray;
+        transition: all 0.2s ease;
+      }
+
 
       @media screen and (max-width: 1650px) {
           .toolbar{
@@ -200,12 +241,27 @@
               width: 45%;
           }
       }
+
+      @media screen and (max-width: 1100px) {
+        .toolbar{
+          left:65%;
+
+        }
+      }
+
       @media screen and (max-width: 1050px) {
           .toolbar{
-              width: 40%;
               left: 65%;
+
           }
       }
+
+      @media screen and (max-width: 1025px) {
+        .toolbar{
+          left: 70%;
+        }
+      }
+
       @media screen and (max-width: 950px) {
           .toolbar{
               width: 40%;
@@ -231,6 +287,22 @@
           .navbar-nav {
               flex-direction: row;
           }
+
+          .sidenav-toolbar {
+            display: flex;
+          }
+
+          .closeBtn{
+            margin-left: 85%;
+            margin-bottom: 15px;
+            color:white;
+          }
+
+          #clearRoute {
+            display: none;
+          }
+
+
       }
       .leaflet-popup-content-wrapper{
         background-color: #ad4040;
@@ -242,10 +314,7 @@
         background-color: #cc4747;
       }
 
-      .sidenav-toolbar {
-          width: 100%;
-          margin: 0 auto;
-      }
+
 
   </style>
 
@@ -270,6 +339,7 @@
   <div class='row m-0'>
     <div class='col-3 clear-paddings sidenav' id="mySidenav">
       <div class='side-bar'>
+        <div class="btn btn-block closeBtn"><b>CLOSE</b></div>
         <div class='row rounded-3 text-center bg-light btn-group side sidenav-toolbar'>
           <div class='col-4 p-0'>
             <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
@@ -292,7 +362,7 @@
             </button>
           </div>
         </div>
-        <div class="btn w-100 btn-block closeBtn"><b>CLOSE</b></div>
+
         <div class='input-group rounded mt-4 search-bar'>
           <form th:method='get' th:action="@{'/search'}" style='display: flex; width: 100%'>
             <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
@@ -340,10 +410,10 @@
       </div>
         <div style="display: flex; justify-content: space-between">
           <div>
-            <button type="button" class="btn" onclick="drawRoute(minffindex.lat, minffindex.lon)"><h6>Closest Fast Food</h6></button>
+            <button type="button" id="closestFastFood" class="btn btn-block" onclick="drawRoute(minffindex.lat, minffindex.lon)"><h6>CLOSEST FAST FOOD</h6></button>
           </div>
           <div>
-            <button type="button" class="btn" onclick="drawRoute(minpubindex.lat, minpubindex.lon)"><h6>Closest Pub</h6></button>
+            <button type="button" id="closestPub" class="btn btn-block closestBtn" onclick="drawRoute(minpubindex.lat, minpubindex.lon)"><h6>CLOSEST PUB</h6></button>
           </div>
         </div>
         <div th:unless='${(not #lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)) ||
@@ -376,12 +446,10 @@
           </button>
         </div>
       </div>
-      <div id='clearRoute' onclick='clearRoute()' class='row border rounded-circle text-center btn-group'
-           style='display: none; z-index: 101; bottom: 30px; position: absolute; width: 100px; right: 50px; bottom: 421px; background-color: #cc4747;'>
-        <div>
+      <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods();' class='row border rounded-2  btn-group'>
+        <div style="box-shadow: 0 1px 4px rgb(0 0 0 / 65%);">
           <button type='button' class='btn' style='width: 100%;'>
-            <i class="fa fa-times" aria-hidden="true"></i>
-            <h6>Clear Route</h6>
+            <h6 style="font-size: 24px; margin: 5px; font-weight: lighter;">CLEAR ROUTE</h6>
           </button>
         </div>
       </div>
@@ -430,6 +498,10 @@
       sideNav.style.width = "400px";
     }
   }
+
+
+
+
 
   var pubs = /*[[${pubObs}]]*/ "pubObs";
   var fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
@@ -675,6 +747,9 @@
     userLocationMarker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
     userLocationMarker.bindPopup('My location');
   }
+
+
+
 
   setTimeout(addPubsAndFastFoods,150);
 
