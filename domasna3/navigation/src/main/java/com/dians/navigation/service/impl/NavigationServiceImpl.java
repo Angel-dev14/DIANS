@@ -8,6 +8,8 @@ import com.dians.navigation.service.NavigationService;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -86,6 +88,39 @@ public class NavigationServiceImpl implements NavigationService {
     @Override
     public Optional<Pub> findPubById(Long id) {
         return pubRepository.findById(id);
+    }
+
+    @Override
+    public Page<FastFood> findAllFastFoodsInPage(Integer page) {
+        Integer pageNr = null;
+        Integer max = fastFoodRepository.findAll(PageRequest.of(1,3)).getTotalPages();
+        if(max == 0)
+            return null;
+        if(page >= max){
+            pageNr = max - 1;
+        } else if (page < 0) {
+            pageNr = 0;
+        } else {
+            pageNr = page;
+        }
+        return fastFoodRepository.findAll(PageRequest.of(pageNr,3));
+    }
+
+    @Override
+    public Page<Pub> findAllPubsInPage(Integer page) {
+        Integer pageNr = null;
+        Integer max = pubRepository.findAll(PageRequest.of(1,3)).getTotalPages();
+        if(max == 0)
+            return null;
+        if(page >= max){
+            pageNr = max - 1;
+        } else if (page < 0) {
+            pageNr = 0;
+        } else {
+            pageNr = page;
+        }
+
+        return pubRepository.findAll(PageRequest.of(pageNr, 3));
     }
 
 }

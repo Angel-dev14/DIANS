@@ -2,6 +2,7 @@ package com.dians.navigation.service;
 
 import com.dians.navigation.model.FastFood;
 import com.dians.navigation.model.Pub;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,4 +32,8 @@ public interface NavigationService {
     Optional<FastFood> findFastFoodById(Long id);
 
     Optional<Pub> findPubById(Long id);
+
+    Page<FastFood> findAllFastFoodsInPage(Integer page);
+
+    Page<Pub> findAllPubsInPage(Integer page);
 }
