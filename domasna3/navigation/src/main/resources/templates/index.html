@@ -51,17 +51,6 @@
           margin-right: 10px;
       }
 
-      /*.left-panel {*/
-      /*    position: absolute;*/
-      /*    left: 0;*/
-      /*    top: 0;*/
-      /*    z-index: 13;*/
-      /*    background-color: #cc4747;*/
-      /*    height: 100%;*/
-      /*    padding: 15px;*/
-      /*    width: 400px;*/
-      /*}*/
-
       .side-bar {
           height: 100%;
           padding: 10px;
@@ -125,6 +114,7 @@
           width: 80%;
           background-color: #b74e4e;
           border-radius: 10px;
+          cursor: pointer;
       }
 
       img {
@@ -164,6 +154,11 @@
           transform: translate(-50%,-50%);
       }
 
+      .closeBtn{
+          height: 35px;
+          background-color: #ad4040;
+      }
+
       .sidenav {
           z-index: 3;
           height: 100%;
@@ -174,32 +169,18 @@
           background-color: #b75a5a;
           overflow-x: hidden;
           transition: 0.5s;
-          padding-top: 60px;
-      }
-
-      .sidenav .closebtn {
-          position: absolute;
-          top: 0;
-          right: 25px;
-          font-size: 80px;
-          margin-left: 50px;
-          width: 40px;
-          height: 40px;
-          display: inline-block;
-          cursor: pointer;
-      }
-      .closebtn{
-          font-size: 80px;
+          margin-top: 50px;
       }
 
       .nav-bar-toggle-button{
-          width: 70px;
-          height: 70px;
+          border-radius: 10px;
+          padding: 10px;
           cursor:pointer;
           z-index: 2;
           position: absolute;
           left: 50px;
           margin-top: 20px;
+          background-color: #cc4747;
       }
 
       @media screen and (max-width: 1650px) {
@@ -213,11 +194,49 @@
               width: 50%;
           }
       }
-      @media screen and (max-width: 1450px) {
+      @media screen and (max-width: 1200px) {
           .toolbar{
-            left: 70%;
+              width: 45%;
           }
       }
+      @media screen and (max-width: 1050px) {
+          .toolbar{
+              width: 40%;
+              left: 65%;
+          }
+      }
+      @media screen and (max-width: 950px) {
+          .toolbar{
+              width: 40%;
+              left: 70%;
+              display: none;
+          }
+
+          .navbar{
+              height: 50px;
+              text-align: center;
+              display: flex;
+          }
+
+          .sidenav{
+              width: 100%;
+              margin-top: 50px;
+          }
+
+          .nav-bar-toggle-button {
+              left: 10px;
+          }
+
+          .navbar-nav {
+              flex-direction: row;
+          }
+      }
+
+      .sidenav-toolbar {
+          width: 100%;
+          margin: 0 auto;
+      }
+
   </style>
 
 </head>
@@ -235,11 +254,35 @@
       </div>
     </div>
   </nav>
-  <img src='images/hamburger.png' class='nav-bar-toggle-button' id='hamburger' onclick="openNav()" alt='hamburger button'/>
+  <div class='nav-bar-toggle-button'>
+    <img src='images/hamburger.png' id='hamburger' onclick="openNav()" alt='hamburger button'/>
+  </div>
   <div class='row m-0'>
     <div class='col-3 clear-paddings sidenav' id="mySidenav">
-      <div class="closebtn">&times;</div>
       <div class='side-bar'>
+        <div class='row rounded-3 text-center bg-light btn-group side sidenav-toolbar'>
+          <div class='col-4 p-0'>
+            <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
+              <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
+              <h6>Fast Food</h6>
+            </button>
+          </div>
+
+          <div class='col-4 m-0 p-0'>
+            <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
+              src='/images/pubicon.png' class='m-1 button_icon'>
+              <h6>Pubs</h6>
+            </button>
+          </div>
+          <div class='col-4 p-0'>
+            <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start' style='width: 100%;'>
+              <img
+                src='/images/ffandpubicon.png' class='m-1 button_icon'>
+              <h6>Fast Food & Pubs</h6>
+            </button>
+          </div>
+        </div>
+        <div class="btn w-100 btn-block closeBtn"><b>CLOSE</b></div>
         <div class='input-group rounded mt-4 search-bar'>
           <form th:method='get' th:action="@{'/search'}" style='display: flex; width: 100%'>
             <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
@@ -344,17 +387,13 @@
 
 <script th:inline='javascript'>
 
-  $("#mySidenav").on("click",function (){
-    $(this).css("width",0);
-    console.log('called')
-    // $(".toolbar").animate({
-    //   display: "none"
-    // },500,function (){
-    //   console.log('animation complete');
-    // })
+  console.warn = () => {};
+
+  $(".closeBtn").on("click",function (){
+    $('#mySidenav').css("width",0);
     $(".toolbar").css({
       left: "50%",
-      transition: "1s"
+      transition: "700"
     });
   })
   $("#hamburger").on("click",function (){
@@ -364,14 +403,15 @@
     });
   })
 
-
   function openNav() {
-    document.getElementById("mySidenav").style.width = "400px";
+    const sideNav = document.getElementById("mySidenav");
+    if(window.innerWidth < 950){
+      sideNav.style.width = "100%";
+    }
+    else{
+      sideNav.style.width = "400px";
+    }
   }
-
-  // function closeNav() {
-  //   document.getElementById("mySidenav").style.width = "0";
-  // }
 
   var pubs = /*[[${pubObs}]]*/ "pubObs";
   var fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
@@ -390,13 +430,13 @@
 
     for(var i = 0; i < pubs.length || i < fastfoods.length; i++) {
 
-      if (i < pubs.length && pubs[i].name == place) {
+      if (i < pubs.length && pubs[i].name === place) {
         target_lat = pubs[i].lat;
         target_lon = pubs[i].lon;
         break;
       }
 
-      if (i < fastfoods.length && fastfoods[i].name == place) {
+      if (i < fastfoods.length && fastfoods[i].name === place) {
         target_lat = fastfoods[i].lat;
         target_lon = fastfoods[i].lon;
         break;
@@ -405,8 +445,7 @@
     }
 
     if(target_lat && target_lon) {
-      //drawRoute(target_lat, target_lon);
-
+      drawRoute(target_lat, target_lon);
     }
   }
 
