@@ -5,7 +5,9 @@ import com.dians.navigation.model.Pub;
 import com.dians.navigation.repository.FastFoodRepository;
 import com.dians.navigation.repository.PubRepository;
 import com.dians.navigation.service.NavigationService;
+
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
