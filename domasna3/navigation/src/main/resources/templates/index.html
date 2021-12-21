@@ -55,10 +55,11 @@
             margin-right: 10px;
         }
 
-        .side-bar {
-            height: 100%;
-            padding: 10px;
-        }
+      .side-bar {
+          height: 100%;
+          padding: 10px;
+        z-index: 3;
+      }
 
         .red_inside {
             background-color: #ad4040;
@@ -155,23 +156,27 @@
             transform: translate(-50%, -50%);
         }
 
-        .closeBtn {
-            height: 35px;
-            background-color: #ad4040;
-        }
+      .closeBtn{
+          height: 35px;
+          background-color: #ad4040;
+          margin-left: 80%;
+          margin-bottom: -10px;
 
-        .sidenav {
-            z-index: 3;
-            height: 100%;
-            width: 400px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #cc4747;
-            overflow-x: hidden;
-            transition: 0.5s;
-            margin-top: 50px;
-        }
+      }
+
+      .sidenav {
+          z-index: 3;
+          height: 100%;
+          width: 400px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          background-color: #cc4747;
+          overflow-x: hidden;
+          transition: 0.2s;
+          margin-top: 50px;
+
+      }
 
         .nav-bar-toggle-button {
             border-radius: 10px;
@@ -184,38 +189,85 @@
             background-color: #cc4747;
         }
 
-        @media screen and (max-width: 1650px) {
-            .toolbar {
-                width: 60%;
-                left: 60%;
-            }
-        }
+      .sidenav-toolbar {
+        width: 100%;
+        margin: 0 auto;
+        display: none;
+      }
 
-        @media screen and (max-width: 1450px) {
-            .toolbar {
-                width: 50%;
-            }
-        }
+      #closestPub {
+        height: 35px;
+        background-color: #ad4040;
+        margin-top: 20px;
+        color: white;
+        margin-right: 40px;
 
-        @media screen and (max-width: 1200px) {
-            .toolbar {
-                width: 45%;
-            }
-        }
+      }
 
-        @media screen and (max-width: 1050px) {
-            .toolbar {
-                width: 40%;
-                left: 65%;
-            }
-        }
+      #closestFastFood {
+        height: 35px;
+        background-color: #ad4040;
+        margin-top: 20px;
+        margin-left: 25px;
+        color: white;
 
-        @media screen and (max-width: 950px) {
-            .toolbar {
-                width: 40%;
-                left: 70%;
-                display: none;
-            }
+      }
+
+      #clearRoute{
+        display: none;
+        z-index: 2;
+        background-color: white;
+        bottom: 3%;
+        position:absolute;
+        right: 354px;
+        border: 3px solid darkslategray;
+        transition: all 0.2s ease;
+      }
+
+
+      @media screen and (max-width: 1650px) {
+          .toolbar{
+              width: 60%;
+              left: 60%;
+          }
+      }
+      @media screen and (max-width: 1450px) {
+          .toolbar{
+              width: 50%;
+          }
+      }
+      @media screen and (max-width: 1200px) {
+          .toolbar{
+              width: 45%;
+          }
+      }
+
+      @media screen and (max-width: 1100px) {
+        .toolbar{
+          left:65%;
+
+        }
+      }
+
+      @media screen and (max-width: 1050px) {
+          .toolbar{
+              left: 65%;
+
+          }
+      }
+
+      @media screen and (max-width: 1025px) {
+        .toolbar{
+          left: 70%;
+        }
+      }
+
+      @media screen and (max-width: 950px) {
+          .toolbar{
+              width: 40%;
+              left: 70%;
+              display: none;
+          }
 
             .navbar {
                 height: 50px;
@@ -232,26 +284,37 @@
                 left: 10px;
             }
 
-            .navbar-nav {
-                flex-direction: row;
-            }
-        }
+          .navbar-nav {
+              flex-direction: row;
+          }
 
-        .leaflet-popup-content-wrapper {
-            background-color: #ad4040;
-            font-size: 15px;
-            text-align: center;
-            color: white;
-        }
+          .sidenav-toolbar {
+            display: flex;
+          }
 
-        .leaflet-popup-tip {
-            background-color: #cc4747;
-        }
+          .closeBtn{
+            margin-left: 85%;
+            margin-bottom: 15px;
+            color:white;
+          }
 
-        .sidenav-toolbar {
-            width: 100%;
-            margin: 0 auto;
-        }
+          #clearRoute {
+            display: none;
+          }
+
+
+      }
+      .leaflet-popup-content-wrapper{
+        background-color: #ad4040;
+        font-size: 15px;
+        text-align: center;
+        color: white;
+      }
+      .leaflet-popup-tip{
+        background-color: #cc4747;
+      }
+
+
 
     </style>
 
@@ -285,44 +348,40 @@
                         </button>
                     </div>
 
-                    <div class='col-4 m-0 p-0'>
-                        <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
-                                src='/images/pubicon.png' class='m-1 button_icon'>
-                            <h6>Pubs</h6>
-                        </button>
-                    </div>
-                    <div class='col-4 p-0'>
-                        <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start'
-                                style='width: 100%;'>
-                            <img
-                                    src='/images/ffandpubicon.png' class='m-1 button_icon'>
-                            <h6>Fast Food & Pubs</h6>
-                        </button>
-                    </div>
-                </div>
-                <div class="btn w-100 btn-block closeBtn"><b>CLOSE</b></div>
-                <div class='input-group rounded mt-4 search-bar'>
-                    <form th:method='get' th:action="@{'/search'}" style='display: flex; width: 100%'>
-                        <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
-                               class='form-control rounded' placeholder='Search' aria-label='Search'
-                               aria-describedby='search-addon'/>
-                        <!--            <span class='input-group-text border-0' id='search-addon'>-->
-                        <button class='input-group-text border-0' type="submit" th:for="search"><i
-                                class='fa fa-search'></i></button>
-                        <!--              </span>-->
-                    </form>
-                </div>
-                <div>
-                    <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
-                </div>
-                <div class='rounded-3 pt-1 red_inside' style=' margin-right: 1vh'
-                     th:if='${#lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)}'>
-                    <p style='font-size: 150%; text-align:center' class="text">No results found for "
-                        <th:block th:text='${searched}'>
-                        </th:block>
-                        ".
-                    </p>
-                </div>
+          <div class='col-4 m-0 p-0'>
+            <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
+              src='/images/pubicon.png' class='m-1 button_icon'>
+              <h6>Pubs</h6>
+            </button>
+          </div>
+          <div class='col-4 p-0'>
+            <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start' style='width: 100%;'>
+              <img
+                src='/images/ffandpubicon.png' class='m-1 button_icon'>
+              <h6>Fast Food & Pubs</h6>
+            </button>
+          </div>
+        </div>
+
+        <div class='input-group rounded mt-4 search-bar'>
+          <form th:method='get' th:action="@{'/search'}" style='display: flex; width: 100%'>
+            <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
+                   class='form-control rounded' placeholder='Search' aria-label='Search'
+                   aria-describedby='search-addon'/>
+<!--            <span class='input-group-text border-0' id='search-addon'>-->
+                <button class='input-group-text border-0' type="submit" th:for="search"><i class='fa fa-search'></i></button>
+<!--              </span>-->
+          </form>
+        </div>
+        <div>
+          <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
+        </div>
+        <div class='rounded-3 pt-1 red_inside' style=' margin-right: 1vh'
+             th:if='${#lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)}'  >
+          <p style='font-size: 150%; text-align:center' class="text">No results found for "<th:block th:text='${searched}'>
+          </th:block>".
+          </p>
+        </div>
 
                 <div id='fastfood_' class="scroll-div" style="height: 35vh" th:unless='${#lists.isEmpty(fastFoodObs)}'>
                     <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
@@ -340,69 +399,63 @@
                     <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
                 </div>
 
-                <div id='_pubs' th:unless='${#lists.isEmpty(pubObs)}' class="scroll-div" style="height: 35vh">
-                    <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
-                        <div class='red3 rounded-pill m-3 text-center p-1'>
-                            <h4 class="text">PUBS</h4>
-                        </div>
-                        <ul>
-                            <li class="text" th:each='pub : ${pubObs}' th:text='${pub.name}'
-                                th:attr="onclick=|getRoute('${pub.id}')|"></li>
-                        </ul>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between">
-                    <div>
-                        <button type="button" class="btn" onclick="drawRoute(minffindex.lat, minffindex.lon)"><h6>
-                            Closest Fast Food</h6></button>
-                    </div>
-                    <div>
-                        <button type="button" class="btn" onclick="drawRoute(minpubindex.lat, minpubindex.lon)"><h6>
-                            Closest Pub</h6></button>
-                    </div>
-                </div>
-                <div th:unless='${(not #lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)) ||
-                (#lists.isEmpty(fastFoodObs) && not #lists.isEmpty(pubObs))}'>
-                    <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
-                </div>
+        <div  id='_pubs' th:unless='${#lists.isEmpty(pubs)}' class="scroll-div" style="height: 35vh">
+          <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
+            <div class='red3 rounded-pill m-3 text-center p-1'>
+              <h4 class="text">PUBS</h4>
             </div>
+            <ul>
+              <li class="text" th:each='pub : ${pubs}' th:text='${pub}' th:attr="onclick=|getRoute('${pub}')|"></li>
+            </ul>
+          </div>
+      </div>
+        <div style="display: flex; justify-content: space-between">
+          <div>
+            <button type="button" id="closestFastFood" class="btn btn-block" onclick="drawRoute(minffindex.lat, minffindex.lon)"><h6>CLOSEST FAST FOOD</h6></button>
+          </div>
+          <div>
+            <button type="button" id="closestPub" class="btn btn-block closestBtn" onclick="drawRoute(minpubindex.lat, minpubindex.lon)"><h6>CLOSEST PUB</h6></button>
+          </div>
         </div>
-        <div class='col-9 clear-paddings'>
-            <div class='d-block position-absolute ' id='map'></div>
-            <div class='row rounded-3 text-center bg-light btn-group toolbar'>
-                <div id='fastfood' class='col-4 p-0'>
-                    <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
-                        <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
-                        <h6>Fast Food</h6>
-                    </button>
-                </div>
-
-                <div id='pubs' class='col-4 m-0 p-0'>
-                    <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
-                            src='/images/pubicon.png' class='m-1 button_icon'>
-                        <h6>Pubs</h6>
-                    </button>
-                </div>
-                <div id='ffpb' class='col-4 p-0'>
-                    <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start'
-                            style='width: 100%;'>
-                        <img
-                                src='/images/ffandpubicon.png' class='m-1 button_icon'>
-                        <h6>Fast Food & Pubs</h6>
-                    </button>
-                </div>
-            </div>
-            <div id='clearRoute' onclick='clearRoute()' class='row border rounded-circle text-center btn-group'
-                 style='display: none; z-index: 101; bottom: 30px; position: absolute; width: 100px; right: 50px; bottom: 421px; background-color: #cc4747;'>
-                <div>
-                    <button type='button' class='btn' style='width: 100%;'>
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                        <h6>Clear Route</h6>
-                    </button>
-                </div>
-            </div>
+        <div th:unless='${(not #lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)) ||
+                (#lists.isEmpty(fastFoods) && not #lists.isEmpty(pubs))}'>
+          <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
         </div>
+      </div>
     </div>
+    <div class='col-9 clear-paddings'>
+      <div class='d-block position-absolute ' id='map'></div>
+      <div class='row rounded-3 text-center bg-light btn-group toolbar'>
+        <div id='fastfood' class='col-4 p-0'>
+          <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
+            <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
+            <h6>Fast Food</h6>
+          </button>
+        </div>
+
+        <div id='pubs' class='col-4 m-0 p-0'>
+          <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
+            src='/images/pubicon.png' class='m-1 button_icon'>
+            <h6>Pubs</h6>
+          </button>
+        </div>
+        <div id='ffpb' class='col-4 p-0'>
+          <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start' style='width: 100%;'>
+            <img
+              src='/images/ffandpubicon.png' class='m-1 button_icon'>
+            <h6>Fast Food & Pubs</h6>
+          </button>
+        </div>
+      </div>
+      <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods();' class='row border rounded-2  btn-group'>
+        <div style="box-shadow: 0 1px 4px rgb(0 0 0 / 65%);">
+          <button type='button' class='btn' style='width: 100%;'>
+            <h6 style="font-size: 24px; margin: 5px; font-weight: lighter;">CLEAR ROUTE</h6>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--<script src='https://unpkg.com/leaflet@1.4.0/dist/leaflet.js'-->
@@ -447,20 +500,18 @@
         }
     }
 
-    var pubs = /*[[${pubObs}]]*/ "pubObs";
-    var fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
-    console.log("objekti")
-    console.log(pubs)
-    var layerGroup = L.layerGroup().addTo(map);
+  var pubs = /*[[${pubObs}]]*/ "pubObs";
+  var fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
+
+  var layerGroup = L.layerGroup().addTo(map);
 
     var currentUserLocation = undefined;
 
     var route = null, userLocationMarker = null;
     var plostadLat = 41.99646, plostadLon = 21.43141;
 
-    //Funcijava nigde ne se povikuva - Hristijan
-    function getRoute(place) {
-        console.log(place)
+  //Funcijava nigde ne se povikuva - Hristijan
+  function getRoute(place) {
 
         var target_lat = undefined, target_lon = undefined;
 
