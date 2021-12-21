@@ -2,7 +2,7 @@
 <html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:th='http://thymeleaf.org'>
 
 <head>
-    <title>DIANS_Prototype</title>
+    <title>Navigation Application</title>
     <link rel='stylesheet' href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css'
           integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
           crossorigin=''>
@@ -136,10 +136,6 @@
             color: #191d1f;
         }
 
-        a {
-            font-weight: bolder;
-        }
-
         .leaflet-top {
             position: absolute;
             z-index: 1000;
@@ -265,11 +261,11 @@
     <nav class='navbar navbar-expand-lg navbar-light'>
         <div class='collapse navbar-collapse d-flex justify-content-center' id='navbarNavAltMarkup'>
             <div class='navbar-nav'>
-                <a class='nav-item nav-link active' href='#' style='color: white' id='home'
+                <a class='nav-item nav-link active' href='home' style='color: #C0C0C0' id='home'
                    onclick='navbarText(id)'>Home <span class='sr-only'></span></a>
-                <a class='nav-item nav-link' href='#' style='color: #C0C0C0' id='project'
+                <a class='nav-item nav-link' href='/' style='color: white' id='project'
                    onclick='navbarText(id)'>Project</a>
-                <a class='nav-item nav-link' href='#' style='color: #C0C0C0' id='aboutus' onclick='navbarText(id)'>About
+                <a class='nav-item nav-link' href='aboutUs' style='color: #C0C0C0' id='aboutus' onclick='navbarText(id)'>About
                     Us</a>
             </div>
         </div>

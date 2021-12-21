@@ -6,6 +6,7 @@ import com.dians.navigation.service.NavigationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class MainController {
     }
 
     @GetMapping("")
-    public String getIndexPage(Model model){
+    public String getIndexPage(Model model) {
 
         List<Pub> pubObs = navigationService.findAllPubs();
         List<FastFood> fastFoodObs = navigationService.findAllFastFoods();
@@ -50,5 +51,15 @@ public class MainController {
         model.addAttribute("fastFoodObs", fastFoodObs);
 
         return "index";
+    }
+
+    @GetMapping("/aboutUs")
+    public String getAboutUsPage() {
+        return "aboutUs";
+    }
+
+    @GetMapping("/home")
+    public String getProjectPage() {
+        return "home";
     }
 }
