@@ -12,12 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FastFoodRepository extends JpaRepository<FastFood, Long> {
 
-    @Query("SELECT name FROM FastFood ")
-    List<String> findAllFastFoodNames();
-
-    @Query("SELECT name FROM FastFood  WHERE name LIKE %?1% ")
-    List<String> findAllFastFoodNamesFromPlaceName(String place);
-
     List<FastFood> findAllByNameContaining(String name);
 
     Page<FastFood> findAll(Pageable pageable);

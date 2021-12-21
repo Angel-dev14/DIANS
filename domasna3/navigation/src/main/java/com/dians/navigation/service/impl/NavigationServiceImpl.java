@@ -1,10 +1,11 @@
 package com.dians.navigation.service.impl;
 
-import com.dians.navigation.model.FastFood;
+import  com.dians.navigation.model.FastFood;
 import com.dians.navigation.model.Pub;
 import com.dians.navigation.repository.FastFoodRepository;
 import com.dians.navigation.repository.PubRepository;
 import com.dians.navigation.service.NavigationService;
+
 import java.util.List;
 import java.util.Optional;
 
