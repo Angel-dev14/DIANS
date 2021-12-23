@@ -2,321 +2,330 @@
 <html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:th='http://thymeleaf.org'>
 
 <head>
-  <title>DIANS_Prototype</title>
-  <link rel='stylesheet' href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css'
-        integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
-        crossorigin=''>
-  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
-        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
-  <link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet'>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>DIANS_Prototype</title>
+    <link rel='stylesheet' href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css'
+          integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
+          crossorigin=''>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+          integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+    <link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet'>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+            integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+            crossorigin=""></script>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
-  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
-  <style>
+    <style>
 
-      .clear-paddings {
-          padding: 0;
-      }
+        .clear-paddings {
+            padding: 0;
+        }
 
-      html {
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-      }
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
-      body {
-          padding: 0;
-          margin: 0;
-      }
+        body {
+            padding: 0;
+            margin: 0;
+        }
 
-      .navbar {
-          height: 50px;
-          z-index: 100;
-      }
+        .navbar {
+            height: 50px;
+            z-index: 100;
+        }
 
-      .navbar {
-          background-color: #191d1f;
-      }
+        .navbar {
+            background-color: #191d1f;
+        }
 
-      .nav-item {
-          margin-left: 10px;
-          margin-right: 10px;
-      }
+        .nav-item {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
 
-      .side-bar {
-          height: 100%;
-          padding: 10px;
-        z-index: 3;
-      }
+        .side-bar {
+            height: 100%;
+            padding: 10px;
+            z-index: 3;
+        }
 
-      .red_inside {
-          background-color: #ad4040;
-      }
+        .red_inside {
+            background-color: #ad4040;
+        }
 
-      .red3 {
-          background-color: #b75a5a;
-      }
+        .red3 {
+            background-color: #b75a5a;
+        }
 
-      .scroll-div {
-          overflow: hidden;
-          overflow-y: scroll;
-          height: 600px;
-      }
+        .scroll-div {
+            overflow: hidden;
+            overflow-y: scroll;
+            height: 600px;
+        }
 
-      .scroll-div::-webkit-scrollbar {
-          width: 11px;
-      }
+        .scroll-div::-webkit-scrollbar {
+            width: 11px;
+        }
 
-      .scroll-div::-webkit-scrollbar-track {
+        .scroll-div::-webkit-scrollbar-track {
 
-          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 
-          border-radius: 5px;
-      }
+            border-radius: 5px;
+        }
 
-      .scroll-div::-webkit-scrollbar-thumb {
-          border-radius: 5px;
-          background-color: rgb(192, 192, 192);
-      }
+        .scroll-div::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-color: rgb(192, 192, 192);
+        }
 
-      #map {
-          width: 100%;
-          height: 100%;
-          z-index: 1;
-      }
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
 
-      h4 {
-          font-weight: bold;
-          margin: 0;
-      }
+        h4 {
+            font-weight: bold;
+            margin: 0;
+        }
 
-      ul {
-          list-style-type: none;
-          padding: 0;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-      }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-      ul li {
-          font-size: 20px;
-          margin: 2px 0;
-          padding: 5px 0;
-          width: 80%;
-          background-color: #b74e4e;
-          border-radius: 10px;
-          cursor: pointer;
-      }
+        ul li {
+            font-size: 20px;
+            margin: 2px 0;
+            padding: 5px 0;
+            width: 80%;
+            background-color: #b74e4e;
+            border-radius: 10px;
+            cursor: pointer;
+        }
 
-      img {
-          height: 50px;
-          width: 50px;
-      }
+        img {
+            height: 50px;
+            width: 50px;
+        }
 
-      .directions-button {
-          background-color: #b75a5a;
-          color: white;
-          text-align: center;
-      }
+        .directions-button {
+            background-color: #b75a5a;
+            color: white;
+            text-align: center;
+        }
 
-      .text {
-          color: #191d1f;
-      }
+        .text {
+            color: #191d1f;
+        }
 
-      a {
-          font-weight: bolder;
-      }
+        a {
+            font-weight: bolder;
+        }
 
-      .leaflet-top {
-          position: absolute;
-          z-index: 1000;
-          pointer-events: none;
-          bottom: 0;
-          top: auto;
-          margin-bottom: 50px;
-      }
+        .leaflet-top {
+            position: absolute;
+            z-index: 1000;
+            pointer-events: none;
+            bottom: 0;
+            top: auto;
+            margin-bottom: 50px;
+        }
 
-      .toolbar {
-          background-color: #cc4747;
-          z-index: 100;
-          position: absolute;
-          margin-top: 60px;
-          left: 60%;
-          width: 70%;
-          transform: translate(-50%,-50%);
-      }
+        .toolbar {
+            background-color: #cc4747;
+            z-index: 100;
+            position: absolute;
+            margin-top: 60px;
+            left: 60%;
+            width: 70%;
+            transform: translate(-50%, -50%);
+        }
 
-      .closeBtn{
-          height: 35px;
-          background-color: #ad4040;
-          margin-left: 80%;
-          margin-bottom: -10px;
-
-      }
-
-      .sidenav {
-          z-index: 3;
-          height: 100%;
-          width: 400px;
-          position: fixed;
-          top: 0;
-          left: 0;
-          background-color: #cc4747;
-          overflow-x: hidden;
-          transition: 0.5s;
-          margin-top: 50px;
-
-      }
-
-      .nav-bar-toggle-button{
-          border-radius: 10px;
-          padding: 10px;
-          cursor:pointer;
-          z-index: 2;
-          position: absolute;
-          left: 50px;
-          margin-top: 20px;
-          background-color: #cc4747;
-      }
-
-      .sidenav-toolbar {
-        width: 100%;
-        margin: 0 auto;
-        display: none;
-      }
-
-        #closestPub {
+        .closeBtn {
             height: 35px;
             background-color: #ad4040;
+            margin-left: 80%;
+            margin-bottom: -10px;
+
+        }
+
+        .sidenav {
+            z-index: 3;
+            height: 100%;
+            width: 400px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #cc4747;
+            overflow-x: hidden;
+            transition: 0.5s;
+            margin-top: 50px;
+
+        }
+
+        .nav-bar-toggle-button {
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 2;
+            position: absolute;
+            left: 50px;
             margin-top: 20px;
+            background-color: #cc4747;
+        }
+
+        .sidenav-toolbar {
+            width: 100%;
+            margin: 0 auto;
+            display: none;
+        }
+
+        #closestPubButton {
+            height: 35px;
+            background-color: #ad4040;
+            margin-bottom: 10px;
             color: white;
             margin-right: 40px;
 
-      }
+        }
 
-      #closestFastFood {
-        height: 35px;
-        background-color: #ad4040;
-        margin-top: 20px;
-        margin-left: 25px;
-        color: white;
-
-      }
-
-      #clearRoute{
-        display: none;
-        z-index: 2;
-        background-color: white;
-        bottom: 3%;
-        position:absolute;
-        right: 354px;
-        border: 3px solid darkslategray;
-        transition: all 0.2s ease;
-      }
-
-
-      @media screen and (max-width: 1650px) {
-          .toolbar{
-              width: 60%;
-              left: 60%;
-          }
-      }
-      @media screen and (max-width: 1450px) {
-          .toolbar{
-              width: 50%;
-          }
-      }
-      @media screen and (max-width: 1200px) {
-          .toolbar{
-              width: 45%;
-          }
-      }
-
-      @media screen and (max-width: 1100px) {
-        .toolbar{
-          left:65%;
+        #closestFastFoodButton {
+            height: 35px;
+            background-color: #ad4040;
+            margin-bottom: 10px;
+            margin-left: 25px;
+            color: white;
 
         }
-      }
 
-      @media screen and (max-width: 1050px) {
-          .toolbar{
-              left: 65%;
-
-          }
-      }
-
-      @media screen and (max-width: 1025px) {
-        .toolbar{
-          left: 70%;
-        }
-      }
-
-      @media screen and (max-width: 950px) {
-          .toolbar{
-              width: 40%;
-              left: 70%;
-              display: none;
-          }
-
-          .navbar{
-              height: 50px;
-              text-align: center;
-              display: flex;
-          }
-
-          .sidenav{
-              width: 100%;
-              margin-top: 50px;
-          }
-
-          .nav-bar-toggle-button {
-              left: 10px;
-          }
-
-          .navbar-nav {
-              flex-direction: row;
-          }
-
-          .sidenav-toolbar {
-            display: flex;
-          }
-
-          .closeBtn{
-            margin-left: 85%;
-            margin-bottom: 15px;
-            color:white;
-          }
-
-          #clearRoute {
+        #clearRoute {
             display: none;
-          }
+            z-index: 2;
+            background-color: white;
+            bottom: 3%;
+            position: absolute;
+            right: 54px;
+            bottom: 180px;
+            border: 3px solid darkslategray;
+            transition: all 0.2s ease;
+        }
 
 
-      }
-      .leaflet-popup-content-wrapper{
-        background-color: #ad4040;
-        font-size: 15px;
-        text-align: center;
-        color: white;
-      }
-      .leaflet-popup-tip{
-        background-color: #cc4747;
-      }
+        @media screen and (max-width: 1650px) {
+            .toolbar {
+                width: 60%;
+                left: 60%;
+            }
+        }
 
+        @media screen and (max-width: 1450px) {
+            .toolbar {
+                width: 50%;
+            }
+        }
 
+        @media screen and (max-width: 1200px) {
+            .toolbar {
+                width: 45%;
+            }
+        }
 
-  </style>
+        @media screen and (max-width: 1100px) {
+            .toolbar {
+                left: 65%;
+
+            }
+        }
+
+        @media screen and (max-width: 1050px) {
+            .toolbar {
+                left: 65%;
+
+            }
+        }
+
+        @media screen and (max-width: 1025px) {
+            .toolbar {
+                left: 70%;
+            }
+        }
+
+        @media screen and (max-width: 950px) {
+            .toolbar {
+                width: 40%;
+                left: 70%;
+                display: none;
+            }
+
+            .navbar {
+                height: 50px;
+                text-align: center;
+                display: flex;
+            }
+
+            .sidenav {
+                width: 100%;
+                margin-top: 50px;
+            }
+
+            .nav-bar-toggle-button {
+                left: 10px;
+            }
+
+            .navbar-nav {
+                flex-direction: row;
+            }
+
+            .sidenav-toolbar {
+                display: flex;
+            }
+
+            .closeBtn {
+                margin-left: 85%;
+                margin-bottom: 15px;
+                color: white;
+            }
+
+        }
+
+        .leaflet-popup-content-wrapper {
+            background-color: #ad4040;
+            font-size: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .leaflet-popup-tip {
+            background-color: #cc4747;
+        }
+
+        .leaflet-routing-alt, .leaflet-routing-geocoders, .leaflet-routing-error {
+            max-height: 160px;
+        }
+        .leaflet-routing-container, .leaflet-bar, .leaflet-control{
+            max-height: 160px;
+        }
+
+    </style>
 
 </head>
 <body>
@@ -328,7 +337,8 @@
                    onclick='navbarText(id)'>Home <span class='sr-only'></span></a>
                 <a class='nav-item nav-link' href=' ' style='color: white' id='project'
                    onclick='navbarText(id)'>Project</a>
-                <a class='nav-item nav-link' href='aboutUs' style='color: #C0C0C0' id='aboutus' onclick='navbarText(id)'>About
+                <a class='nav-item nav-link' href='aboutUs' style='color: #C0C0C0' id='aboutus'
+                   onclick='navbarText(id)'>About
                     Us</a>
             </div>
         </div>
@@ -342,80 +352,89 @@
                 <div class="btn btn-block closeBtn"><b>CLOSE</b></div>
                 <div class='row rounded-3 text-center bg-light btn-group side sidenav-toolbar'>
                     <div class='col-4 p-0'>
-                        <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
+                        <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end'
+                                style='width: 100%;'>
                             <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
                             <h6>Fast Food</h6>
                         </button>
                     </div>
 
-          <div class='col-4 m-0 p-0'>
-            <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
-              src='/images/pubicon.png' class='m-1 button_icon'>
-              <h6>Pubs</h6>
-            </button>
-          </div>
-          <div class='col-4 p-0'>
-            <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start' style='width: 100%;'>
-              <img
-                src='/images/ffandpubicon.png' class='m-1 button_icon'>
-              <h6>Fast Food & Pubs</h6>
-            </button>
-          </div>
-        </div>
+                    <div class='col-4 m-0 p-0'>
+                        <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
+                                src='/images/pubicon.png' class='m-1 button_icon'>
+                            <h6>Pubs</h6>
+                        </button>
+                    </div>
+                    <div class='col-4 p-0'>
+                        <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start'
+                                style='width: 100%;'>
+                            <img
+                                    src='/images/ffandpubicon.png' class='m-1 button_icon'>
+                            <h6>Fast Food & Pubs</h6>
+                        </button>
+                    </div>
+                </div>
 
-        <div class='input-group rounded mt-4 search-bar'>
-          <form th:method='get' th:action="@{'/search'}" style='display: flex; width: 100%'>
-            <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
-                   class='form-control rounded' placeholder='Search' aria-label='Search'
-                   aria-describedby='search-addon'/>
-<!--            <span class='input-group-text border-0' id='search-addon'>-->
-                <button class='input-group-text border-0' type="submit" th:for="search"><i class='fa fa-search'></i></button>
-<!--              </span>-->
-          </form>
-        </div>
-        <div>
-          <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
-        </div>
-        <div class='rounded-3 pt-1 red_inside' style=' margin-right: 1vh'
-             th:if='${#lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)}'  >
-          <p style='font-size: 150%; text-align:center' class="text">No results found for "<th:block th:text='${searched}'>
-          </th:block>".
-          </p>
-        </div>
-
-       <div  id='fastfood_' class="scroll-div" style="height: 35vh" th:unless='${#lists.isEmpty(fastFoodObs)}'>
-         <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
-            <div class='red3 rounded-pill m-3 text-center p-1'>
-              <h4 class="text">FAST FOOD</h4>
-            </div>
-            <ul>
-              <li class="text" th:each='fastFood : ${fastFoodObs}' th:text='${fastFood.name}' th:attr="onclick=|getRoute('${fastFood.id}')|"></li>
-            </ul>
-          </div>
-      </div>
+                <div class='input-group rounded mt-4 search-bar'>
+                    <form th:method='get' th:action="@{'/search'}" style='display: flex; width: 100%'>
+                        <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
+                               class='form-control rounded' placeholder='Search' aria-label='Search'
+                               aria-describedby='search-addon'/>
+                        <!--            <span class='input-group-text border-0' id='search-addon'>-->
+                        <button class='input-group-text border-0' type="submit" th:for="search"><i
+                                class='fa fa-search'></i></button>
+                        <!--              </span>-->
+                    </form>
+                </div>
+                <div>
+                    <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
+                </div>
+                <div class='rounded-3 pt-1 red_inside' style=' margin-right: 1vh'
+                     th:if='${#lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)}'>
+                    <p style='font-size: 150%; text-align:center' class="text">No results found for "
+                        <th:block th:text='${searched}'>
+                        </th:block>
+                        ".
+                    </p>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                    <div>
+                        <button type="button" id="closestFastFoodButton" class="btn btn-block"
+                                onclick="drawRoute(minffindex.lat, minffindex.lon)"><h6>CLOSEST FAST FOOD</h6></button>
+                    </div>
+                    <div>
+                        <button type="button" id="closestPubButton" class="btn btn-block closestBtn"
+                                onclick="drawRoute(minpubindex.lat, minpubindex.lon)"><h6>CLOSEST PUB</h6></button>
+                    </div>
+                </div>
+                <div id='fastfood_' class="scroll-div" style="height: 35vh" th:unless='${#lists.isEmpty(fastFoodObs)}'>
+                    <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
+                        <div class='red3 rounded-pill m-3 text-center p-1'>
+                            <h4 class="text">FAST FOOD</h4>
+                        </div>
+                        <ul>
+                            <li class="text" th:each='fastFood : ${fastFoodObs}' th:text='${fastFood.name}'
+                                th:attr="onclick=|getRoute('${fastFood.id}')|"></li>
+                        </ul>
+                    </div>
+                </div>
 
                 <div id="middleLine" th:if='${not #lists.isEmpty(fastFoodObs) && not #lists.isEmpty(pubObs)}'>
                     <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
                 </div>
 
-                <div  id='_pubs' th:unless='${#lists.isEmpty(pubObs)}' class="scroll-div" style="height: 35vh">
+                <div id='_pubs' th:unless='${#lists.isEmpty(pubObs)}' class="scroll-div" style="height: 35vh">
                     <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
                         <div class='red3 rounded-pill m-3 text-center p-1'>
                             <h4 class="text">PUBS</h4>
                         </div>
                         <ul>
-                            <li class="text" th:each='pub : ${pubObs}' th:text='${pub.name}' th:attr="onclick=|getRoute('${pub.id}')|"></li>
+                            <li class="text" th:each='pub : ${pubObs}' th:text='${pub.name}'
+                                th:attr="onclick=|getRoute('${pub.id}')|"></li>
                         </ul>
                     </div>
                 </div>
-                <div style="display: flex; justify-content: space-between">
-                    <div>
-                        <button type="button" id="closestFastFood" class="btn btn-block" onclick="drawRoute(minffindex.lat, minffindex.lon)"><h6>CLOSEST FAST FOOD</h6></button>
-                    </div>
-                    <div>
-                        <button type="button" id="closestPub" class="btn btn-block closestBtn" onclick="drawRoute(minpubindex.lat, minpubindex.lon)"><h6>CLOSEST PUB</h6></button>
-                    </div>
-                </div>
+
                 <div th:unless='${(not #lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)) ||
                 (#lists.isEmpty(fastFoodObs) && not #lists.isEmpty(pubObs))}'>
                     <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
@@ -432,29 +451,30 @@
                     </button>
                 </div>
 
-        <div id='pubs' class='col-4 m-0 p-0'>
-          <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
-            src='/images/pubicon.png' class='m-1 button_icon'>
-            <h6>Pubs</h6>
-          </button>
+                <div id='pubs' class='col-4 m-0 p-0'>
+                    <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
+                            src='/images/pubicon.png' class='m-1 button_icon'>
+                        <h6>Pubs</h6>
+                    </button>
+                </div>
+                <div id='ffpb' class='col-4 p-0'>
+                    <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start'
+                            style='width: 100%;'>
+                        <img
+                                src='/images/ffandpubicon.png' class='m-1 button_icon'>
+                        <h6>Fast Food & Pubs</h6>
+                    </button>
+                </div>
+            </div>
+            <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods();' class='row border rounded-2  btn-group'>
+                <div style="box-shadow: 0 1px 4px rgb(0 0 0 / 65%);">
+                    <button type='button' class='btn' style='width: 100%;'>
+                        <h6 style="font-size: 24px; margin: 5px; font-weight: lighter;">CLEAR ROUTE</h6>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div id='ffpb' class='col-4 p-0'>
-          <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start' style='width: 100%;'>
-            <img
-              src='/images/ffandpubicon.png' class='m-1 button_icon'>
-            <h6>Fast Food & Pubs</h6>
-          </button>
-        </div>
-      </div>
-      <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods();' class='row border rounded-2  btn-group'>
-        <div style="box-shadow: 0 1px 4px rgb(0 0 0 / 65%);">
-          <button type='button' class='btn' style='width: 100%;'>
-            <h6 style="font-size: 24px; margin: 5px; font-weight: lighter;">CLEAR ROUTE</h6>
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <!--<script src='https://unpkg.com/leaflet@1.4.0/dist/leaflet.js'-->
@@ -473,60 +493,70 @@
 
 <script th:inline='javascript'>
 
-  navigator.geolocation.getCurrentPosition(getUserLocation);
+    navigator.geolocation.getCurrentPosition(getUserLocation);
 
-  console.warn = () => {};
-
-  $(".closeBtn").on("click",function (){
-    $('#mySidenav').css("width",0);
-    $(".toolbar").css({
-      left: "50%",
-      transition: "700"
-    });
-  })
-  $("#hamburger").on("click",function (){
-    $(".toolbar").css({
-      left: "60%",
-      transition: "1s"
-    });
-  })
-
-  function openNav() {
-    const sideNav = document.getElementById("mySidenav");
-    if(window.innerWidth < 950){
-      sideNav.style.width = "100%";
+    window.onload = function () {
+        navigator.geolocation.getCurrentPosition(getUserLocation);
     }
-    else{
-      sideNav.style.width = "400px";
+
+    function getUserLocation(position) {
+        currentUserLocation = position.coords;
+        displayCurrentLocation()
     }
-  }
+
+    function displayCurrentLocation() {
+        userLocationMarker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
+        userLocationMarker.bindPopup('My location');
+    }
+
+    console.warn = () => {
+    };
+
+    $(".closeBtn").on("click", function () {
+        $('#mySidenav').css("width", 0);
+        $(".toolbar").css({
+            left: "50%",
+            transition: "700"
+        });
+    })
+    $("#hamburger").on("click", function () {
+        $(".toolbar").css({
+            left: "60%",
+            transition: "1s"
+        });
+    })
+
+    function openNav() {
+        const sideNav = document.getElementById("mySidenav");
+        if (window.innerWidth < 950) {
+            sideNav.style.width = "100%";
+        } else {
+            sideNav.style.width = "400px";
+        }
+    }
 
 
+    var pubs = /*[[${pubObs}]]*/ "pubObs";
+    var fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
 
+    var layerGroup = L.layerGroup().addTo(map);
 
+    var currentUserLocation = undefined;
 
-  var pubs = /*[[${pubObs}]]*/ "pubObs";
-  var fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
+    var route = null, userLocationMarker = null;
+    var plostadLat = 41.99646, plostadLon = 21.43141;
 
-  var layerGroup = L.layerGroup().addTo(map);
+    function getRoute(place) {
 
-  var currentUserLocation = undefined;
+        var target_lat = undefined, target_lon = undefined;
 
-  var route = null, userLocationMarker = null;
-  var plostadLat = 41.99646, plostadLon = 21.43141;
+        for (var i = 0; i < pubs.length || i < fastfoods.length; i++) {
 
-  //Funcijava nigde ne se povikuva - Hristijan
-  function getRoute(place) {
-
-    var target_lat = undefined, target_lon = undefined;
-
-    for(var i = 0; i < pubs.length || i < fastfoods.length; i++) {
-
-      if (i < pubs.length && pubs[i].id == place) {
-        target_lat = pubs[i].lat;
-        target_lon = pubs[i].lon;
-        break;
-      }
+            if (i < pubs.length && pubs[i].id == place) {
+                target_lat = pubs[i].lat;
+                target_lon = pubs[i].lon;
+                break;
+            }
 
             if (i < fastfoods.length && fastfoods[i].id == place) {
                 target_lat = fastfoods[i].lat;
@@ -534,220 +564,222 @@
                 break;
             }
 
-    }
-
-    if(target_lat && target_lon) {
-      drawRoute(target_lat, target_lon);
-    }
-  }
-
-  function drawRoute(target_lat, target_lon) {
-    clearUserMarker();
-    clearMarkers();
-    clearRoute();
-
-    var startLat, startLon;
-
-    if (currentUserLocation) {
-      startLat = currentUserLocation.latitude;
-      startLon = currentUserLocation.longitude;
-    } else {
-      startLat = plostadLat;
-      startLon = plostadLon;
-    }
-
-    route = L.Routing.control({
-      waypoints: [
-        L.latLng(startLat, startLon),
-        L.latLng(target_lat, target_lon)
-      ],
-      createMarker: function(i, wp, nWps) {
-        if (i === 0) {
-          return L.marker(wp.latLng, {
-            icon: userIcon
-          });
-        } else if (i === nWps - 1) {
-          return L.marker(wp.latLng, {
-            icon: redIcon
-          });
         }
-      },
-      router: new L.Routing.osrmv1({
-        language: 'en',
-        profile: 'car'
-      })
-    });
-    route.addTo(map);
 
-    //getDistance(route);
-
-    $('#clearRoute').css('display', 'inline-block');
-  }
-  // Naoga tocna dolzina i vreme na rutata, maybe useful for future functionalities
-  // function getDistance(route) {
-  //   route.on('routesfound', function (e) {
-  //     var routes = e.routes;
-  //     var summary = routes[0].summary;
-  //     //var distance = summary.totalDistance / 1000;
-  //     //return distance.toFixed(2);
-  //     // alert distance and time in km and minutes
-  //     alert('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes')
-  //   });
-  // }
-
-  function getDistancePlace(lon , lat) {
-    var startLat, startLon;
-
-    if (currentUserLocation) {
-      startLat = currentUserLocation.latitude;
-      startLon = currentUserLocation.longitude;
-    } else {
-      startLat = plostadLat;
-      startLon = plostadLon;
-    }
-    
-    var markerFrom = L.circleMarker([startLat, startLon], {color: "#F00", radius: 10});
-    var markerTo = L.circleMarker([lon, lat], {color: "#4AFF00", radius: 10});
-    var from = markerFrom.getLatLng();
-    var to = markerTo.getLatLng();
-
-    return (from.distanceTo(to) / 1000);
-  }
-
-  var minpub = Number.MAX_SAFE_INTEGER;
-  var minpubindex = pubs[0];
-
-  var minff = Number.MAX_SAFE_INTEGER;
-  var minffindex = fastfoods[0];
-
-  function addPubsAndFastFoods() {
-    clearMarkers();
-    clearRoute();
-    $("#middleLine").css("display", "block");
-    $("#fastfood_").css({
-      "display": "block",
-      "height": "35vh"
-    });
-
-    $("#_pubs").css({
-      "display": "block",
-      "height": "35vh"
-    });
-
-    var marker;
-
-    for (let i = 0; i < pubs.length; i++) {
-      marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
-      var distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
-      var showdistance =  distance.toFixed(2);
-      if(parseFloat(distance) < minpub) {
-        minpub = distance;
-        minpubindex = pubs[i];
-      }
-      marker.bindPopup(pubs[i].name +
-              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
-              '<button class="btn directions-button" onclick="drawRoute('
-              + pubs[i].lat + ', ' + pubs[i].lon +')">DIRECTIONS</button>');
+        if (target_lat && target_lon) {
+            drawRoute(target_lat, target_lon);
+        }
     }
 
-    for (let i = 0; i < fastfoods.length; i++) {
-      marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
-      var distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
-      var showdistance =  distance.toFixed(2);
-      if (distance < minff) {
-        minff = distance;
-        minffindex = fastfoods[i];
-      }
-      marker.bindPopup(fastfoods[i].name +
-              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
-              '<button class="btn directions-button" onclick="drawRoute('
-              + fastfoods[i].lat + ', ' + fastfoods[i].lon +')">DIRECTIONS</button>');
-    }
-    if(currentUserLocation)
-      displayCurrentLocation()
-  }
+    function drawRoute(target_lat, target_lon) {
+        clearUserMarker();
+        clearMarkers();
+        clearRoute();
 
+        var startLat, startLon;
 
-  //Function called on load
+        if (currentUserLocation) {
+            startLat = currentUserLocation.latitude;
+            startLon = currentUserLocation.longitude;
+        } else {
+            startLat = plostadLat;
+            startLon = plostadLon;
+        }
 
-  function addPubs() {
-    clearMarkers();
-    clearRoute();
-    $("#middleLine").css("display", "none");
-    $("#fastfood_").css("display", "none");
-    $("#_pubs").css({
-      "display" : "block",
-      "height" : "70vh"
-    });
+        route = L.Routing.control({
+            waypoints: [
+                L.latLng(startLat, startLon),
+                L.latLng(target_lat, target_lon)
+            ],
+            createMarker: function (i, wp, nWps) {
+                if (i === 0) {
+                    return L.marker(wp.latLng, {
+                        icon: userIcon
+                    });
+                } else if (i === nWps - 1) {
+                    return L.marker(wp.latLng, {
+                        icon: redIcon
+                    });
+                }
+            },
+            router: new L.Routing.osrmv1({
+                language: 'en',
+                profile: 'car'
+            })
+        });
+        route.addTo(map);
 
-    var marker;
-    for (let i = 0; i < pubs.length; i++) {
-      marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
-      var distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
-      var showdistance =  distance.toFixed(2);
-      marker.bindPopup(pubs[i].name +
-              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
-              '<button class="btn directions-button" onclick="drawRoute('
-              + pubs[i].lat + ', ' + pubs[i].lon +')">DIRECTIONS</button>');
-    }
-    if(currentUserLocation)
-      displayCurrentLocation()
-  }
+        //getDistance(route);
 
-  function addFastFoods() {
-    clearMarkers();
-    clearRoute();
-    $("#middleLine").css("display", "none");
-    $("#fastfood_").css({
-      "display" : "block",
-      "height" : "70vh"
-    });
-
-    $("#_pubs").css("display", "none");
-    var marker;
-    for (let i = 0; i < fastfoods.length; i++) {
-      marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
-      var distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
-      var showdistance =  distance.toFixed(2);
-      marker.bindPopup(fastfoods[i].name +
-              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
-              '<button class="btn directions-button" onclick="drawRoute('
-              + fastfoods[i].lat + ', ' + fastfoods[i].lon +')">DIRECTIONS</button>');
-    }
-    if(currentUserLocation)
-      displayCurrentLocation()
-  }
-
-  function clearMarkers() {
-    layerGroup.clearLayers();
-  }
-
-  function clearRoute() {
-    if(route) {
-      map.removeControl(route);
+        $('#clearRoute').css('display', 'inline-block');
     }
 
-    $('#clearRoute').css('display', 'none');
-    //addPubsAndFastFoods();
-  }
+    // Naoga tocna dolzina i vreme na rutata, maybe useful for future functionalities
+    // function getDistance(route) {
+    //   route.on('routesfound', function (e) {
+    //     var routes = e.routes;
+    //     var summary = routes[0].summary;
+    //     //var distance = summary.totalDistance / 1000;
+    //     //return distance.toFixed(2);
+    //     // alert distance and time in km and minutes
+    //     alert('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes')
+    //   });
+    // }
 
-  function clearUserMarker() {
-    if (userLocationMarker)
-      map.removeLayer(userLocationMarker);
-  }
+    function getDistancePlace(lon, lat) {
+        // var startLat = currentUserLocation.latitude;
+        // var startLon = currentUserLocation.longitude;
 
-  function getUserLocation(position){
-    currentUserLocation = position.coords;
-    displayCurrentLocation()
-  }
+        if (currentUserLocation) {
+            startLat = currentUserLocation.latitude;
+            startLon = currentUserLocation.longitude;
+        } else {
+            startLat = plostadLat;
+            startLon = plostadLon;
+        }
 
-  function displayCurrentLocation(){
-    userLocationMarker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
-    userLocationMarker.bindPopup('My location');
-  }
+        var markerFrom = L.circleMarker([startLat, startLon], {color: "#F00", radius: 10});
+        var markerTo = L.circleMarker([lon, lat], {color: "#4AFF00", radius: 10});
+        var from = markerFrom.getLatLng();
+        var to = markerTo.getLatLng();
+
+        return (from.distanceTo(to) / 1000);
+    }
+
+    var minpub = Number.MAX_SAFE_INTEGER;
+    var minpubindex = pubs[0];
+
+    var minff = Number.MAX_SAFE_INTEGER;
+    var minffindex = fastfoods[0];
+
+    function addPubsAndFastFoods() {
+        clearMarkers();
+        clearRoute();
+        $("#middleLine").css("display", "block");
+        $("#fastfood_").css({
+            "display": "block",
+            "height": "35vh"
+        });
+
+        $("#_pubs").css({
+            "display": "block",
+            "height": "35vh"
+        });
+
+        var marker;
+
+        for (let i = 0; i < pubs.length; i++) {
+            marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
+            var distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
+            var showdistance = distance.toFixed(2);
+            if (parseFloat(distance) < minpub) {
+                minpub = distance;
+                minpubindex = pubs[i];
+            }
+            marker.bindPopup(pubs[i].name +
+                '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
+                '<button class="btn directions-button" onclick="drawRoute('
+                + pubs[i].lat + ', ' + pubs[i].lon + ')">DIRECTIONS</button>');
+        }
+
+        for (let i = 0; i < fastfoods.length; i++) {
+            marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
+            var distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
+            var showdistance = distance.toFixed(2);
+            if (distance < minff) {
+                minff = distance;
+                minffindex = fastfoods[i];
+            }
+            marker.bindPopup(fastfoods[i].name +
+                '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
+                '<button class="btn directions-button" onclick="drawRoute('
+                + fastfoods[i].lat + ', ' + fastfoods[i].lon + ')">DIRECTIONS</button>');
+        }
+        if (currentUserLocation)
+            displayCurrentLocation()
+    }
 
 
-  setTimeout(addPubsAndFastFoods,150);
+    //Function called on load
+
+    function addPubs() {
+        clearMarkers();
+        clearRoute();
+        $("#middleLine").css("display", "none");
+        $("#fastfood_").css("display", "none");
+        $("#_pubs").css({
+            "display": "block",
+            "height": "70vh"
+        });
+
+        var marker;
+        for (let i = 0; i < pubs.length; i++) {
+            marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
+            var distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
+            var showdistance = distance.toFixed(2);
+            marker.bindPopup(pubs[i].name +
+                '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
+                '<button class="btn directions-button" onclick="drawRoute('
+                + pubs[i].lat + ', ' + pubs[i].lon + ')">DIRECTIONS</button>');
+        }
+        if (currentUserLocation)
+            displayCurrentLocation()
+    }
+
+    function addFastFoods() {
+        clearMarkers();
+        clearRoute();
+        $("#middleLine").css("display", "none");
+        $("#fastfood_").css({
+            "display": "block",
+            "height": "70vh"
+        });
+
+        $("#_pubs").css("display", "none");
+        var marker;
+        for (let i = 0; i < fastfoods.length; i++) {
+            marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
+            var distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
+            var showdistance = distance.toFixed(2);
+            marker.bindPopup(fastfoods[i].name +
+                '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
+                '<button class="btn directions-button" onclick="drawRoute('
+                + fastfoods[i].lat + ', ' + fastfoods[i].lon + ')">DIRECTIONS</button>');
+        }
+        if (currentUserLocation)
+            displayCurrentLocation()
+    }
+
+    function clearMarkers() {
+        layerGroup.clearLayers();
+    }
+
+    function clearRoute() {
+        if (route) {
+            map.removeControl(route);
+        }
+
+        $('#clearRoute').css('display', 'none');
+        //addPubsAndFastFoods();
+    }
+
+    function clearUserMarker() {
+        if (userLocationMarker)
+            map.removeLayer(userLocationMarker);
+    }
+
+    function getUserLocation(position) {
+        currentUserLocation = position.coords;
+        displayCurrentLocation()
+    }
+
+    function displayCurrentLocation() {
+        userLocationMarker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
+        userLocationMarker.bindPopup('My location');
+    }
+
+
+    setTimeout(addPubsAndFastFoods, 150);
 
 </script>
 
