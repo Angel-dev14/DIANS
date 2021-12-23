@@ -321,32 +321,32 @@
 </head>
 <body>
 <div class='container-fluid clear-paddings'>
-    <nav class='navbar navbar-expand navbar-light'>
-        <div class='collapse navbar-collapse d-flex justify-content-center' id='navbarNavAltMarkup'>
-            <div class='navbar-nav'>
-                <a class='nav-item nav-link active' href='home' style='color: #C0C0C0' id='home'
-                   onclick='navbarText(id)'>Home <span class='sr-only'></span></a>
-                <a class='nav-item nav-link' href=' ' style='color: white' id='project'
-                   onclick='navbarText(id)'>Project</a>
-                <a class='nav-item nav-link' href='aboutUs' style='color: #C0C0C0' id='aboutus' onclick='navbarText(id)'>About
-                    Us</a>
-            </div>
-        </div>
-    </nav>
-    <div class='nav-bar-toggle-button'>
-        <img src='images/hamburger.png' id='hamburger' onclick="openNav()" alt='hamburger button'/>
+  <nav class='navbar navbar-expand-lg navbar-light'>
+    <div class='collapse navbar-collapse d-flex justify-content-center' id='navbarNavAltMarkup'>
+      <div class='navbar-nav'>
+        <a class='nav-item nav-link active' href='#' style='color: white' id='home'
+           onclick='navbarText(id)'>Home <span class='sr-only'></span></a>
+        <a class='nav-item nav-link' href='#' style='color: #C0C0C0' id='project'
+           onclick='navbarText(id)'>Project</a>
+        <a class='nav-item nav-link' href='#' style='color: #C0C0C0' id='aboutus' onclick='navbarText(id)'>About
+          Us</a>
+      </div>
     </div>
-    <div class='row m-0'>
-        <div class='col-3 clear-paddings sidenav' id="mySidenav">
-            <div class='side-bar'>
-                <div class="btn btn-block closeBtn"><b>CLOSE</b></div>
-                <div class='row rounded-3 text-center bg-light btn-group side sidenav-toolbar'>
-                    <div class='col-4 p-0'>
-                        <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
-                            <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
-                            <h6>Fast Food</h6>
-                        </button>
-                    </div>
+  </nav>
+  <div class='nav-bar-toggle-button'>
+    <img src='images/hamburger.png' id='hamburger' onclick="openNav()" alt='hamburger button'/>
+  </div>
+  <div class='row m-0'>
+    <div class='col-3 clear-paddings sidenav' id="mySidenav">
+      <div class='side-bar'>
+        <div class="btn btn-block closeBtn"><b>CLOSE</b></div>
+        <div class='row rounded-3 text-center bg-light btn-group side sidenav-toolbar'>
+          <div class='col-4 p-0'>
+            <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
+              <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
+              <h6>Fast Food</h6>
+            </button>
+          </div>
 
           <div class='col-4 m-0 p-0'>
             <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
@@ -410,10 +410,10 @@
                 </div>
                 <div style="display: flex; justify-content: space-between">
                     <div>
-                        <button type="button" id="closestFastFood" class="btn btn-block" onclick="drawRoute(minffindex.lat, minffindex.lon)"><h6>CLOSEST FAST FOOD</h6></button>
+                        <button type="button" id="closestFastFood" class="btn btn-block" onclick="drawRoute(minffindex.lat, minffindex.lon,minffindex.name)"><h6>CLOSEST FAST FOOD</h6></button>
                     </div>
                     <div>
-                        <button type="button" id="closestPub" class="btn btn-block closestBtn" onclick="drawRoute(minpubindex.lat, minpubindex.lon)"><h6>CLOSEST PUB</h6></button>
+                        <button type="button" id="closestPub" class="btn btn-block closestBtn" onclick="drawRoute(minpubindex.lat, minpubindex.lon,minpubindex.name)"><h6>CLOSEST PUB</h6></button>
                     </div>
                 </div>
                 <div th:unless='${(not #lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)) ||
@@ -556,6 +556,19 @@
       startLon = plostadLon;
     }
 
+    var target_name;
+    for(let i=0;i<fastfoods.length;i++){
+        if(target_lat ==  fastfoods[i].lat && target_lon == fastfoods[i].lon){
+            target_name = fastfoods[i].name;
+        }
+    }
+      for(let i=0;i<pubs.length;i++){
+          if(target_lat ==  pubs[i].lat && target_lon == pubs[i].lon){
+              target_name = pubs[i].name;
+          }
+      }
+
+
     route = L.Routing.control({
       waypoints: [
         L.latLng(startLat, startLon),
@@ -565,11 +578,11 @@
         if (i === 0) {
           return L.marker(wp.latLng, {
             icon: userIcon
-          });
+          }).bindPopup('My location');
         } else if (i === nWps - 1) {
           return L.marker(wp.latLng, {
             icon: redIcon
-          });
+          }).bindPopup(target_name);
         }
       },
       router: new L.Routing.osrmv1({
@@ -578,7 +591,6 @@
       })
     });
     route.addTo(map);
-
     //getDistance(route);
 
     $('#clearRoute').css('display', 'inline-block');
@@ -647,7 +659,7 @@
       marker.bindPopup(pubs[i].name +
               '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
               '<button class="btn directions-button" onclick="drawRoute('
-              + pubs[i].lat + ', ' + pubs[i].lon +')">DIRECTIONS</button>');
+              + pubs[i].lat + ', ' + pubs[i].lon + ')">DIRECTIONS</button>');
     }
 
     for (let i = 0; i < fastfoods.length; i++) {
@@ -661,7 +673,7 @@
       marker.bindPopup(fastfoods[i].name +
               '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
               '<button class="btn directions-button" onclick="drawRoute('
-              + fastfoods[i].lat + ', ' + fastfoods[i].lon +')">DIRECTIONS</button>');
+              + fastfoods[i].lat + ', ' + fastfoods[i].lon + ');">DIRECTIONS</button>');
     }
     if(currentUserLocation)
       displayCurrentLocation()
@@ -712,7 +724,7 @@
       marker.bindPopup(fastfoods[i].name +
               '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
               '<button class="btn directions-button" onclick="drawRoute('
-              + fastfoods[i].lat + ', ' + fastfoods[i].lon +')">DIRECTIONS</button>');
+              + fastfoods[i].lat + ', ' + fastfoods[i].lon + ')">DIRECTIONS</button>');
     }
     if(currentUserLocation)
       displayCurrentLocation()
@@ -736,6 +748,7 @@
       map.removeLayer(userLocationMarker);
   }
 
+
   function getUserLocation(position){
     currentUserLocation = position.coords;
     displayCurrentLocation()
@@ -745,6 +758,8 @@
     userLocationMarker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
     userLocationMarker.bindPopup('My location');
   }
+
+
 
 
   setTimeout(addPubsAndFastFoods,150);
