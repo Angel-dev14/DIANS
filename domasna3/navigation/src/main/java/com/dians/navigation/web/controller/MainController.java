@@ -58,8 +58,8 @@ public class MainController {
         return "aboutUs";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/project")
     public String getProjectPage() {
-        return "home";
+        return "project";
     }
 }
