@@ -307,6 +307,23 @@
             }
 
         }
+        li {
+            border: 1px solid transparent;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+        li:hover {
+            border: 1px solid white;
+            color: white;
+        }
+        .selectedLi {
+            border: 1px solid white;
+            color: white;
+        }
+        .notselectedLi {
+            border: 1px solid transparent;
+            color: black;
+        }
 
         .leaflet-popup-content-wrapper {
             background-color: #ad4040;
@@ -465,7 +482,7 @@
                     </button>
                 </div>
             </div>
-            <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods();' class='row border rounded-2  btn-group'>
+            <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods(); clearSelectedLiCSS();' class='row border rounded-2  btn-group'>
                 <div style="box-shadow: 0 1px 4px rgb(0 0 0 / 65%);">
                     <button type='button' class='btn' style='width: 100%;'>
                         <h6 style="font-size: 24px; margin: 5px; font-weight: lighter;">CLEAR ROUTE</h6>
@@ -537,27 +554,40 @@
 
     function getRoute(place) {
 
-        var target_lat = undefined, target_lon = undefined;
+        var target_lat = undefined, target_lon = undefined, target_name;
 
         for (var i = 0; i < pubs.length || i < fastfoods.length; i++) {
 
             if (i < pubs.length && pubs[i].id == place) {
                 target_lat = pubs[i].lat;
                 target_lon = pubs[i].lon;
+                target_name = pubs[i].name;
                 break;
             }
 
             if (i < fastfoods.length && fastfoods[i].id == place) {
                 target_lat = fastfoods[i].lat;
                 target_lon = fastfoods[i].lon;
+                target_name = fastfoods[i].name;
                 break;
             }
 
         }
 
+        let lis = document.querySelectorAll("li");
+        for(var i=0; i<68; i++){
+            lis[i].setAttribute("class", "text notselectedLi");
+            if(lis[i].innerText == target_name){
+                lis[i].setAttribute("class", "text selectedLi");
+            }
+        }
+
+
         if (target_lat && target_lon) {
             drawRoute(target_lat, target_lon);
         }
+
+
     }
 
     function drawRoute(target_lat, target_lon) {
@@ -753,6 +783,15 @@
   function clearMarkers() {
     layerGroup.clearLayers();
   }
+
+  function clearSelectedLiCSS() {
+
+        let lis = document.getElementsByTagName('li');
+
+        for (var i = 0; i < 68; i++) {
+            lis[i].setAttribute("class", "text notselectedLi");
+        }
+    }
 
   function clearRoute() {
     if(route) {
