@@ -217,6 +217,42 @@
             border: 1px solid white;
         }
 
+        li {
+            border: 1px solid transparent;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+        li:hover {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .selectedLi {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .notselectedLi {
+            border: 1px solid transparent;
+            color: black;
+        }
+
+        #notification{
+            background-color:#cc4747;
+            position:fixed;
+            z-index: 2;
+            top: 200px;
+            width: 380px;
+            height: 60px;
+            left: 50%;
+            display: none;
+            padding: 20px;
+        }
+
+        #searchButton{
+            width: 20px;
+            height: 20px;
+        }
 
         @media screen and (max-width: 1650px) {
             .toolbar {
@@ -306,6 +342,23 @@
                 bottom: auto;
             }
 
+            #notification{
+                transform: translate(-50%,-50%);
+            }
+
+        }
+
+        @media screen and (max-width: 530px) {
+            #notification{
+                top: 130px;
+                width: auto;
+                height: 60px;
+                padding: 10px;
+                margin: 20px;
+                text-align: center;
+                left: auto;
+                transform: none;
+            }
         }
 
         .leaflet-popup-content-wrapper {
@@ -324,21 +377,6 @@
         }
         .leaflet-routing-container, .leaflet-bar, .leaflet-control{
             max-height: 160px;
-        }
-        #notification{
-            background-color:#cc4747;
-            position:fixed;
-            z-index: 10000;
-            top: 30px;
-            width: 340px;
-            height: 40px;
-            left: 50%;
-            display: none;
-        }
-
-        #searchButton{
-        width: 20px;
-            height: 20px;
         }
     </style>
 
@@ -480,7 +518,7 @@
                     </button>
                 </div>
             </div>
-            <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods();' class='row border rounded-2  btn-group'>
+            <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods(); clearSelectedLiCSS();' class='row border rounded-2  btn-group'>
                 <div style="box-shadow: 0 1px 4px rgb(0 0 0 / 65%);">
                     <button type='button' class='btn' style='width: 100%;'>
                         <h6 style="font-size: 24px; margin: 5px; font-weight: lighter;">CLEAR ROUTE</h6>
@@ -488,9 +526,7 @@
                 </div>
             </div>
             <div  id="notification" class="rounded">
-                <h7> The default location is the center of Skopje.</h7>
-                <button type="button" onclick="deleteNotification()" class="btn-close btn-close-black" data-dismiss="toast" aria-label="Close" style="background-color: #cc4747">
-                </button>
+                <h7> Enable your location, default is center of Skopje </h7>
             </div>
         </div>
     </div>
@@ -572,7 +608,10 @@
         } else {
             startLat = plostadLat;
             startLon = plostadLon;
-            $("#notification").css("display", "block");
+          $("#notification").css("display", "block");
+          setTimeout(function () {
+            deleteNotification()
+          }, 5000);
         }
 
         var target_name;
@@ -587,8 +626,18 @@
               }
           }
 
+      let lis = document.querySelectorAll("li");
+      for(var i=0; i<68; i++){
+        lis[i].setAttribute("class", "text notselectedLi");
+        if(lis[i].innerText == target_name){
+          lis[i].setAttribute("class", "text selectedLi");
+        }
+      }
 
-        route = L.Routing.control({
+
+
+
+      route = L.Routing.control({
           waypoints: [
             L.latLng(startLat, startLon),
             L.latLng(target_lat, target_lon)
@@ -768,7 +817,17 @@
       map.removeLayer(userLocationMarker);
   }
 
-  setTimeout(addPubsAndFastFoods,150);
+    function clearSelectedLiCSS() {
+
+      let lis = document.getElementsByTagName('li');
+
+      for (var i = 0; i < 68; i++) {
+        lis[i].setAttribute("class", "text notselectedLi");
+      }
+    }
+
+
+    setTimeout(addPubsAndFastFoods,150);
 
 </script>
 
