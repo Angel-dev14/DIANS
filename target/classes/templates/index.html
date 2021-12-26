@@ -175,7 +175,6 @@
             overflow-x: hidden;
             transition: 0.5s;
             margin-top: 50px;
-
         }
 
         .nav-bar-toggle-button {
@@ -218,6 +217,42 @@
             border: 1px solid white;
         }
 
+        li {
+            border: 1px solid transparent;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+        li:hover {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .selectedLi {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .notselectedLi {
+            border: 1px solid transparent;
+            color: black;
+        }
+
+        #notification{
+            background-color:#cc4747;
+            position:fixed;
+            z-index: 2;
+            top: 200px;
+            width: 380px;
+            height: 60px;
+            left: 50%;
+            display: none;
+            padding: 20px;
+        }
+
+        #searchButton{
+            width: 20px;
+            height: 20px;
+        }
 
         @media screen and (max-width: 1650px) {
             .toolbar {
@@ -273,8 +308,9 @@
 
             .sidenav {
                 width: 0;
-                margin-top: 50px;
                 transition: 0.5s;
+                padding-top: 50px;
+                margin-top: 0;
             }
 
             .nav-bar-toggle-button {
@@ -306,6 +342,23 @@
                 bottom: auto;
             }
 
+            #notification{
+                transform: translate(-50%,-50%);
+            }
+
+        }
+
+        @media screen and (max-width: 530px) {
+            #notification{
+                top: 130px;
+                width: auto;
+                height: 60px;
+                padding: 10px;
+                margin: 20px;
+                text-align: center;
+                left: auto;
+                transform: none;
+            }
         }
 
         .leaflet-popup-content-wrapper {
@@ -325,7 +378,6 @@
         .leaflet-routing-container, .leaflet-bar, .leaflet-control{
             max-height: 160px;
         }
-
     </style>
 
 </head>
@@ -380,8 +432,9 @@
                                class='form-control rounded' placeholder='Search' aria-label='Search'
                                aria-describedby='search-addon'/>
                         <!--            <span class='input-group-text border-0' id='search-addon'>-->
-                        <button class='input-group-text border-0' type="submit" th:for="search"><i
-                                class='fa fa-search'></i></button>
+                        <button class='input-group-text border-0' type="submit" th:for="search">
+                            <img src="images/free-search-icon.png" id="searchButton">
+                        </button>
                         <!--              </span>-->
                     </form>
                 </div>
@@ -413,7 +466,7 @@
                         </div>
                         <ul>
                             <li class="text" th:each='fastFood : ${fastFoodObs}' th:text='${fastFood.name}'
-                                th:attr="onclick=|getRoute('${fastFood.id}')|"></li>
+                                th:attr="onclick=|drawRoute('${fastFood.lat}', '${fastFood.lon}')|"></li>
                         </ul>
                     </div>
                 </div>
@@ -429,7 +482,7 @@
                         </div>
                         <ul>
                             <li class="text" th:each='pub : ${pubObs}' th:text='${pub.name}'
-                                th:attr="onclick=|getRoute('${pub.id}')|"></li>
+                                th:attr="onclick=|drawRoute('${pub.lat}', '${pub.lon}')|"></li>
                         </ul>
                     </div>
                 </div>
@@ -465,12 +518,15 @@
                     </button>
                 </div>
             </div>
-            <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods();' class='row border rounded-2  btn-group'>
+            <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods(); clearSelectedLiCSS();' class='row border rounded-2  btn-group'>
                 <div style="box-shadow: 0 1px 4px rgb(0 0 0 / 65%);">
                     <button type='button' class='btn' style='width: 100%;'>
                         <h6 style="font-size: 24px; margin: 5px; font-weight: lighter;">CLEAR ROUTE</h6>
                     </button>
                 </div>
+            </div>
+            <div  id="notification" class="rounded">
+                <h7> Enable your location, default is center of Skopje </h7>
             </div>
         </div>
     </div>
@@ -488,9 +544,13 @@
         navigator.geolocation.getCurrentPosition(getUserLocation);
     }
 
+    function deleteNotification(){
+        $("#notification").remove();
+    }
+
     function getUserLocation(position) {
         currentUserLocation = position.coords;
-        displayCurrentLocation()
+        addPubsAndFastFoods();
     }
 
     function displayCurrentLocation() {
@@ -535,31 +595,6 @@
     var route = null, userLocationMarker = null;
     var plostadLat = 41.99646, plostadLon = 21.43141;
 
-    function getRoute(place) {
-
-        var target_lat = undefined, target_lon = undefined;
-
-        for (var i = 0; i < pubs.length || i < fastfoods.length; i++) {
-
-            if (i < pubs.length && pubs[i].id == place) {
-                target_lat = pubs[i].lat;
-                target_lon = pubs[i].lon;
-                break;
-            }
-
-            if (i < fastfoods.length && fastfoods[i].id == place) {
-                target_lat = fastfoods[i].lat;
-                target_lon = fastfoods[i].lon;
-                break;
-            }
-
-        }
-
-        if (target_lat && target_lon) {
-            drawRoute(target_lat, target_lon);
-        }
-    }
-
     function drawRoute(target_lat, target_lon) {
         clearUserMarker();
         clearMarkers();
@@ -573,44 +608,58 @@
         } else {
             startLat = plostadLat;
             startLon = plostadLon;
+          $("#notification").css("display", "block");
+          setTimeout(function () {
+            deleteNotification()
+          }, 5000);
         }
 
-    var target_name;
-    for(let i=0;i<fastfoods.length;i++){
-        if(target_lat ==  fastfoods[i].lat && target_lon == fastfoods[i].lon){
-            target_name = fastfoods[i].name;
+        var target_name;
+        for(let i=0;i<fastfoods.length;i++){
+            if(target_lat ==  fastfoods[i].lat && target_lon == fastfoods[i].lon){
+                target_name = fastfoods[i].name;
+            }
         }
-    }
-      for(let i=0;i<pubs.length;i++){
-          if(target_lat ==  pubs[i].lat && target_lon == pubs[i].lon){
-              target_name = pubs[i].name;
+          for(let i=0;i<pubs.length;i++){
+              if(target_lat ==  pubs[i].lat && target_lon == pubs[i].lon){
+                  target_name = pubs[i].name;
+              }
           }
+
+      let lis = document.querySelectorAll("li");
+      for(var i=0; i<68; i++){
+        lis[i].setAttribute("class", "text notselectedLi");
+        if(lis[i].innerText == target_name){
+          lis[i].setAttribute("class", "text selectedLi");
+        }
       }
 
 
-    route = L.Routing.control({
-      waypoints: [
-        L.latLng(startLat, startLon),
-        L.latLng(target_lat, target_lon)
-      ],
-      createMarker: function(i, wp, nWps) {
-        if (i === 0) {
-          return L.marker(wp.latLng, {
-            icon: userIcon
-          }).bindPopup('My location');
-        } else if (i === nWps - 1) {
-          return L.marker(wp.latLng, {
-            icon: redIcon
-          }).bindPopup(target_name);
-        }
-      },
-      router: new L.Routing.osrmv1({
-        language: 'en',
-        profile: 'walk'
-      })
-    });
-    route.addTo(map);
-    //getDistance(route);
+
+
+      route = L.Routing.control({
+          waypoints: [
+            L.latLng(startLat, startLon),
+            L.latLng(target_lat, target_lon)
+          ],
+          createMarker: function(i, wp, nWps) {
+            if (i === 0) {
+              return L.marker(wp.latLng, {
+                icon: userIcon
+              }).bindPopup('My location');
+            } else if (i === nWps - 1) {
+              return L.marker(wp.latLng, {
+                icon: redIcon
+              }).bindPopup(target_name);
+            }
+          },
+          router: new L.Routing.osrmv1({
+            language: 'en',
+            profile: 'walk'
+          })
+        });
+        route.addTo(map);
+        //getDistance(route);
 
         $('#clearRoute').css('display', 'inline-block');
     }
@@ -644,7 +693,7 @@
         var to = markerTo.getLatLng();
 
         return (from.distanceTo(to) / 1000);
-    }
+  }
 
     var minpub = Number.MAX_SAFE_INTEGER;
     var minpubindex = pubs[0];
@@ -668,36 +717,36 @@
 
         var marker;
 
-    for (let i = 0; i < pubs.length; i++) {
-      marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
-      var distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
-      var showdistance =  distance.toFixed(2);
-      if(parseFloat(distance) < minpub) {
-        minpub = distance;
-        minpubindex = pubs[i];
-      }
-      marker.bindPopup(pubs[i].name +
-              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
-              '<button class="btn directions-button" onclick="drawRoute('
-              + pubs[i].lat + ', ' + pubs[i].lon + ')">DIRECTIONS</button>');
-    }
+        for (let i = 0; i < pubs.length; i++) {
+          marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
+          var distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
+          var showdistance =  distance.toFixed(2);
+          if(parseFloat(distance) < minpub) {
+            minpub = distance;
+            minpubindex = pubs[i];
+          }
+          marker.bindPopup(pubs[i].name +
+                  '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
+                  '<button class="btn directions-button" onclick="drawRoute('
+                  + pubs[i].lat + ', ' + pubs[i].lon + ')">DIRECTIONS</button>');
+        }
 
-    for (let i = 0; i < fastfoods.length; i++) {
-      marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
-      var distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
-      var showdistance =  distance.toFixed(2);
-      if (distance < minff) {
-        minff = distance;
-        minffindex = fastfoods[i];
-      }
-      marker.bindPopup(fastfoods[i].name +
-              '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
-              '<button class="btn directions-button" onclick="drawRoute('
-              + fastfoods[i].lat + ', ' + fastfoods[i].lon + ');">DIRECTIONS</button>');
+        for (let i = 0; i < fastfoods.length; i++) {
+          marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
+          var distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
+          var showdistance =  distance.toFixed(2);
+          if (distance < minff) {
+            minff = distance;
+            minffindex = fastfoods[i];
+          }
+          marker.bindPopup(fastfoods[i].name +
+                  '<br /><label id="_distance">' + showdistance + 'km</label><br />' +
+                  '<button class="btn directions-button" onclick="drawRoute('
+                  + fastfoods[i].lat + ', ' + fastfoods[i].lon + ');">DIRECTIONS</button>');
+        }
+        if(currentUserLocation)
+          displayCurrentLocation()
     }
-    if(currentUserLocation)
-      displayCurrentLocation()
-  }
 
 
   //Function called on load
@@ -768,21 +817,17 @@
       map.removeLayer(userLocationMarker);
   }
 
+    function clearSelectedLiCSS() {
 
-  function getUserLocation(position){
-    currentUserLocation = position.coords;
-    displayCurrentLocation()
-  }
+      let lis = document.getElementsByTagName('li');
 
-  function displayCurrentLocation(){
-    userLocationMarker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
-    userLocationMarker.bindPopup('My location');
-  }
+      for (var i = 0; i < 68; i++) {
+        lis[i].setAttribute("class", "text notselectedLi");
+      }
+    }
 
 
-
-
-  setTimeout(addPubsAndFastFoods,150);
+    setTimeout(addPubsAndFastFoods,150);
 
 </script>
 
