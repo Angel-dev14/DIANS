@@ -326,6 +326,10 @@
             max-height: 160px;
         }
 
+        #searchButton{
+        width: 20px;
+            height: 20px;
+        }
     </style>
 
 </head>
@@ -380,8 +384,9 @@
                                class='form-control rounded' placeholder='Search' aria-label='Search'
                                aria-describedby='search-addon'/>
                         <!--            <span class='input-group-text border-0' id='search-addon'>-->
-                        <button class='input-group-text border-0' type="submit" th:for="search"><i
-                                class='fa fa-search'></i></button>
+                        <button class='input-group-text border-0' type="submit" th:for="search">
+                            <img src="images/free-search-icon.png" id="searchButton">
+                        </button>
                         <!--              </span>-->
                     </form>
                 </div>
