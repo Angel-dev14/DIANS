@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FastFoodRepository extends JpaRepository<FastFood, Long> {
 
-    List<FastFood> findAllByNameContaining(String name);
+    List<FastFood> findAllByNameContainingIgnoreCase(String name);
 
     Page<FastFood> findAll(Pageable pageable);
 
