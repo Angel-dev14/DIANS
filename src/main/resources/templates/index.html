@@ -325,6 +325,16 @@
         .leaflet-routing-container, .leaflet-bar, .leaflet-control{
             max-height: 160px;
         }
+        #notification{
+            background-color:#cc4747;
+            position:fixed;
+            z-index: 10000;
+            top: 30px;
+            width: 340px;
+            height: 40px;
+            left: 50%;
+            display: none;
+        }
 
         #searchButton{
         width: 20px;
@@ -477,6 +487,11 @@
                     </button>
                 </div>
             </div>
+            <div  id="notification" class="rounded">
+                <h7> The default location is the center of Skopje.</h7>
+                <button type="button" onclick="deleteNotification()" class="btn-close btn-close-black" data-dismiss="toast" aria-label="Close" style="background-color: #cc4747">
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -491,6 +506,10 @@
 
     window.onload = function () {
         navigator.geolocation.getCurrentPosition(getUserLocation);
+    }
+
+    function deleteNotification(){
+        $("#notification").remove();
     }
 
     function getUserLocation(position) {
@@ -553,6 +572,7 @@
         } else {
             startLat = plostadLat;
             startLon = plostadLon;
+            $("#notification").css("display", "block");
         }
 
         var target_name;
