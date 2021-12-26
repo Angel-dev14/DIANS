@@ -39,12 +39,12 @@ public class NavigationServiceImpl implements NavigationService {
 
     @Override
     public List<FastFood> findAllFastFoodsByName(String name) {
-        return fastFoodRepository.findAllByNameContaining(name);
+        return fastFoodRepository.findAllByNameContainingIgnoreCase(name);
     }
 
     @Override
     public List<Pub> findAllPubsByName(String name) {
-        return pubRepository.findAllByNameContaining(name);
+        return pubRepository.findAllByNameContainingIgnoreCase(name);
     }
 
     @Override

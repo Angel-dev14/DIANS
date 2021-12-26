@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface PubRepository extends JpaRepository<Pub, Long> {
 
-    List<Pub> findAllByNameContaining(String name);
+    List<Pub> findAllByNameContainingIgnoreCase(String name);
 
     Page<Pub> findAll(Pageable pageable);
 
