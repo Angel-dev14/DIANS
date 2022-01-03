@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Navigation Application - Project</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #b75a5a, #ef473a);
+        }
+
+        .container {
+            padding-top: 100px;
+        }
+
+        p {
+            font-size: 20px;
+            margin-top: 60px;
+            text-align: justify;
+        }
+
+        .navbar {
+            height: 50px;
+            z-index: 100;
+        }
+
+        .navbar {
+            background-color: #191d1f;
+        }
+
+        .heading{
+            font-size: 72px;
+        }
+
+        @media screen and (max-width: 500px) {
+            .heading{
+                font-size: 62px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <nav class='navbar navbar-expand navbar-light' style="background-color: #191d1f; height: 50px;">
+        <div class='collapse navbar-collapse d-flex justify-content-center'>
+            <div class='navbar-nav'>
+                <a class='nav-item nav-link' href='/'
+                   id='home'
+                   style='color: #C0C0C0; margin-left: 10px; margin-right: 10px'
+                   onclick='navbarText(id)'>Home <span class='sr-only'></span></a>
+                <a class='nav-item nav-link' href='project'
+                   id='project'
+                   style='color: white; margin-left: 10px; margin-right: 10px'
+                   onclick='navbarText(id)'>Project</a>
+                <a class='nav-item nav-link' href='aboutUs'
+                   style='color: #C0C0C0; margin-right: 10px; margin-left: 10px'
+                   id='aboutus' onclick='navbarText(id)'>About
+                    Us</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <h1 style="display-outside: ruby-text-container" class="text-center heading">Navigation
+            Application</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <p> This is a web application for navigating to Fast Food and Pub offering places in the central area of
+                    Skopje.
+                    <br><br>
+                    For the architecture of this application was used Spring Boot as backend framework and Thymeleaf for
+                    getting data from backend.
+                    For the map we used Leaflet map and it's functions.
+                    The frontend was implemented using Bootstrap classes and for the functionality on the page we used
+                    Javascript and jQuery.
+                    <br>
+                </p>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12" id="image">
+                <div style="text-align: center">
+                    <img width="100%" height="100%" src="images/homeImage.jpg" alt="homepage">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer class="page-footer font-small blue">
+
+    <div class="footer-copyright text-center py-3">© 2021 Copyright: DIANS
+    </div>
+
+</footer>
+</html>
