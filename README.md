@@ -14,3 +14,8 @@
 <li>Агон Османи, индекс: 191025 </li>
 <li>Христијан Савески, индекс: 191150 </li>
 </ul>
+
+<p><a href='https://navigation-application.herokuapp.com/'>https://navigation-application.herokuapp.com/</a></p>
+<p><a href='https://navigation-application.herokuapp.com/'>https://navigation-application.herokuapp.com/admin</a><br>(username: admin, password: admin)</p>
+
+<p>Деплојуваната апликација е на бранчот deployable и е завршена во предвидениот рок за прикачување на домашната, надвор од тој рок е само мерџано во main</p>
