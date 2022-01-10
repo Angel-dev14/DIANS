@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:th='http://thymeleaf.org'>
+
+<head>
+    <title>Navigation Application</title>
+    <link rel='stylesheet' href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css'
+          integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
+          crossorigin=''>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+          integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+    <link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet'>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+            integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+            crossorigin=""></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+    <style>
+
+        .clear-paddings {
+            padding: 0;
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar {
+            height: 50px;
+            z-index: 100;
+        }
+
+        .navbar {
+            background-color: #191d1f;
+        }
+
+        .nav-item {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .side-bar {
+            height: 100%;
+            padding: 10px;
+            z-index: 3;
+        }
+
+        .red_inside {
+            background-color: #ad4040;
+        }
+
+        .red3 {
+            background-color: #b75a5a;
+        }
+
+        .scroll-div {
+            overflow: hidden;
+            overflow-y: scroll;
+            height: 600px;
+        }
+
+        .scroll-div::-webkit-scrollbar {
+            width: 11px;
+        }
+
+        .scroll-div::-webkit-scrollbar-track {
+
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+            border-radius: 5px;
+        }
+
+        .scroll-div::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-color: rgb(192, 192, 192);
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        h4 {
+            font-weight: bold;
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ul li {
+            font-size: 20px;
+            margin: 2px 0;
+            padding: 5px 0;
+            width: 80%;
+            background-color: #b74e4e;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        img {
+            height: 50px;
+            width: 50px;
+        }
+
+        .directions-button {
+            background-color: #b75a5a;
+            color: white;
+            text-align: center;
+        }
+
+        .text {
+            color: #191d1f;
+        }
+
+        .leaflet-top {
+            position: absolute;
+            z-index: 1000;
+            pointer-events: none;
+            bottom: 0;
+            top: auto;
+            margin-bottom: 50px;
+        }
+
+        .toolbar {
+            background-color: #cc4747;
+            z-index: 100;
+            position: absolute;
+            margin-top: 60px;
+            left: 60%;
+            width: 70%;
+            transform: translate(-50%, -50%);
+        }
+
+        .closeBtn {
+            height: 35px;
+            background-color: #ad4040;
+            margin-left: 80%;
+            margin-bottom: -10px;
+            color: white;
+        }
+
+        .sidenav {
+            z-index: 3;
+            height: 100%;
+            width: 400px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #cc4747;
+            overflow-x: hidden;
+            transition: 0.5s;
+            margin-top: 50px;
+        }
+
+        .nav-bar-toggle-button {
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 2;
+            position: absolute;
+            left: 50px;
+            margin-top: 20px;
+            background-color: #cc4747;
+        }
+
+        .sidenav-toolbar {
+            width: 100%;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .closestButtons{
+            background-color: #ad4040;
+            margin-bottom: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        #clearRoute {
+            display: none;
+            z-index: 2;
+            background-color: white;
+            position: absolute;
+            right: 54px;
+            bottom: 180px;
+            border: 3px solid darkslategray;
+            transition: all 0.2s ease;
+        }
+
+        .closestButtons:hover {
+            color: white;
+            border: 1px solid white;
+        }
+
+        li {
+            border: 1px solid transparent;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+        li:hover {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .selectedLi {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .notselectedLi {
+            border: 1px solid transparent;
+            color: black;
+        }
+
+        #notification{
+            background-color:#cc4747;
+            position:fixed;
+            z-index: 2;
+            top: 200px;
+            width: 380px;
+            height: 60px;
+            left: 50%;
+            display: none;
+            padding: 20px;
+        }
+
+        #searchButton{
+            width: 20px;
+            height: 20px;
+        }
+
+        @media screen and (max-width: 1650px) {
+            .toolbar {
+                width: 60%;
+                left: 60%;
+            }
+        }
+
+        @media screen and (max-width: 1450px) {
+            .toolbar {
+                width: 50%;
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            .toolbar {
+                width: 45%;
+            }
+        }
+
+        @media screen and (max-width: 1100px) {
+            .toolbar {
+                left: 65%;
+
+            }
+        }
+
+        @media screen and (max-width: 1050px) {
+            .toolbar {
+                left: 65%;
+
+            }
+        }
+
+        @media screen and (max-width: 1025px) {
+            .toolbar {
+                left: 70%;
+            }
+        }
+
+        @media screen and (max-width: 950px) {
+            .toolbar {
+                width: 40%;
+                left: 70%;
+                display: none;
+            }
+
+            .navbar {
+                height: 50px;
+                text-align: center;
+                display: flex;
+            }
+
+            .sidenav {
+                width: 0;
+                transition: 0.5s;
+                padding-top: 50px;
+                margin-top: 0;
+            }
+
+            .nav-bar-toggle-button {
+                left: 10px;
+            }
+
+            .navbar-nav {
+                flex-direction: row;
+            }
+
+            .sidenav-toolbar {
+                display: flex;
+            }
+
+            .closeBtn {
+                margin-right: 20px;
+                margin-bottom: 15px;
+            }
+
+            .closestButtons {
+                padding: 10px;
+                max-height: 50px;
+                font-size: 15px
+            }
+
+            #clearRoute{
+                top: 80px;
+                right: 30px;
+                bottom: auto;
+            }
+
+            #notification{
+                transform: translate(-50%,-50%);
+            }
+
+        }
+
+        @media screen and (max-width: 530px) {
+            #notification{
+                top: 130px;
+                width: auto;
+                height: 60px;
+                padding: 10px;
+                margin: 20px;
+                text-align: center;
+                left: auto;
+                transform: none;
+            }
+        }
+
+        .leaflet-popup-content-wrapper {
+            background-color: #ad4040;
+            font-size: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .leaflet-popup-tip {
+            background-color: #cc4747;
+        }
+
+        .leaflet-routing-alt, .leaflet-routing-geocoders, .leaflet-routing-error {
+            max-height: 160px;
+        }
+        .leaflet-routing-container, .leaflet-bar, .leaflet-control{
+            max-height: 160px;
+        }
+    </style>
+
+</head>
+<body>
+<div class='container-fluid clear-paddings'>
+  <nav class='navbar navbar-expand-lg navbar-light'>
+    <div class='collapse navbar-collapse d-flex justify-content-center' id='navbarNavAltMarkup'>
+      <div class='navbar-nav'>
+        <a class='nav-item nav-link active' href='/' style='color: white' id='home'
+           onclick='navbarText(id)'>Home <span class='sr-only'></span></a>
+        <a class='nav-item nav-link' href='project' style='color: #C0C0C0' id='project'
+           onclick='navbarText(id)'>Project</a>
+        <a class='nav-item nav-link' href='aboutUs' style='color: #C0C0C0' id='aboutus' onclick='navbarText(id)'>About
+          Us</a>
+      </div>
+    </div>
+  </nav>
+  <div class='nav-bar-toggle-button'>
+    <img src='images/hamburger.png' id='hamburger' onclick="openNav()" alt='hamburger button'/>
+  </div>
+  <div class='row m-0'>
+    <div class='col-3 clear-paddings sidenav' id="mySidenav">
+      <div class='side-bar'>
+        <div class="btn btn-block closeBtn"><b>CLOSE</b></div>
+        <div class='row rounded-3 text-center bg-light btn-group side sidenav-toolbar'>
+          <div class='col-4 p-0'>
+            <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
+              <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
+              <h6>Fast Food</h6>
+            </button>
+          </div>
+
+                    <div class='col-4 m-0 p-0'>
+                        <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
+                                src='/images/pubicon.png' class='m-1 button_icon'>
+                            <h6>Pubs</h6>
+                        </button>
+                    </div>
+                    <div class='col-4 p-0'>
+                        <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start'
+                                style='width: 100%;'>
+                            <img
+                                    src='/images/ffandpubicon.png' class='m-1 button_icon'>
+                            <h6>Fast Food & Pubs</h6>
+                        </button>
+                    </div>
+                </div>
+
+                <div class='input-group rounded mt-4 search-bar'>
+                    <form th:method='get' th:action="@{'/search'}" style='display: flex; width: 100%'>
+                        <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
+                               class='form-control rounded' placeholder='Search' aria-label='Search'
+                               aria-describedby='search-addon'/>
+                        <!--            <span class='input-group-text border-0' id='search-addon'>-->
+                        <button class='input-group-text border-0' type="submit" th:for="search">
+                            <img src="images/free-search-icon.png" id="searchButton">
+                        </button>
+                        <!--              </span>-->
+                    </form>
+                </div>
+                <div>
+                    <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
+                </div>
+                <div class='rounded-3 pt-1 red_inside' style=' margin-right: 1vh'
+                     th:if='${#lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)}'>
+                    <p style='font-size: 150%; text-align:center' class="text">No results found for "
+                        <th:block th:text='${searched}'>
+                        </th:block>
+                        ".
+                    </p>
+                </div>
+                <div style="display: flex; justify-content: space-around" >
+                    <div>
+                        <div class="btn btn-block closestButtons"
+                                onclick="drawRoute(minffindex.lat, minffindex.lon)">CLOSEST FAST FOOD</div>
+                    </div>
+                    <div>
+                        <div id="closestPubButton" class="btn btn-block closestButtons"
+                                onclick="drawRoute(minpubindex.lat, minpubindex.lon)">CLOSEST PUB</div>
+                    </div>
+                </div>
+                <div id='fastfood_' class="scroll-div" style="height: 35vh" th:unless='${#lists.isEmpty(fastFoodObs)}'>
+                    <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
+                        <div class='red3 rounded-pill m-3 text-center p-1'>
+                            <h4 class="text">FAST FOOD</h4>
+                        </div>
+                        <ul>
+                            <li class="text" th:each='fastFood : ${fastFoodObs}' th:text='${fastFood.name}'
+                                th:attr="onclick=|drawRoute('${fastFood.lat}', '${fastFood.lon}')|"></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="middleLine" th:if='${not #lists.isEmpty(fastFoodObs) && not #lists.isEmpty(pubObs)}'>
+                    <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
+                </div>
+
+                <div id='_pubs' th:unless='${#lists.isEmpty(pubObs)}' class="scroll-div" style="height: 35vh">
+                    <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
+                        <div class='red3 rounded-pill m-3 text-center p-1'>
+                            <h4 class="text">PUBS</h4>
+                        </div>
+                        <ul>
+                            <li class="text" th:each='pub : ${pubObs}' th:text='${pub.name}'
+                                th:attr="onclick=|drawRoute('${pub.lat}', '${pub.lon}')|"></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div th:unless='${(not #lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)) ||
+                (#lists.isEmpty(fastFoodObs) && not #lists.isEmpty(pubObs))}'>
+                    <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
+                </div>
+            </div>
+        </div>
+        <div class='col-9 clear-paddings'>
+            <div class='d-block position-absolute ' id='map'></div>
+            <div class='row rounded-3 text-center bg-light btn-group toolbar'>
+                <div id='fastfood' class='col-4 p-0'>
+                    <button type='submit' onclick='addFastFoods()' class='btn border-2 border-end' style='width: 100%;'>
+                        <img src='/images/fastfoodicon.png' class='m-1 button_icon'>
+                        <h6>Fast Food</h6>
+                    </button>
+                </div>
+
+                <div id='pubs' class='col-4 m-0 p-0'>
+                    <button type='submit' onclick='addPubs()' class='btn' style='width: 100%;'><img
+                            src='/images/pubicon.png' class='m-1 button_icon'>
+                        <h6>Pubs</h6>
+                    </button>
+                </div>
+                <div id='ffpb' class='col-4 p-0'>
+                    <button type='submit' onclick='addPubsAndFastFoods()' class='btn border-2 border-start'
+                            style='width: 100%;'>
+                        <img
+                                src='/images/ffandpubicon.png' class='m-1 button_icon'>
+                        <h6>Fast Food & Pubs</h6>
+                    </button>
+                </div>
+            </div>
+            <div id='clearRoute' onclick='clearRoute(); addPubsAndFastFoods(); clearSelectedLiCSS();' class='row border rounded-2  btn-group'>
+                <div style="box-shadow: 0 1px 4px rgb(0 0 0 / 65%);">
+                    <button type='button' class='btn' style='width: 100%;'>
+                        <h6 style="font-size: 24px; margin: 5px; font-weight: lighter;">CLEAR ROUTE</h6>
+                    </button>
+                </div>
+            </div>
+            <div  id="notification" class="rounded">
+                <h7> Enable your location, default is center of Skopje </h7>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src='/jquery/jquery-3.6.0.min.js'></script>
+
+<script src='map.js'></script>
+
+<script th:inline='javascript'>
+
+    navigator.geolocation.getCurrentPosition(getUserLocation);
+    let pubs = /*[[${pubObs}]]*/ "pubObs";
+    let fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
+    let layerGroup = L.layerGroup().addTo(map);
+    let currentUserLocation = undefined;
+    let route = null, userLocationMarker = null;
+    let plostadLat = 41.99646, plostadLon = 21.43141;
+    let minpub = Number.MAX_SAFE_INTEGER;
+    let minpubindex = pubs[0];
+    let minff = Number.MAX_SAFE_INTEGER;
+    let minffindex = fastfoods[0];
+
+    $(".closeBtn").on("click", function () {
+        $('#mySidenav').css("width", 0);
+        $(".toolbar").css({
+            left: "50%",
+            transition: "1s"
+        });
+    })
+    $("#hamburger").on("click", function () {
+        $(".toolbar").css({
+            left: "60%",
+            transition: "1s"
+        });
+    })
+
+    function deleteNotification(){
+        $("#notification").remove();
+    }
+
+    function getUserLocation(position) {
+        currentUserLocation = position.coords;
+        addPubsAndFastFoods();
+    }
+
+    function displayCurrentLocation() {
+        userLocationMarker = L.marker([currentUserLocation.latitude, currentUserLocation.longitude], {icon: greenIcon}).addTo(layerGroup);
+        userLocationMarker.bindPopup('My location');
+    }
+
+    function openNav() {
+        const sideNav = document.getElementById("mySidenav");
+        if (window.innerWidth < 950) {
+            sideNav.style.width = "100%";
+        } else {
+            sideNav.style.width = "400px";
+        }
+    }
+
+    function drawRoute(target_lat, target_lon) {
+        clearUserMarker();
+        clearMarkers();
+        clearRoute();
+
+        let startLat, startLon;
+
+        if (currentUserLocation) {
+            startLat = currentUserLocation.latitude;
+            startLon = currentUserLocation.longitude;
+        } else {
+            startLat = plostadLat;
+            startLon = plostadLon;
+            $("#notification").css("display", "block");
+            setTimeout(function () {
+                deleteNotification()
+            }, 5000);
+        }
+
+        let target_name;
+        for(let i=0;i<fastfoods.length;i++){
+            if(target_lat ==  fastfoods[i].lat && target_lon == fastfoods[i].lon){
+                target_name = fastfoods[i].name;
+            }
+        }
+        for(let i=0;i<pubs.length;i++){
+            if(target_lat ==  pubs[i].lat && target_lon == pubs[i].lon){
+                target_name = pubs[i].name;
+            }
+        }
+
+        let lis = document.querySelectorAll("li");
+        for(let i=0; i<68; i++){
+            lis[i].setAttribute("class", "text notselectedLi");
+            if(lis[i].innerText == target_name){
+                lis[i].setAttribute("class", "text selectedLi");
+            }
+        }
+
+
+
+
+        route = L.Routing.control({
+            waypoints: [
+                L.latLng(startLat, startLon),
+                L.latLng(target_lat, target_lon)
+            ],
+            createMarker: function(i, wp, nWps) {
+                if (i === 0) {
+                    return L.marker(wp.latLng, {
+                        icon: userIcon
+                    }).bindPopup('My location');
+                } else if (i === nWps - 1) {
+                    return L.marker(wp.latLng, {
+                        icon: redIcon
+                    }).bindPopup(target_name);
+                }
+            },
+            router: new L.Routing.osrmv1({
+                language: 'en',
+                profile: 'walk'
+            })
+        });
+        route.addTo(map);
+        //getDistance(route);
+
+        $('#clearRoute').css('display', 'inline-block');
+    }
+
+    function getDistancePlace(lon , lat) {
+        let startLat, startLon;
+
+        if (currentUserLocation) {
+            startLat = currentUserLocation.latitude;
+            startLon = currentUserLocation.longitude;
+        } else {
+            startLat = plostadLat;
+            startLon = plostadLon;
+        }
+
+        let markerFrom = L.circleMarker([startLat, startLon], {color: "#F00", radius: 10});
+        let markerTo = L.circleMarker([lon, lat], {color: "#4AFF00", radius: 10});
+        let from = markerFrom.getLatLng();
+        let to = markerTo.getLatLng();
+
+        return (from.distanceTo(to) / 1000);
+    }
+
+    function addPubsAndFastFoods() {
+        clearMarkers();
+        clearRoute();
+        $("#middleLine").css("display", "block");
+        $("#fastfood_").css({
+            "display": "block",
+            "height": "35vh"
+        });
+
+        $("#_pubs").css({
+            "display": "block",
+            "height": "35vh"
+        });
+
+        let marker;
+
+        for (let i = 0; i < pubs.length; i++) {
+            marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
+            let distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
+            let showdistance =  distance.toFixed(2);
+            if(parseFloat(distance) < minpub) {
+                minpub = distance;
+                minpubindex = pubs[i];
+            }
+            createPopup(marker,showdistance,pubs[i].name,pubs[i].lat,pubs[i].lon)
+        }
+
+        for (let i = 0; i < fastfoods.length; i++) {
+            marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
+            let distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
+            let showdistance =  distance.toFixed(2);
+            if (distance < minff) {
+                minff = distance;
+                minffindex = fastfoods[i];
+            }
+            createPopup(marker,showdistance,fastfoods[i].name,fastfoods[i].lat,fastfoods[i].lon)
+        }
+        if(currentUserLocation)
+            displayCurrentLocation()
+    }
+
+    function createPopup(marker,obj_distance,obj_name,obj_lat,obj_lon){
+        marker.bindPopup(obj_name +
+            '<br /><label id="_distance">' + obj_distance + 'km</label><br />' +
+            '<button class="btn directions-button" onclick="drawRoute('
+            + obj_lat + ', ' + obj_lon + ');">DIRECTIONS</button>');
+    }
+
+    function addPubs() {
+        clearMarkers();
+        clearRoute();
+        $("#middleLine").css("display", "none");
+        $("#fastfood_").css("display", "none");
+        $("#_pubs").css({
+            "display" : "block",
+            "height" : "70vh"
+        });
+
+        let marker;
+        for (let i = 0; i < pubs.length; i++) {
+            marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
+            let distance = getDistancePlace(pubs[i].lat, pubs[i].lon);
+            let showdistance =  distance.toFixed(2);
+            createPopup(marker,showdistance,pubs[i].name,pubs[i].lat,pubs[i].lon)
+        }
+        if(currentUserLocation)
+            displayCurrentLocation()
+    }
+
+    function addFastFoods() {
+        clearMarkers();
+        clearRoute();
+        $("#middleLine").css("display", "none");
+        $("#fastfood_").css({
+            "display" : "block",
+            "height" : "70vh"
+        });
+
+        $("#_pubs").css("display", "none");
+        let marker;
+        for (let i = 0; i < fastfoods.length; i++) {
+            marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
+            let distance = getDistancePlace(fastfoods[i].lat, fastfoods[i].lon);
+            let showdistance =  distance.toFixed(2);
+            createPopup(marker,showdistance,fastfoods[i].name,fastfoods[i].lat,fastfoods[i].lon)
+        }
+        if(currentUserLocation)
+            displayCurrentLocation()
+    }
+
+    function clearMarkers() {
+        layerGroup.clearLayers();
+    }
+
+    function clearRoute() {
+        if(route) {
+            map.removeControl(route);
+        }
+
+        $('#clearRoute').css('display', 'none');
+        //addPubsAndFastFoods();
+    }
+
+    function clearUserMarker() {
+        if (userLocationMarker)
+            map.removeLayer(userLocationMarker);
+    }
+
+    function clearSelectedLiCSS() {
+
+        let lis = document.getElementsByTagName('li');
+
+        for (let i = 0; i < 68; i++) {
+            lis[i].setAttribute("class", "text notselectedLi");
+        }
+    }
+
+    console.warn = () => {
+    };
+
+    setTimeout(addPubsAndFastFoods,150);
+
+</script>
+
+</body>
+
+</html>
