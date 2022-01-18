@@ -8,6 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface AdminUserRepository extends JpaRepository<AdminUser, Long> {
+
     Optional<AdminUser> findByUsernameAndPassword(String username, String password);
+
     Optional<AdminUser> findByUsername(String username);
 }
