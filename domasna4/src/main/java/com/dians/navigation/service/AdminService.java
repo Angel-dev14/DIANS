@@ -6,9 +6,9 @@ import org.springframework.data.domain.Page;
 
 public interface AdminService {
 
-    Page<FastFood> findAllFastFoodsInPage(Integer page);
+    Page<FastFood> findFastFoodPaginated(Integer page, Integer size);
 
-    Page<Pub> findAllPubsInPage(Integer page);
+    Page<Pub> findPubsPaginated(Integer page, Integer size);
 
     void deleteFastFoodById(Long id);
 
