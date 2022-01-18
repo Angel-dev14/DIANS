@@ -29,85 +29,29 @@ public class AdminController {
 
     //main page
     @GetMapping
-    public String adminPage(Model model, HttpServletRequest req) {
-        Page<FastFood> fastFoods = this.adminService.findAllFastFoodsInPage(0);
-        model.addAttribute("fpage1", 0);
-        model.addAttribute("fpage2", 1);
-        model.addAttribute("fpage3", 2);
-
-        Page<Pub> pubs = this.adminService.findAllPubsInPage(0);
-        model.addAttribute("ppage1", 0);
-        model.addAttribute("ppage2", 1);
-        model.addAttribute("ppage3", 2);
-
-        req.getSession().setAttribute("ffPage", 0);
-        req.getSession().setAttribute("pubPage", 0);
-
-        model.addAttribute("fastFoods", fastFoods);
-        model.addAttribute("pubs", pubs);
-
-        return "admin";
+    public String adminPage(Model model) {
+        return paging(1, 1, model);
     }
 
     //mapping with paging
-    @GetMapping("/paging")
-    public String paging(@RequestParam Integer page,
-                         @RequestParam String type,
-                         Model model,
-                         HttpServletRequest req) {
+    @GetMapping("/page")
+    public String paging(@RequestParam Integer fPageNo,
+                         @RequestParam Integer pPageNo,
+                         Model model) {
 
-        Integer ffPageNr = null;
-        Integer pubPageNr = null;
+        int pageSize = 3; //default is 3
 
-        if (type.equals("fastfood")) {
-            ffPageNr = page;
-            pubPageNr = (Integer) req.getSession().getAttribute("pubPage");
-        } else {
-            ffPageNr = (Integer) req.getSession().getAttribute("ffPage");
-            pubPageNr = page;
-        }
+        Page<FastFood> fastFoods = this.adminService.findFastFoodPaginated(fPageNo, pageSize);
+        Page<Pub> pubs = this.adminService.findPubsPaginated(pPageNo, pageSize);
 
-        Page<FastFood> fastFoods = this.adminService.findAllFastFoodsInPage(ffPageNr);
-        Page<Pub> pubs = this.adminService.findAllPubsInPage(pubPageNr);
+        model.addAttribute("fCurrentPage", fPageNo);
+        model.addAttribute("pCurrentPage", pPageNo);
 
-        //Arrange 2 closest pages to the current page at Fast Foods
-        Integer totalPages = fastFoods.getTotalPages();
-        if (ffPageNr >= totalPages - 1) {
-            ffPageNr = totalPages - 1;
-            model.addAttribute("fpage1", totalPages - 3);
-            model.addAttribute("fpage2", totalPages - 2);
-            model.addAttribute("fpage3", totalPages - 1);
-        } else if (ffPageNr <= 0) {
-            ffPageNr = 0;
-            model.addAttribute("fpage1", 0);
-            model.addAttribute("fpage2", 1);
-            model.addAttribute("fpage3", 2);
-        } else {
-            model.addAttribute("fpage1", ffPageNr - 1);
-            model.addAttribute("fpage2", ffPageNr);
-            model.addAttribute("fpage3", ffPageNr + 1);
-        }
-        req.getSession().setAttribute("ffPage", ffPageNr);
+        model.addAttribute("fTotalPages", fastFoods.getTotalPages());
+        model.addAttribute("pTotalPages", pubs.getTotalPages());
 
-        //paging in pubs
-        totalPages = pubs.getTotalPages();
-
-        if (pubPageNr >= totalPages - 1) {
-            pubPageNr = totalPages - 1;
-            model.addAttribute("ppage1", totalPages - 3);
-            model.addAttribute("ppage2", totalPages - 2);
-            model.addAttribute("ppage3", totalPages - 1);
-        } else if (pubPageNr <= 0) {
-            pubPageNr = 0;
-            model.addAttribute("ppage1", 0);
-            model.addAttribute("ppage2", 1);
-            model.addAttribute("ppage3", 2);
-        } else {
-            model.addAttribute("ppage1", pubPageNr - 1);
-            model.addAttribute("ppage2", pubPageNr);
-            model.addAttribute("ppage3", pubPageNr + 1);
-        }
-        req.getSession().setAttribute("pubPage", pubPageNr);
+        model.addAttribute("fTotalItems", fastFoods.getTotalElements());
+        model.addAttribute("pTotalItems", pubs.getTotalElements());
 
         model.addAttribute("fastFoods", fastFoods);
         model.addAttribute("pubs", pubs);

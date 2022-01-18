@@ -23,38 +23,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<FastFood> findAllFastFoodsInPage(Integer page) {
-        Integer pageNr = null;
-        Integer max = fastFoodRepository.findAll(PageRequest.of(1, 3)).getTotalPages();
-        if (max == 0) {
-            return null;
-        }
-        if (page >= max) {
-            pageNr = max - 1;
-        } else if (page < 0) {
-            pageNr = 0;
-        } else {
-            pageNr = page;
-        }
-        return fastFoodRepository.findAll(PageRequest.of(pageNr, 3));
+    public Page<FastFood> findFastFoodPaginated(Integer page, Integer size) {
+        return fastFoodRepository.findAll(PageRequest.of(page - 1, size));
     }
 
     @Override
-    public Page<Pub> findAllPubsInPage(Integer page) {
-        Integer pageNr = null;
-        Integer max = pubRepository.findAll(PageRequest.of(1, 3)).getTotalPages();
-        if (max == 0) {
-            return null;
-        }
-        if (page >= max) {
-            pageNr = max - 1;
-        } else if (page < 0) {
-            pageNr = 0;
-        } else {
-            pageNr = page;
-        }
-
-        return pubRepository.findAll(PageRequest.of(pageNr, 3));
+    public Page<Pub> findPubsPaginated(Integer page, Integer size) {
+        return pubRepository.findAll(PageRequest.of(page - 1, size));
     }
 
     @Override
