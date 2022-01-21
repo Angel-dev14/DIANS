@@ -466,7 +466,7 @@
             </div>
             <ul>
               <li class="text" th:each='fastFood : ${fastFoodObs}' th:text='${fastFood.name}'
-                  th:attr="onclick=|drawRoute('${fastFood.lat}', '${fastFood.lon}')|"></li>
+                  th:attr="onclick=|drawRoute('${fastFood.lat}', '${fastFood.lon}', ${fastFood.id})|, data-id=|'${fastFood.id}'|"></li>
             </ul>
           </div>
         </div>
@@ -482,7 +482,7 @@
             </div>
             <ul>
               <li class="text" th:each='pub : ${pubObs}' th:text='${pub.name}'
-                  th:attr="onclick=|drawRoute('${pub.lat}', '${pub.lon}')|"></li>
+                  th:attr="onclick=|drawRoute('${pub.lat}', '${pub.lon}', ${pub.id})|, data-id=|'${pub.id}'|"></li>
             </ul>
           </div>
         </div>
@@ -549,6 +549,7 @@
   let minpubindex = pubs[0];
   let minff = Number.MAX_SAFE_INTEGER;
   let minffindex = fastfoods[0];
+  let previous_target_id;
 
   $(".closeBtn").on("click", function () {
     $('#mySidenav').css("width", 0);
@@ -587,7 +588,7 @@
     }
   }
 
-  function drawRoute(target_lat, target_lon) {
+  function drawRoute(target_lat, target_lon, target_id) {
     clearUserMarker();
     clearMarkers();
     clearRoute();
@@ -618,7 +619,9 @@
       }
     }
 
-    selectSelectedPlace(target_name);
+    clearSelectedPlace()
+    selectSelectedPlace(target_id);
+
 
     route = L.Routing.control({
       waypoints: [
@@ -761,6 +764,8 @@
   }
 
   function clearRoute() {
+      clearSelectedPlace(previous_target_id);
+
     if(route) {
       map.removeControl(route);
     }
@@ -775,31 +780,31 @@
   }
 
   function clearSelectedPlace() {
-    // REFACTOR THIS HRISTIJAN
-    // GET ONLY THE SELECTED LI'S AND CHANGE THEIR CLASS INSTEAD OF ADDING NOT SELECTED TO ALL
-    let lis = document.getElementsByTagName('li');
+    if(!previous_target_id)
+      return
 
-    for (let i = 0; i < lis.length; i++) {
-      lis[i].setAttribute("class", "text notselectedLi");
-    }
+    let selected_li = FindByAttributeValue(previous_target_id);
+    selected_li.setAttribute("class", "text notselectedLi");
+
   }
 
-  function selectSelectedPlace(target_name){
-    // REFACTOR THIS HRISTIJAN
-    let lis = document.querySelectorAll("li");
-    for(let i=0; i<lis.length; i++){
-      lis[i].setAttribute("class", "text notselectedLi");
-      if(lis[i].innerText == target_name){
-        lis[i].setAttribute("class", "text selectedLi");
-      }
-    }
+  function selectSelectedPlace(target_id){
+    let selected_li = FindByAttributeValue(target_id);
+    selected_li.setAttribute("class", "text selectedLi");
+    previous_target_id=target_id;
   }
 
   console.warn = () => {
   };
 
-  setTimeout(addPubsAndFastFoods,150);
+  function FindByAttributeValue(value){
+    var All = document.getElementsByTagName("li");
+    for (var i = 0; i < All.length; i++)       {
+      if (All[i].getAttribute("data-id") == "'"+value+"'") { return All[i]; }
+    }
+  }
 
+  setTimeout(addPubsAndFastFoods,150);
 </script>
 
 </body>
