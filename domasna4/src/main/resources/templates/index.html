@@ -561,7 +561,7 @@
                     </button>
                 </div>
             </div>
-            <div id='clear_route' onclick='clear_route(); add_pubs_and_fastfoods(); clear_selected_place();'
+            <div id='clear_route' onclick='clear_route(); add_pubs_and_fastfoods();'
                  class='row border rounded-2  btn-group'>
                 <div id="clearRouteInsideDiv">
                     <button type='button' class='btn w-100'>
@@ -637,9 +637,9 @@
     }
 
   function drawRoute(target_lat, target_lon, target_id) {
-    clearUserMarker();
-    clearMarkers();
-    clearRoute();
+    clear_user_marker();
+    clear_markers();
+    clear_route();
 
         let start_lat, start_lon;
 
@@ -667,8 +667,10 @@
             }
         }
 
-    clearSelectedPlace()
-    selectSelectedPlace(target_id);
+    clear_selected_place()
+      if(target_id) {
+          select_selected_place(target_id);
+      }
 
 
         route = L.Routing.control({
@@ -812,7 +814,7 @@
     }
 
     function clear_route() {
-        clearSelectedPlace(previous_target_id);
+        clear_selected_place(previous_target_id);
         if (route) {
             map.removeControl(route);
         }
@@ -826,17 +828,17 @@
             map.removeLayer(user_location_marker);
     }
 
-  function clearSelectedPlace() {
+  function clear_selected_place() {
     if(!previous_target_id)
       return
 
-    let selected_li = FindByAttributeValue(previous_target_id);
+    let selected_li = find_by_attribute_value(previous_target_id);
     selected_li.setAttribute("class", "text notselectedLi");
 
   }
 
-  function selectSelectedPlace(target_id){
-    let selected_li = FindByAttributeValue(target_id);
+  function select_selected_place(target_id){
+    let selected_li = find_by_attribute_value(target_id);
     selected_li.setAttribute("class", "text selectedLi");
     previous_target_id=target_id;
   }
@@ -844,14 +846,14 @@
     console.warn = () => {
     };
 
-  function FindByAttributeValue(value){
+  function find_by_attribute_value(value){
     var All = document.getElementsByTagName("li");
     for (var i = 0; i < All.length; i++)       {
       if (All[i].getAttribute("data-id") == "'"+value+"'") { return All[i]; }
     }
   }
 
-  setTimeout(addPubsAndFastFoods,150);
+  setTimeout(add_pubs_and_fastfoods,150);
 </script>
 
 </body>
