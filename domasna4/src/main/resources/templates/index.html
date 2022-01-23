@@ -495,11 +495,11 @@
         <div style="display: flex; justify-content: space-around" >
           <div>
             <div class="btn btn-block closestButtons"
-                 onclick="draw_route(minffindex.lat, minffindex.lon)">CLOSEST FAST FOOD</div>
+                 onclick="draw_route(defaultMinFastFoodIndex.lat, defaultMinFastFoodIndex.lon)">CLOSEST FAST FOOD</div>
           </div>
           <div>
             <div id="closestPubButton" class="btn btn-block closestButtons"
-                 onclick="draw_route(minpubindex.lat, minpubindex.lon)">CLOSEST PUB</div>
+                 onclick="draw_route(defaultMinPubIndex.lat, defaultMinPubIndex.lon)">CLOSEST PUB</div>
           </div>
         </div>
         <div id='fastfood_' class="scroll-div" style="height: 35vh" th:unless='${#lists.isEmpty(fastFoodObs)}'>
@@ -593,10 +593,10 @@
     let route = null, user_location_marker = null;
     let plostad_lat = 41.99646, plostad_lon = 21.43141;
 
-    let minpub = Number.MAX_SAFE_INTEGER;
-    let minpubindex = pubs[0];
-    let minff = Number.MAX_SAFE_INTEGER;
-    let minffindex = fastfoods[0];
+    let minPub = Number.MAX_SAFE_INTEGER;
+    let defaultMinPubIndex = pubs[0];
+    let minFastFood = Number.MAX_SAFE_INTEGER;
+    let defaultMinFastFoodIndex = fastfoods[0];
     let previous_target_id;
 
     $(".closeBtn").on("click", function () {
@@ -739,9 +739,9 @@
             marker = L.marker([pubs[i].lat, pubs[i].lon], {icon: redIcon}).addTo(layerGroup);
             let distance = get_distance_place(pubs[i].lat, pubs[i].lon);
             let show_distance = distance.toFixed(2);
-            if (parseFloat(distance) < minpub) {
-                minpub = distance;
-                minpubindex = pubs[i];
+            if (parseFloat(distance) < minPub) {
+                minPub = distance;
+                defaultMinPubIndex = pubs[i];
             }
             create_popup(marker, show_distance, pubs[i].name, pubs[i].lat, pubs[i].lon)
         }
@@ -750,9 +750,9 @@
             marker = L.marker([fastfoods[i].lat, fastfoods[i].lon], {icon: redIcon}).addTo(layerGroup);
             let distance = get_distance_place(fastfoods[i].lat, fastfoods[i].lon);
             let show_distance = distance.toFixed(2);
-            if (distance < minff) {
-                minff = distance;
-                minffindex = fastfoods[i];
+            if (distance < minFastFood) {
+                minFastFood = distance;
+                defaultMinFastFoodIndex = fastfoods[i];
             }
             create_popup(marker, show_distance, fastfoods[i].name, fastfoods[i].lat, fastfoods[i].lon)
         }
@@ -832,14 +832,14 @@
     if(!previous_target_id)
       return
 
-    let selected_li = find_by_attribute_value(previous_target_id);
-    selected_li.setAttribute("class", "text notselectedLi");
+    let selected_place = find_by_attribute_value(previous_target_id);
+      selected_place.setAttribute("class", "text notselectedLi");
 
   }
 
   function select_selected_place(target_id){
-    let selected_li = find_by_attribute_value(target_id);
-    selected_li.setAttribute("class", "text selectedLi");
+    let selected_place = find_by_attribute_value(target_id);
+      selected_place.setAttribute("class", "text selectedLi");
     previous_target_id=target_id;
   }
 
