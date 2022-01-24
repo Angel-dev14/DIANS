@@ -2,19 +2,16 @@ package com.dians.navigation.web.helper;
 
 import com.dians.navigation.model.FastFood;
 import com.dians.navigation.model.Pub;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import reactor.util.annotation.Nullable;
 
 @Component
 public class RequestHelper {
