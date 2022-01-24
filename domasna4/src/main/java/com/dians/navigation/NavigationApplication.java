@@ -3,6 +3,9 @@ package com.dians.navigation;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @ServletComponentScan
 @SpringBootApplication
@@ -12,4 +15,9 @@ public class NavigationApplication {
 		SpringApplication.run(NavigationApplication.class, args);
 	}
 
+    @Bean
+    @LoadBalanced
+    public RestTemplate getRestTemplate(){
+        return new RestTemplate();
+    }
 }
