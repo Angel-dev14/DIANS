@@ -2,31 +2,40 @@ package com.dians.navigation.web.controller;
 
 import com.dians.navigation.model.FastFood;
 import com.dians.navigation.model.Pub;
-import com.dians.navigation.service.NavigationService;
+import com.dians.navigation.web.helper.RequestHelper;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
 
-    private final NavigationService navigationService;
-
-    public MainController(NavigationService navigationService) {
-        this.navigationService = navigationService;
+    public MainController() {
     }
 
-    @GetMapping("")
+    @GetMapping
     public String getIndexPage(Model model) {
+        List<FastFood> fastFoods;
+        List<Pub> pubs;
 
-        List<Pub> pubObs = navigationService.findAllPubs();
-        List<FastFood> fastFoodObs = navigationService.findAllFastFoods();
-        model.addAttribute("pubObs", pubObs);
-        model.addAttribute("fastFoodObs", fastFoodObs);
+        fastFoods = Arrays.asList(
+            Objects.requireNonNull(RequestHelper.sendGetRequestForFastFoods(
+                RequestHelper.createRequestUrl("/find/fastFoods", Collections.emptyMap())).getBody()));
+
+        pubs = Arrays.asList(
+            Objects.requireNonNull(RequestHelper.sendGetRequestForPubs(
+                RequestHelper.createRequestUrl("/find/pubs", Collections.emptyMap())).getBody()));
+
+        model.addAttribute("fastFoodObs", fastFoods);
+        model.addAttribute("pubObs", pubs);
 
         return "index";
     }
@@ -35,20 +44,21 @@ public class MainController {
     public String searchBar(@RequestParam String search, Model model) {
 
         model.addAttribute("searched", search);
+        List<Pub> pubs;
+        List<FastFood> fastFoods;
+        Map<String, String> queries = new HashMap<>();
 
-        List<Pub> pubObs = new ArrayList<>();
-        List<FastFood> fastFoodObs = new ArrayList<>();
+        queries.put("searchTerm", search);
+        pubs = Arrays.asList(Objects.requireNonNull(RequestHelper.sendGetRequestForPubs(
+            RequestHelper.createRequestUrl("/search/pubs", queries)
+        ).getBody()));
 
-        if (!navigationService.findAllPubsByName(search).isEmpty()) {
-            pubObs = navigationService.findAllPubsByName(search);
-        }
+        fastFoods = Arrays.asList(Objects.requireNonNull(RequestHelper.sendGetRequestForFastFoods(
+            RequestHelper.createRequestUrl("/search/fastFoods", queries)
+        ).getBody()));
 
-        if (!navigationService.findAllFastFoodsByName(search).isEmpty()) {
-            fastFoodObs = navigationService.findAllFastFoodsByName(search);
-        }
-
-        model.addAttribute("pubObs", pubObs);
-        model.addAttribute("fastFoodObs", fastFoodObs);
+        model.addAttribute("fastFoodObs", fastFoods);
+        model.addAttribute("pubObs", pubs);
 
         return "index";
     }

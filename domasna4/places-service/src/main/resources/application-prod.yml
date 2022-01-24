@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ec2-34-247-249-224.eu-west-1.compute.amazonaws.com:5432/dbcdfgp1gvkqab
+    username: reevbtwpxbxypy
+    password: 4645c445fe7db1465e22d0dd79a3cc70f7c903432c854f8dcd7b4352e8f6b77c
+  jpa:
+    hibernate:
+      ddl-auto: update
