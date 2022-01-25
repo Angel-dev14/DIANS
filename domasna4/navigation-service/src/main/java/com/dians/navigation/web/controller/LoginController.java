@@ -22,26 +22,28 @@ public class LoginController {
     }
 
     @GetMapping
-    public String loginPage() {
+    public String loginPage(@RequestParam(required = false) String error, Model model) {
+        model.addAttribute("hasError", true);
+        model.addAttribute("error", error);
         return "login";
     }
 
-    @PostMapping
-    public String login(@RequestParam String username,
-                        @RequestParam String password,
-                        Model model,
-                        HttpServletRequest req){
-
-        AdminUser user = null;
-        try{
-            user = this.authService.login(username, password);
-            req.getSession().setAttribute("adminUser", user);
-            return "redirect:/admin";
-        }catch (RuntimeException ex) {
-            model.addAttribute("hasError", true);
-            model.addAttribute("error", ex.getMessage());
-            return "login";
-        }
-
-    }
+//    @PostMapping
+//    public String login(@RequestParam String username,
+//                        @RequestParam String password,
+//                        Model model,
+//                        HttpServletRequest req){
+//
+//        AdminUser user = null;
+//        try{
+//            user = this.authService.login(username, password);
+//            req.getSession().setAttribute("adminUser", user);
+//            return "redirect:/admin";
+//        }catch (RuntimeException ex) {
+//            model.addAttribute("hasError", true);
+//            model.addAttribute("error", ex.getMessage());
+//            return "login";
+//        }
+//
+//    }
 }
