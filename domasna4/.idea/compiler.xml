@@ -7,17 +7,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="navigation-service" />
         <module name="navigation" />
-        <module name="domasna4" />
+        <module name="places-service" />
+        <module name="discovery-server" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="discovery-server" target="11" />
+      <module name="gs-multi-module" target="1.5" />
+      <module name="navigation" target="1.8" />
+      <module name="places-service" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="domasna4" options="-parameters" />
+      <module name="discovery-server" options="-parameters" />
       <module name="navigation" options="-parameters" />
-      <module name="navigation-service" options="-parameters" />
+      <module name="places-service" options="-parameters" />
     </option>
   </component>
 </project>
