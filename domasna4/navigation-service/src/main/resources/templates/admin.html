@@ -83,22 +83,22 @@
     </div>
 
     <!--Pagination Guide-->
-    <div th:if = "${fTotalPages > 1}">
+    <div th:if = "${fastFoodTotalPages > 1}">
         <nav aria-label="Page navigation example" >
             <ul class="pagination">
-                <li class="page-item"><span th:text="'Total Rows: ' + ${fTotalItems}" class="page-link" href="#"></span></li>
+                <li class="page-item"><span th:text="'Total Rows: ' + ${fastFoodTotalItems}" class="page-link" href="#"></span></li>
 
-                <li class="page-item" th:each = "i : ${#numbers.sequence(1, fTotalPages)}">
-                    <a class="page-link" th:if = "${i != fCurrentPage}" th:href = "@{'/admin/page' + '?fPageNo=' + ${i} + '&pPageNo=' + ${pCurrentPage}}" th:text = "${i}"></a>
-                    <span class="page-link selected-page" th:unless = "${i != fCurrentPage}" th:text = "${i}"></span>
+                <li class="page-item" th:each = "i : ${#numbers.sequence(1, fastFoodTotalPages)}">
+                    <a class="page-link" th:if = "${i != currentFastFoodPage}" th:href = "@{'/admin/page' + '?fastFoodPageNo=' + ${i} + '&pubPageNo=' + ${currentPubPage}}" th:text = "${i}"></a>
+                    <span class="page-link selected-page" th:unless = "${i != currentFastFoodPage}" th:text = "${i}"></span>
                 </li>
 
                 <li class="page-item">
-                    <a class="page-link" th:if = "${fCurrentPage < fTotalPages}" th:href = "@{'/admin/page' + '?fPageNo=' + ${fCurrentPage+1} + '&pPageNo=' + ${pCurrentPage}}" aria-label="Next">
+                    <a class="page-link" th:if = "${currentFastFoodPage < fastFoodTotalPages}" th:href = "@{'/admin/page' + '?fastFoodPageNo=' + ${currentFastFoodPage+1} + '&pubPageNo=' + ${currentPubPage}}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>
-                    <span class="page-link" th:unless = "${fCurrentPage < fTotalPages}" aria-label="Next">
+                    <span class="page-link" th:unless = "${currentFastFoodPage < fastFoodTotalPages}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </span>
@@ -152,22 +152,22 @@
     </div>
 
     <!--Pagination Guide-->
-    <div th:if = "${pTotalPages > 1}">
+    <div th:if = "${pubTotalPages > 1}">
         <nav aria-label="Page navigation example" >
             <ul class="pagination">
-                <li class="page-item"><span th:text="'Total Rows: ' + ${pTotalItems}" class="page-link" href="#"></span></li>
+                <li class="page-item"><span th:text="'Total Rows: ' + ${pubsTotalItems}" class="page-link" href="#"></span></li>
 
-                <li class="page-item" th:each = "i : ${#numbers.sequence(1, pTotalPages)}">
-                    <a class="page-link" th:if = "${i != pCurrentPage}" th:href = "@{'/admin/page' + '?fPageNo=' + ${fCurrentPage} + '&pPageNo=' + ${i}}" th:text = "${i}"></a>
-                    <span class="page-link selected-page" th:unless = "${i != pCurrentPage}" th:text = "${i}"></span>
+                <li class="page-item" th:each = "i : ${#numbers.sequence(1, pubTotalPages)}">
+                    <a class="page-link" th:if = "${i != currentPubPage}" th:href = "@{'/admin/page' + '?fastFoodPageNo=' + ${currentFastFoodPage} + '&pubPageNo=' + ${i}}" th:text = "${i}"></a>
+                    <span class="page-link selected-page" th:unless = "${i != currentPubPage}" th:text = "${i}"></span>
                 </li>
 
                 <li class="page-item">
-                    <a class="page-link" th:if = "${pCurrentPage < pTotalPages}" th:href = "@{'/admin/page' + '?fPageNo=' + ${fCurrentPage} + '&pPageNo=' + ${pCurrentPage+1}}" aria-label="Next">
+                    <a class="page-link" th:if = "${currentPubPage < pubTotalPages}" th:href = "@{'/admin/page' + '?fastFoodPageNo=' + ${currentFastFoodPage} + '&pubPageNo=' + ${currentPubPage+1}}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>
-                    <span class="page-link" th:unless = "${pCurrentPage < pTotalPages}" aria-label="Next">
+                    <span class="page-link" th:unless = "${currentPubPage < pubTotalPages}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </span>

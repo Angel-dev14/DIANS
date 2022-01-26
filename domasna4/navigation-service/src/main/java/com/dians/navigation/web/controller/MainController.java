@@ -34,8 +34,8 @@ public class MainController {
             Objects.requireNonNull(RequestHelper.sendGetRequestForPubs(
                 RequestHelper.createRequestUrl("/find/pubs", Collections.emptyMap())).getBody()));
 
-        model.addAttribute("fastFoodObs", fastFoods);
-        model.addAttribute("pubObs", pubs);
+        model.addAttribute("fastFoods", fastFoods);
+        model.addAttribute("pubs", pubs);
 
         return "index";
     }
@@ -57,8 +57,8 @@ public class MainController {
             RequestHelper.createRequestUrl("/search/fastFoods", queries)
         ).getBody()));
 
-        model.addAttribute("fastFoodObs", fastFoods);
-        model.addAttribute("pubObs", pubs);
+        model.addAttribute("fastFoods", fastFoods);
+        model.addAttribute("pubs", pubs);
 
         return "index";
     }
