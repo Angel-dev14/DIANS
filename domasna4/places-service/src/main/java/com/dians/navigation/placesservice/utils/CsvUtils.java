@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.util.List;
 
 public class CsvUtils {
-    private static final CsvMapper mapper = new CsvMapper();
+    private static final CsvMapper mapper = Mapper.getInstance();
 
     public static <T> List<T> read(Class<T> modelClass, InputStream stream) throws IOException {
         CsvSchema schema = mapper.schemaFor(modelClass).withHeader().withColumnReordering(true);
