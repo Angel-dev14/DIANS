@@ -474,18 +474,16 @@
             <input type='search' th:value="${searched != null  ? searched : ''}" id='search' name='search'
                    class='form-control rounded' placeholder='Search' aria-label='Search'
                    aria-describedby='search-addon'/>
-            <!--            <span class='input-group-text border-0' id='search-addon'>-->
             <button class='input-group-text border-0' type="submit" th:for="search">
               <img src="images/free-search-icon.png" id="searchButton">
             </button>
-            <!--              </span>-->
           </form>
         </div>
         <div>
           <hr style='width: 100%; background-color: rgba(255, 255, 255, 0.904); height: 3px;'>
         </div>
         <div class='rounded-3 pt-1 red_inside' style=' margin-right: 1vh'
-             th:if='${#lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)}'>
+             th:if='${#lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)}'>
           <p style='font-size: 150%; text-align:center' class="text">No results found for "
             <th:block th:text='${searched}'>
             </th:block>
@@ -502,36 +500,36 @@
                  onclick="draw_route(defaultMinPubIndex.lat, defaultMinPubIndex.lon)">CLOSEST PUB</div>
           </div>
         </div>
-        <div id='fastfood_' class="scroll-div" style="height: 35vh" th:unless='${#lists.isEmpty(fastFoodObs)}'>
+        <div id='fastfood_' class="scroll-div" style="height: 35vh" th:unless='${#lists.isEmpty(fastFoods)}'>
           <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
             <div class='red3 rounded-pill m-3 text-center p-1'>
               <h4 class="text">FAST FOOD</h4>
             </div>
             <ul>
-              <li class="text" th:each='fastFood : ${fastFoodObs}' th:text='${fastFood.name}'
+              <li class="text" th:each='fastFood : ${fastFoods}' th:text='${fastFood.name}'
                   th:attr="onclick=|draw_route('${fastFood.lat}', '${fastFood.lon}', ${fastFood.id})|, data-id=|'${fastFood.id}'|"></li>
             </ul>
           </div>
         </div>
 
-                <div id="middleLine" th:if='${not #lists.isEmpty(fastFoodObs) && not #lists.isEmpty(pubObs)}'>
+                <div id="middleLine" th:if='${not #lists.isEmpty(fastFoods) && not #lists.isEmpty(pubs)}'>
                     <hr class="line">
                 </div>
 
-        <div id='_pubs' th:unless='${#lists.isEmpty(pubObs)}' class="scroll-div" style="height: 35vh">
+        <div id='_pubs' th:unless='${#lists.isEmpty(pubs)}' class="scroll-div" style="height: 35vh">
           <div class='rounded-3 pt-1 red_inside' style="padding-bottom: 5px">
             <div class='red3 rounded-pill m-3 text-center p-1'>
               <h4 class="text">PUBS</h4>
             </div>
             <ul>
-              <li class="text" th:each='pub : ${pubObs}' th:text='${pub.name}'
+              <li class="text" th:each='pub : ${pubs}' th:text='${pub.name}'
                   th:attr="onclick=|draw_route('${pub.lat}', '${pub.lon}', ${pub.id})|, data-id=|'${pub.id}'|"></li>
             </ul>
           </div>
         </div>
 
-                <div th:unless='${(not #lists.isEmpty(fastFoodObs) && #lists.isEmpty(pubObs)) ||
-                (#lists.isEmpty(fastFoodObs) && not #lists.isEmpty(pubObs))}'>
+                <div th:unless='${(not #lists.isEmpty(fastFoods) && #lists.isEmpty(pubs)) ||
+                (#lists.isEmpty(fastFoods) && not #lists.isEmpty(pubs))}'>
                     <hr class="line">
                 </div>
             </div>
@@ -584,8 +582,8 @@
 
     navigator.geolocation.getCurrentPosition(get_user_location);
 
-    let pubs = /*[[${pubObs}]]*/ "pubObs";
-    let fastfoods = /*[[${fastFoodObs}]]*/ "fastFoodsObs";
+    let pubs = /*[[${pubs}]]*/ "pubs";
+    let fastfoods = /*[[${fastFoods}]]*/ "fastFoods";
 
     let layerGroup = L.layerGroup().addTo(map);
 

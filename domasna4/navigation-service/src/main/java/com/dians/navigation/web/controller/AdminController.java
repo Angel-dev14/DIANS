@@ -40,14 +40,14 @@ public class AdminController {
 
     //mapping with paging
     @GetMapping("/page")
-    public String paging(@RequestParam Integer fPageNo,
-                         @RequestParam Integer pPageNo,
+    public String paging(@RequestParam Integer fastFoodPageNo,
+                         @RequestParam Integer pubPageNo,
                          Model model) {
         List<Pub> pubs;
         List<FastFood> fastFoods;
 
         ResponseEntity<Pub[]> pubsResponse =
-            restTemplate.getForEntity(String.format("%s/paginated/pubs?pageNumber=%s", adminRequestUrl, pPageNo),
+            restTemplate.getForEntity(String.format("%s/paginated/pubs?pageNumber=%s", adminRequestUrl, pubPageNo),
                 Pub[].class);
         Integer pubsTotalPages = Integer.valueOf(pubsResponse.getHeaders().get("totalPages").get(0));
         Integer pubsTotalItems = Integer.valueOf(pubsResponse.getHeaders().get("totalItems").get(0));
@@ -55,20 +55,20 @@ public class AdminController {
 
         ResponseEntity<FastFood[]> fastFoodsResponse =
             restTemplate.getForEntity(
-                String.format("%s/paginated/fastFoods?pageNumber=%s", adminRequestUrl, fPageNo),
+                String.format("%s/paginated/fastFoods?pageNumber=%s", adminRequestUrl, fastFoodPageNo),
                 FastFood[].class);
         Integer fastFoodTotalPages = Integer.valueOf(fastFoodsResponse.getHeaders().get("totalPages").get(0));
         Integer fastFoodTotalItems = Integer.valueOf(fastFoodsResponse.getHeaders().get("totalItems").get(0));
         fastFoods = Arrays.asList(Objects.requireNonNull(fastFoodsResponse.getBody()));
 
-        model.addAttribute("fCurrentPage", fPageNo);
-        model.addAttribute("pCurrentPage", pPageNo);
+        model.addAttribute("currentFastFoodPage", fastFoodPageNo);
+        model.addAttribute("currentPubPage", pubPageNo);
 
-        model.addAttribute("fTotalPages", fastFoodTotalPages);
-        model.addAttribute("pTotalPages", pubsTotalPages);
+        model.addAttribute("fastFoodTotalPages", fastFoodTotalPages);
+        model.addAttribute("pubTotalPages", pubsTotalPages);
 
-        model.addAttribute("fTotalItems", fastFoodTotalItems);
-        model.addAttribute("pTotalItems", pubsTotalItems);
+        model.addAttribute("fastFoodTotalItems", fastFoodTotalItems);
+        model.addAttribute("pubsTotalItems", pubsTotalItems);
 
         model.addAttribute("fastFoods", fastFoods);
         model.addAttribute("pubs", pubs);
