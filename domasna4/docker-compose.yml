@@ -1,0 +1,30 @@
+version: '3'
+services:
+  discovery-server:
+    build: ./discovery-server/
+    hostname: discovery-server
+    ports:
+      - "8761:8761"
+    tty: true
+  navigation-service:
+    build: ./navigation-service/
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://discovery-server:8761/eureka
+    restart: always
+    tty: true
+    depends_on:
+    - discovery-server
+  places-service:
+    build: ./places-service/
+    ports:
+      - "8081:8081"
+    tty: true
+    depends_on:
+    - discovery-server
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://discovery-server:8761/eureka
+
