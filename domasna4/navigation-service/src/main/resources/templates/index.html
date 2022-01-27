@@ -495,11 +495,11 @@
         <div style="display: flex; justify-content: space-around" >
           <div>
             <div class="btn btn-block closestButtons"
-                 onclick="draw_route(defaultMinFastFoodIndex.lat, defaultMinFastFoodIndex.lon)">CLOSEST FAST FOOD</div>
+                 onclick="draw_route(defaultMinFastFoodIndex.lat, defaultMinFastFoodIndex.lon, defaultMinFastFoodIndex.name)">CLOSEST FAST FOOD</div>
           </div>
           <div>
             <div id="closestPubButton" class="btn btn-block closestButtons"
-                 onclick="draw_route(defaultMinPubIndex.lat, defaultMinPubIndex.lon)">CLOSEST PUB</div>
+                 onclick="draw_route(defaultMinPubIndex.lat, defaultMinPubIndex.lon, defaultMinPubIndex.name)">CLOSEST PUB</div>
           </div>
         </div>
         <div id='fastfood_' class="scroll-div" style="height: 35vh" th:unless='${#lists.isEmpty(fastFoodObs)}'>
@@ -509,7 +509,7 @@
             </div>
             <ul>
               <li class="text" th:each='fastFood : ${fastFoodObs}' th:text='${fastFood.name}'
-                  th:attr="onclick=|draw_route('${fastFood.lat}', '${fastFood.lon}', ${fastFood.id})|, data-id=|'${fastFood.id}'|"></li>
+                  th:attr="onclick=|draw_route('${fastFood.lat}', '${fastFood.lon}', '${fastFood.name}', ${fastFood.id})|, data-id=|'${fastFood.id}'|"></li>
             </ul>
           </div>
         </div>
@@ -525,7 +525,7 @@
             </div>
             <ul>
               <li class="text" th:each='pub : ${pubObs}' th:text='${pub.name}'
-                  th:attr="onclick=|draw_route('${pub.lat}', '${pub.lon}', ${pub.id})|, data-id=|'${pub.id}'|"></li>
+                  th:attr="onclick=|draw_route('${pub.lat}', '${pub.lon}', '${pub.name}', ${pub.id})|, data-id=|'${pub.id}'|"></li>
             </ul>
           </div>
         </div>
@@ -636,7 +636,7 @@
         }
     }
 
-  function draw_route(target_lat, target_lon, target_id) {
+  function draw_route(target_lat, target_lon, target_name, target_id) {
     clear_user_marker();
     clear_markers();
     clear_route();
@@ -653,18 +653,6 @@
             setTimeout(function () {
                 delete_notification()
             }, 5000);
-        }
-
-        let target_name;
-        for (let i = 0; i < fastfoods.length; i++) {
-            if (target_lat == fastfoods[i].lat && target_lon == fastfoods[i].lon) {
-                target_name = fastfoods[i].name;
-            }
-        }
-        for (let i = 0; i < pubs.length; i++) {
-            if (target_lat == pubs[i].lat && target_lon == pubs[i].lon) {
-                target_name = pubs[i].name;
-            }
         }
 
     clear_selected_place()
@@ -764,7 +752,7 @@
         marker.bindPopup(obj_name +
             '<br /><label id="_distance">' + obj_distance + 'km</label><br />' +
             '<button class="btn directions-button" onclick="draw_route('
-            + obj_lat + ', ' + obj_lon + ');">DIRECTIONS</button>');
+            + obj_lat + ', ' + obj_lon + ', \'' + obj_name + '\');">DIRECTIONS</button>');
     }
 
     function add_pubs() {
