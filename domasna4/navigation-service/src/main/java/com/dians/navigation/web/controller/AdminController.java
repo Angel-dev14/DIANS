@@ -26,7 +26,7 @@ public class AdminController {
 
     private final RestTemplate restTemplate;
 
-    private final String adminRequestUrl = "http://places-service/api/private/admin";
+    private final String adminRequestUrl = "http://places-service:8081/api/private/admin";
 
     public AdminController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;

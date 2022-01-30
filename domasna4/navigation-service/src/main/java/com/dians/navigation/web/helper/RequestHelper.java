@@ -32,7 +32,7 @@ public class RequestHelper {
                 .collect(
                     Collectors.joining("&"));
         }
-        String placesUrl = "http://places-service/api/places";
+        String placesUrl = "http://places-service:8081/api/places";
         return String.format("%s%s?%s", placesUrl, endpoint, query);
     }
 
