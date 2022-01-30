@@ -69,6 +69,10 @@ public class RequestHelper {
         for (int i = 0; i < objects.length; i += 2) {
             requestParams.add(objects[i].toString(), objects[i + 1]);
         }
-        return new HttpEntity<>(requestParams,new HttpHeaders());
+        return new HttpEntity<>(requestParams, new HttpHeaders());
+    }
+
+    public static Integer getHeaderIntValue(String key, ResponseEntity<?> response) {
+        return Integer.valueOf(response.getHeaders().get(key).get(0));
     }
 }

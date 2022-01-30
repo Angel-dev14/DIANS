@@ -49,16 +49,16 @@ public class AdminController {
         ResponseEntity<Pub[]> pubsResponse =
             restTemplate.getForEntity(String.format("%s/paginated/pubs?pageNumber=%s", adminRequestUrl, pubPageNo),
                 Pub[].class);
-        Integer pubsTotalPages = Integer.valueOf(pubsResponse.getHeaders().get("totalPages").get(0));
-        Integer pubsTotalItems = Integer.valueOf(pubsResponse.getHeaders().get("totalItems").get(0));
+        Integer pubsTotalPages = RequestHelper.getHeaderIntValue("totalPages", pubsResponse);
+        Integer pubsTotalItems = RequestHelper.getHeaderIntValue("totalItems", pubsResponse);
         pubs = Arrays.asList(Objects.requireNonNull(pubsResponse.getBody()));
 
         ResponseEntity<FastFood[]> fastFoodsResponse =
             restTemplate.getForEntity(
                 String.format("%s/paginated/fastFoods?pageNumber=%s", adminRequestUrl, fastFoodPageNo),
                 FastFood[].class);
-        Integer fastFoodTotalPages = Integer.valueOf(fastFoodsResponse.getHeaders().get("totalPages").get(0));
-        Integer fastFoodTotalItems = Integer.valueOf(fastFoodsResponse.getHeaders().get("totalItems").get(0));
+        Integer fastFoodTotalPages = RequestHelper.getHeaderIntValue("totalPages", fastFoodsResponse);
+        Integer fastFoodTotalItems = RequestHelper.getHeaderIntValue("totalItems", fastFoodsResponse);
         fastFoods = Arrays.asList(Objects.requireNonNull(fastFoodsResponse.getBody()));
 
         model.addAttribute("currentFastFoodPage", fastFoodPageNo);
