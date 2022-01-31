@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: NAVIGATION-SERVICE
+
+server:
+  port: 80
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://discovery-service:8761/eureka}
