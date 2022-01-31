@@ -1,30 +1,32 @@
-version: '3'
+version: "3.3"
+
 services:
   discovery-server:
     build: ./discovery-server/
     hostname: discovery-server
     ports:
       - "8761:8761"
-    tty: true
+    networks:
+      - ms-network
   navigation-service:
     build: ./navigation-service/
     ports:
-      - "8080:8080"
+      - "80:80"
     environment:
-      - JAVA_OPTS=
-        -DEUREKA_SERVER=http://discovery-server:8761/eureka
-    restart: always
-    tty: true
-    depends_on:
-    - discovery-server
+      eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka
+    networks:
+     - ms-network
+
   places-service:
     build: ./places-service/
     ports:
       - "8081:8081"
-    tty: true
-    depends_on:
-    - discovery-server
     environment:
-      - JAVA_OPTS=
-        -DEUREKA_SERVER=http://discovery-server:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://discovery-server:8761/eureka
+    networks:
+      - ms-network
 
+
+networks:
+  ms-network:
+    driver: bridge
