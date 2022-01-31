@@ -15,7 +15,6 @@
 <li>Христијан Савески, индекс: 191150 </li>
 </ul>
 
-<p><a href='https://navigation-application.herokuapp.com/'>https://navigation-application.herokuapp.com/</a></p>
-<p><a href='https://navigation-application.herokuapp.com/'>https://navigation-application.herokuapp.com/admin</a><br>(username: admin, password: admin)</p>
-
-<p>Деплојуваната апликација е на бранчот deployable и е завршена во предвидениот рок за прикачување на домашната, надвор од тој рок е само мерџано во main</p>
+<h3>Деплојуваната апликација:</h3>
+<p><a href='https://dians-navigation-app.westeurope.cloudapp.azure.com/'>https://dians-navigation-app.westeurope.cloudapp.azure.com/</a></p>
+<p><a href='https://dians-navigation-app.westeurope.cloudapp.azure.com/admin'>https://dians-navigation-app.westeurope.cloudapp.azure.com/admin</a><br>(username: admin, password: admin)</p>
