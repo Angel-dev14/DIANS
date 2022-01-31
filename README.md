@@ -15,6 +15,14 @@
 <li>Христијан Савески, индекс: 191150 </li>
 </ul>
 
-<h3>Деплојуваната апликација:</h3>
+<h3>Домашна 4</h3>
+<h4>Деплојуваната апликација во azure:</h4>
 <p><a href='https://dians-navigation-app.westeurope.cloudapp.azure.com/'>https://dians-navigation-app.westeurope.cloudapp.azure.com/</a></p>
 <p><a href='https://dians-navigation-app.westeurope.cloudapp.azure.com/admin'>https://dians-navigation-app.westeurope.cloudapp.azure.com/admin</a><br>(username: admin, password: admin)</p>
+
+<h3>Домашна 3:</h3>
+<h4>Деплојувана апликација во heroku:</h4>
+<p><a href='https://navigation-application.herokuapp.com/'>https://navigation-application.herokuapp.com/</a></p>
+<p><a href='https://navigation-application.herokuapp.com/admin'>https://navigation-application.herokuapp.com/admin</a><br>(username: admin, password: admin)</p>
+
+
